@@ -1,0 +1,1194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Guide - Travel Tips</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    
+    <!-- styles moved into styles.css -->
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <i class="fas fa-spinner"></i>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-compass"></i>
+                <span>AI Travel Guide</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="plan-trip.html">Plan Trip</a></li>
+                    <li><a href="travel-tips.html" class="active">Travel Tips</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <!-- Sign In/Sign Up buttons (shown when not logged in) -->
+                <div id="authButtons">
+                    <a href="#" id="signInBtn">Sign In</a>
+                    <a href="#" class="btn" id="signUpBtn">Sign Up</a>
+                </div>
+                
+                <!-- User profile menu (shown when logged in) -->
+                <div id="userProfile" class="user-menu" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                        <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                    </div>
+                    <div class="user-menu-content">
+                        <a href="#" id="myAccount">My Account</a>
+                        <a href="#" id="myTrips">My Trips</a>
+                        <a href="#" id="savedDestinations">Saved Destinations</a>
+                        <a href="#" id="signOutBtn">Sign Out</a>
+                    </div>
+                </div>
+                
+                <select class="lang-selector" id="langSelector">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                </select>
+                <button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h1>Travel Tips & Advice</h1>
+        
+        <div class="tips-categories">
+            <button class="tip-category active" data-category="all">All Tips</button>
+            <button class="tip-category" data-category="packing">Packing</button>
+            <button class="tip-category" data-category="safety">Safety</button>
+            <button class="tip-category" data-category="budget">Budget</button>
+            <button class="tip-category" data-category="culture">Culture</button>
+        </div>
+        
+        <div class="tips-grid">
+            <div class="tip-card" data-category="packing" data-tip="packing-light">
+                <div class="tip-icon">
+                    <i class="fas fa-suitcase"></i>
+                </div>
+                <h3>Packing Light</h3>
+                <p>Learn how to pack efficiently for any trip with our ultimate guide to traveling light.</p>
+                <a href="#" class="read-more">Read More</a>
+                <div class="tip-details" id="details-packing-light">
+                    <h4>Packing Light: The Ultimate Guide</h4>
+                    <img src="https://images.unsplash.com/photo-1551698618-1dfe5d97d256?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Packing light" class="tip-image">
+                    <p>Packing light is an art that can transform your travel experience. By bringing only what you need, you'll enjoy greater mobility, flexibility, and peace of mind.</p>
+                    <h5>Benefits of Packing Light:</h5>
+                    <ul>
+                        <li>Easier navigation through airports and train stations</li>
+                        <li>No checked baggage fees</li>
+                        <li>Less to keep track of and potentially lose</li>
+                        <li>More space for souvenirs on your return journey</li>
+                    </ul>
+                    <h5>Essential Packing Tips:</h5>
+                    <ul>
+                        <li>Choose versatile clothing that can be mixed and matched</li>
+                        <li>Roll clothes instead of folding to save space</li>
+                        <li>Use packing cubes to organize your belongings</li>
+                        <li>Limit yourself to 3-4 pairs of shoes maximum</li>
+                        <li>Bring travel-sized toiletries or buy them at your destination</li>
+                    </ul>
+                    <div id="weather-packing" class="weather-info">
+                        <i class="fas fa-spinner fa-spin"></i> Loading weather-based packing suggestions...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-card" data-category="safety" data-tip="staying-safe">
+                <div class="tip-icon">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <h3>Staying Safe Abroad</h3>
+                <p>Essential safety tips for international travelers to ensure a secure and enjoyable trip.</p>
+                <a href="#" class="read-more">Read More</a>
+                <div class="tip-details" id="details-staying-safe">
+                    <h4>Staying Safe Abroad: Essential Tips</h4>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Travel safety" class="tip-image">
+                    <p>Safety should be a top priority when traveling internationally. With proper preparation and awareness, you can minimize risks and focus on enjoying your journey.</p>
+                    <h5>Pre-Trip Safety Preparations:</h5>
+                    <ul>
+                        <li>Research your destination's safety situation and any travel advisories</li>
+                        <li>Make copies of important documents (passport, ID, insurance)</li>
+                        <li>Share your itinerary with someone at home</li>
+                        <li>Register with your country's embassy if traveling to high-risk areas</li>
+                        <li>Get appropriate travel insurance that covers medical emergencies</li>
+                    </ul>
+                    <h5>While Traveling:</h5>
+                    <ul>
+                        <li>Be aware of your surroundings and trust your instincts</li>
+                        <li>Keep valuables secure and out of sight</li>
+                        <li>Use reputable transportation services</li>
+                        <li>Stay connected with friends or family back home</li>
+                        <li>Know emergency numbers and the location of your country's embassy</li>
+                    </ul>
+                    <div id="safety-updates" class="api-info">
+                        <i class="fas fa-spinner fa-spin"></i> Loading travel safety updates...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-card" data-category="budget" data-tip="budget-hacks">
+                <div class="tip-icon">
+                    <i class="fas fa-piggy-bank"></i>
+                </div>
+                <h3>Budget Travel Hacks</h3>
+                <p>Discover smart ways to save money on flights, accommodation, and activities.</p>
+                <a href="#" class="read-more">Read More</a>
+                <div class="tip-details" id="details-budget-hacks">
+                    <h4>Budget Travel Hacks: Save Money Without Sacrificing Experience</h4>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Budget travel" class="tip-image">
+                    <p>Traveling on a budget doesn't mean missing out on great experiences. With these smart hacks, you can stretch your travel budget further and enjoy more of what the world has to offer.</p>
+                    <h5>Flight Savings:</h5>
+                    <ul>
+                        <li>Be flexible with your travel dates and times</li>
+                        <li>Set price alerts for your desired routes</li>
+                        <li>Consider alternative airports or nearby cities</li>
+                        <li>Book flights 6-8 weeks in advance for domestic trips</li>
+                        <li>Use airline miles and credit card points strategically</li>
+                    </ul>
+                    <h5>Accommodation Savings:</h5>
+                    <ul>
+                        <li>Consider alternatives to hotels (hostels, vacation rentals, house-sitting)</li>
+                        <li>Stay slightly outside city centers for better rates</li>
+                        <li>Travel during shoulder seasons for lower prices</li>
+                        <li>Book accommodations with free breakfast or kitchen facilities</li>
+                        <li>Look for loyalty programs and member discounts</li>
+                    </ul>
+                    <div id="currency-rates" class="api-info">
+                        <i class="fas fa-spinner fa-spin"></i> Loading currency exchange rates...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-card" data-category="culture" data-tip="cultural-etiquette">
+                <div class="tip-icon">
+                    <i class="fas fa-globe"></i>
+                </div>
+                <h3>Cultural Etiquette</h3>
+                <p>Understand local customs and traditions to respect the cultures you visit.</p>
+                <a href="#" class="read-more">Read More</a>
+                <div class="tip-details" id="details-cultural-etiquette">
+                    <h4>Cultural Etiquette: Respecting Local Customs</h4>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Cultural etiquette" class="tip-image">
+                    <p>Understanding and respecting local customs is key to being a responsible traveler. It not only shows respect but also enriches your travel experience and helps you connect with local communities.</p>
+                    <h5>General Cultural Tips:</h5>
+                    <ul>
+                        <li>Learn basic phrases in the local language</li>
+                        <li>Dress appropriately for religious sites and conservative areas</li>
+                        <li>Ask permission before taking photos of people</li>
+                        <li>Be mindful of local dining customs and table manners</li>
+                        <li>Remove shoes when entering homes or certain establishments</li>
+                    </ul>
+                    <h5>Region-Specific Etiquette:</h5>
+                    <ul>
+                        <li><strong>Asia:</strong> Avoid touching someone's head, use both hands when giving or receiving</li>
+                        <li><strong>Middle East:</strong> Dress modestly, be aware of gender-segregated spaces</li>
+                        <li><strong>Europe:</strong> Punctuality is valued, learn basic greeting customs</li>
+                        <li><strong>Latin America:</strong> Personal space is smaller, expect more physical contact</li>
+                    </ul>
+                    <div id="cultural-info" class="api-info">
+                        <i class="fas fa-spinner fa-spin"></i> Loading cultural information...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-card" data-category="packing" data-tip="clothing-essentials">
+                <div class="tip-icon">
+                    <i class="fas fa-tshirt"></i>
+                </div>
+                <h3>Clothing Essentials</h3>
+                <p>What to pack for different climates and occasions during your travels.</p>
+                <a href="#" class="read-more">Read More</a>
+                <div class="tip-details" id="details-clothing-essentials">
+                    <h4>Clothing Essentials: Packing for Any Climate</h4>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Clothing essentials" class="tip-image">
+                    <p>Packing the right clothing can make or break your travel experience. Being prepared for various weather conditions and occasions ensures comfort and enjoyment throughout your journey.</p>
+                    <h5>Climate-Specific Packing:</h5>
+                    <ul>
+                        <li><strong>Tropical:</strong> Lightweight, breathable fabrics, sun protection, quick-dry items</li>
+                        <li><strong>Temperate:</strong> Layering options, waterproof jacket, comfortable walking shoes</li>
+                        <li><strong>Cold:</strong> Insulated layers, thermal wear, waterproof outer shell, warm accessories</li>
+                        <li><strong>Desert:</strong> Light-colored clothing to reflect sun, sun protection, warm layers for cool nights</li>
+                    </ul>
+                    <h5>Occasion-Specific Items:</h5>
+                    <ul>
+                        <li><strong>Business:</strong> At least one professional outfit, comfortable business shoes</li>
+                        <li><strong>Formal:</strong> Appropriate attire for upscale restaurants or events</li>
+                        <li><strong>Active:</strong> Moisture-wicking fabrics, proper footwear for planned activities</li>
+                        <li><strong>Beach:</strong> Swimwear, cover-ups, sandals, sun protection</li>
+                    </ul>
+                    <div id="weather-clothing" class="api-info">
+                        <i class="fas fa-spinner fa-spin"></i> Loading weather-based clothing suggestions...
+                    </div>
+                </div>
+            </div>
+            
+            <div class="tip-card" data-category="safety" data-tip="document-safety">
+                <div class="tip-icon">
+                    <i class="fas fa-passport"></i>
+                </div>
+                <h3>Document Safety</h3>
+                <p>How to keep your important documents secure while traveling.</p>
+                <a href="#" class="read-more">Read More</a>
+                <div class="tip-details" id="details-document-safety">
+                    <h4>Document Safety: Protecting Your Important Papers</h4>
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Document safety" class="tip-image">
+                    <p>Your travel documents are among your most important possessions when traveling. Losing them can turn a dream vacation into a nightmare. Here's how to keep them safe.</p>
+                    <h5>Before You Leave:</h5>
+                    <ul>
+                        <li>Make both physical and digital copies of all important documents</li>
+                        <li>Store digital copies in secure cloud storage and email them to yourself</li>
+                        <li>Leave copies with a trusted friend or family member at home</li>
+                        <li>Check passport validity and visa requirements well in advance</li>
+                        <li>Consider getting a passport holder or RFID-blocking wallet</li>
+                    </ul>
+                    <h5>While Traveling:</h5>
+                    <ul>
+                        <li>Keep original documents in a hotel safe when not needed</li>
+                        <li>Carry a photocopy or digital version on your phone for daily use</li>
+                        <li>Use a money belt or hidden pouch for valuable documents</li>
+                        <li>Separate your cash and cards to minimize risk if one is lost</li>
+                        <li>Know the location and contact information for your country's embassy</li>
+                    </ul>
+                    <div id="embassy-info" class="api-info">
+                        <i class="fas fa-spinner fa-spin"></i> Loading embassy information...
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="#">Activities</a></li>
+                        <li><a href="#">Seasons</a></li>
+                        <li><a href="#">Travel Guides</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AI Travel Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignInModal">&times;</span>
+            <h2>Sign In to Your Account</h2>
+            
+            <div class="error-message" id="signInError"></div>
+            <div class="success-message" id="signInSuccess"></div>
+            
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" required>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Sign In</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleLogin" title="Login with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookLogin" title="Login with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterLogin" title="Login with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switchToSignUp">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignUpModal">&times;</span>
+            <h2>Create Your Account</h2>
+            
+            <div class="error-message" id="signUpError"></div>
+            <div class="success-message" id="signUpSuccess"></div>
+            
+            <form id="signUpForm">
+                <div class="form-group">
+                    <label for="signUpName">Full Name</label>
+                    <input type="text" id="signUpName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" required>
+                </div>
+                <button type="submit" class="btn" id="registerBtn">Sign Up</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleSignup" title="Sign Up with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookSignup" title="Sign Up with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterSignup" title="Sign Up with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switchToSignIn">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCB1lyyMwbrZP-ZL3MTIAT5H34p1vWbL1M",
+            authDomain: "srinjoy-46fc2.firebaseapp.com",
+            projectId: "srinjoy-46fc2",
+            storageBucket: "srinjoy-46fc2.firebasestorage.app",
+            messagingSenderId: "156421945116",
+            appId: "1:156421945116:web:0ea10bbd2f6464df362cd9",
+            measurementId: "G-KH1TDMBDW2"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // DOM Elements
+        const tipCategories = document.querySelectorAll('.tip-category');
+        const tipCards = document.querySelectorAll('.tip-card');
+        const readMoreLinks = document.querySelectorAll('.read-more');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const langSelector = document.getElementById('langSelector');
+        const signInBtn = document.getElementById('signInBtn');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInModal = document.getElementById('signInModal');
+        const signUpModal = document.getElementById('signUpModal');
+        const closeSignInModal = document.getElementById('closeSignInModal');
+        const closeSignUpModal = document.getElementById('closeSignUpModal');
+        const switchToSignUp = document.getElementById('switchToSignUp');
+        const switchToSignIn = document.getElementById('switchToSignIn');
+        const signInFormEl = document.getElementById('signInForm');
+        const signUpFormEl = document.getElementById('signUpForm');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        
+        // Firebase Auth Elements
+        const authButtons = document.getElementById('authButtons');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const userMenu = document.querySelector('.user-menu');
+        const userProfileMenu = document.querySelector('.user-profile');
+        
+        // Firebase Auth Message Elements
+        const signInError = document.getElementById('signInError');
+        const signInSuccess = document.getElementById('signInSuccess');
+        const signUpError = document.getElementById('signUpError');
+        const signUpSuccess = document.getElementById('signUpSuccess');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        // Social Login Elements
+        const googleLogin = document.getElementById('googleLogin');
+        const facebookLogin = document.getElementById('facebookLogin');
+        const twitterLogin = document.getElementById('twitterLogin');
+        const googleSignup = document.getElementById('googleSignup');
+        const facebookSignup = document.getElementById('facebookSignup');
+        const twitterSignup = document.getElementById('twitterSignup');
+        
+        // Initialize
+        let currentUser = null;
+        let userLocation = null;
+
+        // Event Listeners
+        tipCategories.forEach(category => {
+            category.addEventListener('click', () => {
+                // Update active category
+                tipCategories.forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+                
+                // Filter tips
+                const categoryValue = category.getAttribute('data-category');
+                tipCards.forEach(card => {
+                    if (categoryValue === 'all' || card.getAttribute('data-category') === categoryValue) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        readMoreLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const card = e.target.closest('.tip-card');
+                const tipId = card.getAttribute('data-tip');
+                const detailsElement = document.getElementById(`details-${tipId}`);
+                
+                if (detailsElement.classList.contains('active')) {
+                    detailsElement.classList.remove('active');
+                    e.target.textContent = 'Read More';
+                } else {
+                    // Close all other details
+                    document.querySelectorAll('.tip-details').forEach(detail => {
+                        detail.classList.remove('active');
+                    });
+                    
+                    // Reset all read more links
+                    document.querySelectorAll('.read-more').forEach(link => {
+                        link.textContent = 'Read More';
+                    });
+                    
+                    // Open this detail
+                    detailsElement.classList.add('active');
+                    e.target.textContent = 'Read Less';
+                    
+                    // Load API data for this tip if not already loaded
+                    loadTipData(tipId, detailsElement);
+                }
+            });
+        });
+
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        langSelector.addEventListener('change', changeLanguage);
+        signInBtn.addEventListener('click', openSignInModal);
+        signUpBtn.addEventListener('click', openSignUpModal);
+        closeSignInModal.addEventListener('click', () => signInModal.style.display = 'none');
+        closeSignUpModal.addEventListener('click', () => signUpModal.style.display = 'none');
+        switchToSignUp.addEventListener('click', (e) => {
+            e.preventDefault();
+            signInModal.style.display = 'none';
+            signUpModal.style.display = 'block';
+        });
+        switchToSignIn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signUpModal.style.display = 'none';
+            signInModal.style.display = 'block';
+        });
+        
+        // Firebase Auth Event Listeners
+        signInFormEl.addEventListener('submit', handleSignIn);
+        signUpFormEl.addEventListener('submit', handleSignUp);
+        signOutBtn.addEventListener('click', handleSignOut);
+        
+        // Social Login Event Listeners
+        googleLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+        facebookLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+        twitterLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+        googleSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+        facebookSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+        twitterSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+        
+        // User menu toggle
+        userProfileMenu.addEventListener('click', () => {
+            userMenu.classList.toggle('show');
+        });
+        
+        // Close user menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
+                userMenu.classList.remove('show');
+            }
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === signInModal) signInModal.style.display = 'none';
+            if (e.target === signUpModal) signUpModal.style.display = 'none';
+        });
+
+        // Load dark mode preference on page load
+        window.addEventListener('load', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Get user location for personalized tips
+            getUserLocation();
+        });
+
+        // Functions
+        function getUserLocation() {
+            // Try to get user location from browser
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    position => {
+                        userLocation = {
+                            lat: position.coords.latitude,
+                            lon: position.coords.longitude
+                        };
+                        console.log('User location:', userLocation);
+                    },
+                    error => {
+                        console.log('Error getting location:', error);
+                        // Fallback to IP-based location
+                        getIPLocation();
+                    }
+                );
+            } else {
+                // Fallback to IP-based location
+                getIPLocation();
+            }
+        }
+
+        function getIPLocation() {
+            fetch('https://ipgeolocation.io/ipgeo?apiKey=YOUR_API_KEY')
+                .then(response => response.json())
+                .then(data => {
+                    userLocation = {
+                        lat: data.latitude,
+                        lon: data.longitude,
+                        country: data.country_name,
+                        city: data.city
+                    };
+                    console.log('User IP location:', userLocation);
+                })
+                .catch(error => {
+                    console.error('Error getting IP location:', error);
+                });
+        }
+
+        function loadTipData(tipId, detailsElement) {
+            // Check if data is already loaded
+            if (detailsElement.querySelector('.api-loaded')) {
+                return;
+            }
+            
+            switch (tipId) {
+                case 'packing-light':
+                    loadWeatherPackingData(detailsElement);
+                    break;
+                case 'staying-safe':
+                    loadSafetyUpdatesData(detailsElement);
+                    break;
+                case 'budget-hacks':
+                    loadCurrencyRatesData(detailsElement);
+                    break;
+                case 'cultural-etiquette':
+                    loadCulturalInfoData(detailsElement);
+                    break;
+                case 'clothing-essentials':
+                    loadWeatherClothingData(detailsElement);
+                    break;
+                case 'document-safety':
+                    loadEmbassyInfoData(detailsElement);
+                    break;
+            }
+            
+            // Mark as loaded
+            const marker = document.createElement('div');
+            marker.className = 'api-loaded';
+            marker.style.display = 'none';
+            detailsElement.appendChild(marker);
+        }
+
+        function loadWeatherPackingData(detailsElement) {
+            const weatherElement = detailsElement.querySelector('#weather-packing');
+            
+            if (!userLocation) {
+                weatherElement.innerHTML = '<div class="api-error">Unable to get your location for weather-based suggestions.</div>';
+                return;
+            }
+            
+            // Get current weather
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${userLocation.lat}&longitude=${userLocation.lon}&current_weather=true`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.current_weather) {
+                        const temp = data.current_weather.temperature;
+                        const weatherCode = data.current_weather.weathercode;
+                        
+                        let packingSuggestions = '';
+                        
+                        if (temp < 10) {
+                            packingSuggestions = 'Cold weather detected: Pack warm layers, insulated jacket, gloves, hat, and scarf.';
+                        } else if (temp < 20) {
+                            packingSuggestions = 'Cool weather detected: Pack light layers, a jacket, and long pants.';
+                        } else {
+                            packingSuggestions = 'Warm weather detected: Pack lightweight clothing, sun protection, and breathable fabrics.';
+                        }
+                        
+                        if (weatherCode >= 51 && weatherCode <= 67) {
+                            packingSuggestions += ' Rain expected: Don\'t forget a waterproof jacket or umbrella!';
+                        }
+                        
+                        weatherElement.innerHTML = `<div class="weather-suggestion">${packingSuggestions}</div>`;
+                        // Generate an AI-powered short summary for packing tips
+                        generateTipSummary(packingSuggestions).then(summary => {
+                            const aiEl = document.createElement('div');
+                            aiEl.className = 'ai-tip-summary';
+                            aiEl.style.marginTop = '10px';
+                            aiEl.innerHTML = `<strong>Quick AI Tip:</strong> ${summary}`;
+                            weatherElement.appendChild(aiEl);
+                        }).catch(() => {
+                            // ignore summary errors
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    weatherElement.innerHTML = '<div class="api-error">Unable to load weather-based packing suggestions.</div>';
+                });
+        }
+
+        // AI helpers: configurable API endpoint and key. If left blank, a small local summarizer is used.
+        const AI_API_URL = '';
+        const AI_API_KEY = '';
+
+        async function generateTipSummary(text) {
+            // If API URL provided, call it (expect JSON { summary: '...' })
+            if (AI_API_URL && AI_API_URL.length > 0) {
+                try {
+                    const resp = await fetch(AI_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(AI_API_KEY ? { 'Authorization': `Bearer ${AI_API_KEY}` } : {})
+                        },
+                        body: JSON.stringify({ text })
+                    });
+                    if (!resp.ok) throw new Error('AI API error');
+                    const data = await resp.json();
+                    return data.summary || data.result || (data.choices && data.choices[0] && data.choices[0].text) || text.slice(0,200) + '...';
+                } catch (e) {
+                    console.warn('AI API call failed, falling back to local summarizer:', e.message || e);
+                }
+            }
+
+            // Local lightweight summarizer: pick the first sentence and trim
+            const sentences = text.match(/[^\.?!]+[\.?!]?/g) || [text];
+            let summary = sentences.slice(0,2).join(' ').trim();
+            if (summary.length > 180) summary = summary.slice(0,177) + '...';
+            return summary;
+        }
+
+        function loadSafetyUpdatesData(detailsElement) {
+            const safetyElement = detailsElement.querySelector('#safety-updates');
+            
+            // Get travel safety updates (this would typically use a paid API)
+            // For demo, we'll simulate with a timeout
+            setTimeout(() => {
+                safetyElement.innerHTML = `
+                    <div class="safety-update">
+                        <h5>Recent Safety Updates:</h5>
+                        <ul>
+                            <li>Check your government's travel advisories before departure</li>
+                            <li>Register with your embassy when traveling internationally</li>
+                            <li>Keep emergency contacts easily accessible</li>
+                            <li>Consider travel insurance that covers medical emergencies</li>
+                        </ul>
+                    </div>
+                `;
+            }, 1500);
+        }
+
+        function loadCurrencyRatesData(detailsElement) {
+            const currencyElement = detailsElement.querySelector('#currency-rates');
+            
+            // Get currency exchange rates
+            fetch('https://api.exchangerate-api.com/v4/latest/USD')
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.rates) {
+                        const rates = data.rates;
+                        const popularCurrencies = ['EUR', 'GBP', 'JPY', 'CAD', 'AUD'];
+                        
+                        let ratesHtml = '<div class="currency-rates"><h5>Current Exchange Rates (1 USD):</h5><ul>';
+                        
+                        popularCurrencies.forEach(currency => {
+                            if (rates[currency]) {
+                                ratesHtml += `<li>${currency}: ${rates[currency]}</li>`;
+                            }
+                        });
+                        
+                        ratesHtml += '</ul><p class="rate-note">Rates are for reference only and may fluctuate.</p></div>';
+                        
+                        currencyElement.innerHTML = ratesHtml;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching currency rates:', error);
+                    currencyElement.innerHTML = '<div class="api-error">Unable to load currency exchange rates.</div>';
+                });
+        }
+
+        function loadCulturalInfoData(detailsElement) {
+            const culturalElement = detailsElement.querySelector('#cultural-info');
+            
+            // Get cultural information based on user location
+            if (userLocation && userLocation.country) {
+                // This would typically use a cultural information API
+                // For demo, we'll simulate with a timeout and generic info
+                setTimeout(() => {
+                    culturalElement.innerHTML = `
+                        <div class="cultural-info">
+                            <h5>Cultural Tips for ${userLocation.country}:</h5>
+                            <ul>
+                                <li>Learn basic greetings in the local language</li>
+                                <li>Research local dining customs and tipping practices</li>
+                                <li>Be aware of appropriate dress codes for religious sites</li>
+                                <li>Understand local gestures and body language</li>
+                            </ul>
+                        </div>
+                    `;
+                }, 1500);
+            } else {
+                culturalElement.innerHTML = `
+                    <div class="cultural-info">
+                        <h5>General Cultural Tips:</h5>
+                        <ul>
+                            <li>Research your destination's customs before traveling</li>
+                            <li>Always ask permission before taking photos of locals</li>
+                            <li>Dress modestly when visiting religious sites</li>
+                            <li>Learn a few phrases in the local language</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        function loadWeatherClothingData(detailsElement) {
+            const weatherElement = detailsElement.querySelector('#weather-clothing');
+            
+            if (!userLocation) {
+                weatherElement.innerHTML = '<div class="api-error">Unable to get your location for weather-based clothing suggestions.</div>';
+                return;
+            }
+            
+            // Get 7-day forecast
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${userLocation.lat}&longitude=${userLocation.lon}&daily=temperature_2m_max,temperature_2m_min,weathercode&timezone=auto`)
+                .then(response => response.json())
+                .then(data => {
+                    if (data && data.daily) {
+                        const maxTemps = data.daily.temperature_2m_max;
+                        const minTemps = data.daily.temperature_2m_min;
+                        const weatherCodes = data.daily.weathercode;
+                        
+                        // Calculate average temperature
+                        const avgMaxTemp = maxTemps.reduce((a, b) => a + b, 0) / maxTemps.length;
+                        const avgMinTemp = minTemps.reduce((a, b) => a + b, 0) / minTemps.length;
+                        
+                        // Check for rain
+                        const hasRain = weatherCodes.some(code => (code >= 51 && code <= 67) || (code >= 80 && code <= 82));
+                        
+                        let clothingSuggestions = '';
+                        
+                        if (avgMaxTemp < 15) {
+                            clothingSuggestions = 'Cold weather expected: Pack warm layers, insulated jacket, thermal wear, and waterproof boots.';
+                        } else if (avgMaxTemp < 25) {
+                            clothingSuggestions = 'Cool to mild weather: Pack layers, a light jacket, long pants, and comfortable walking shoes.';
+                        } else {
+                            clothingSuggestions = 'Warm weather expected: Pack lightweight clothing, breathable fabrics, sun protection, and comfortable sandals.';
+                        }
+                        
+                        if (hasRain) {
+                            clothingSuggestions += ' Rain is expected: Don\'t forget a waterproof jacket or umbrella!';
+                        }
+                        
+                        weatherElement.innerHTML = `<div class="clothing-suggestion">${clothingSuggestions}</div>`;
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    weatherElement.innerHTML = '<div class="api-error">Unable to load weather-based clothing suggestions.</div>';
+                });
+        }
+
+        function loadEmbassyInfoData(detailsElement) {
+            const embassyElement = detailsElement.querySelector('#embassy-info');
+            
+            // Get embassy information based on user location
+            if (userLocation && userLocation.country) {
+                // This would typically use an embassy/consulate API
+                // For demo, we'll simulate with a timeout and generic info
+                setTimeout(() => {
+                    embassyElement.innerHTML = `
+                        <div class="embassy-info">
+                            <h5>Embassy Information for ${userLocation.country}:</h5>
+                            <ul>
+                                <li>Locate your country's nearest embassy or consulate</li>
+                                <li>Save the embassy's contact information in your phone</li>
+                                <li>Register with your embassy upon arrival if recommended</li>
+                                <li>Keep a copy of your passport's data page separate from the original</li>
+                            </ul>
+                        </div>
+                    `;
+                }, 1500);
+            } else {
+                embassyElement.innerHTML = `
+                    <div class="embassy-info">
+                        <h5>General Embassy Tips:</h5>
+                        <ul>
+                            <li>Research embassy locations before you travel</li>
+                            <li>Keep embassy contact information easily accessible</li>
+                            <li>Register with your embassy when traveling to high-risk areas</li>
+                            <li>Know what services your embassy provides to travelers</li>
+                        </ul>
+                    </div>
+                `;
+            }
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Save preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function changeLanguage() {
+            const selectedLang = langSelector.value;
+            showNotification(`Language changed to ${selectedLang.toUpperCase()}`);
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#333';
+            notification.style.color = 'white';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s';
+            
+            // Add to DOM
+            document.body.appendChild(notification);
+            
+            // Fade in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        function openSignInModal() {
+            signInModal.style.display = 'block';
+        }
+
+        function openSignUpModal() {
+            signUpModal.style.display = 'block';
+        }
+
+        // Firebase Auth Functions
+        function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            
+            // Show loading state
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            loginBtn.disabled = true;
+            
+            // Clear previous messages
+            signInError.style.display = 'none';
+            signInSuccess.style.display = 'none';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log('User signed in:', user);
+                    
+                    // Show success message
+                    signInSuccess.textContent = 'Login successful! Welcome back!';
+                    signInSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/user-not-found') {
+                        friendlyMessage = 'No account found with this email.';
+                    } else if (errorCode === 'auth/wrong-password') {
+                        friendlyMessage = 'Incorrect password. Please try again.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/user-disabled') {
+                        friendlyMessage = 'This account has been disabled.';
+                    } else if (errorCode === 'auth/too-many-requests') {
+                        friendlyMessage = 'Too many failed login attempts. Please try again later.';
+                    }
+                    
+                    signInError.textContent = friendlyMessage;
+                    signInError.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                });
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            
+            // Show loading state
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            registerBtn.disabled = true;
+            
+            // Clear previous messages
+            signUpError.style.display = 'none';
+            signUpSuccess.style.display = 'none';
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up
+                    const user = userCredential.user;
+                    console.log('User signed up:', user);
+                    
+                    // Update user profile with name
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    // Show success message
+                    signUpSuccess.textContent = 'Account created successfully! Welcome!';
+                    signUpSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign up error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Sign up failed. Please try again.';
+                    if (errorCode === 'auth/email-already-in-use') {
+                        friendlyMessage = 'An account with this email already exists.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/weak-password') {
+                        friendlyMessage = 'Password is too weak. Please use a stronger password.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'Email/password accounts are not enabled.';
+                    }
+                    
+                    signUpError.textContent = friendlyMessage;
+                    signUpError.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                });
+        }
+
+        function handleSignOut() {
+            auth.signOut()
+                .then(() => {
+                    console.log('User signed out');
+                    showNotification('You have been signed out successfully.');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showNotification('Error signing out. Please try again.');
+                });
+        }
+
+        function signInWithProvider(provider) {
+            // Show loading spinner
+            loadingSpinner.style.display = 'flex';
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // The signed-in user info
+                    const user = result.user;
+                    console.log('User signed in with provider:', user);
+                    
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Show success message
+                    showNotification(`Welcome, ${user.displayName || user.email}!`);
+                })
+                .catch((error) => {
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Provider sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/account-exists-with-different-credential') {
+                        friendlyMessage = 'An account already exists with the same email address but different sign-in credentials.';
+                    } else if (errorCode === 'auth/auth-domain-config-required') {
+                        friendlyMessage = 'Authentication domain configuration is required.';
+                    } else if (errorCode === 'auth/cancelled-popup-request') {
+                        friendlyMessage = 'Popup request was cancelled.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'This login method is not enabled. Please contact support.';
+                    } else if (errorCode === 'auth/operation-not-supported-in-this-environment') {
+                        friendlyMessage = 'This operation is not supported in the current environment.';
+                    } else if (errorCode === 'auth/popup-blocked') {
+                        friendlyMessage = 'Popup was blocked by the browser. Please allow popups and try again.';
+                    } else if (errorCode === 'auth/popup-closed-by-user') {
+                        friendlyMessage = 'Popup was closed before completing the login.';
+                    } else if (errorCode === 'auth/unauthorized-domain') {
+                        friendlyMessage = 'This domain is not authorized for OAuth operations.';
+                    }
+                    
+                    showNotification(friendlyMessage);
+                });
+        }
+
+        // Firebase Auth State Listener
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                currentUser = user;
+                console.log('User logged in:', user);
+                
+                // Update UI for logged-in user
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'block';
+                
+                // Set user avatar and name
+                if (user.displayName) {
+                    userName.textContent = user.displayName;
+                    userAvatar.textContent = user.displayName.charAt(0).toUpperCase();
+                } else if (user.email) {
+                    userName.textContent = user.email;
+                    userAvatar.textContent = user.email.charAt(0).toUpperCase();
+                }
+                
+                // Close any open modals
+                signInModal.style.display = 'none';
+                signUpModal.style.display = 'none';
+                
+                // Show success message
+                showNotification(`Welcome back, ${user.displayName || user.email}!`);
+            } else {
+                // User is signed out
+                currentUser = null;
+                console.log('User logged out');
+                
+                // Update UI for logged-out user
+                authButtons.style.display = 'block';
+                userProfile.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

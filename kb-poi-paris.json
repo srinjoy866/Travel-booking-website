@@ -1,0 +1,3909 @@
+{
+  "city": "Paris, France",
+  "timestamp": 1761366965,
+  "count": 200,
+  "pois": [
+    {
+      "id": "node:21662099",
+      "title": "Notre-Dame",
+      "text": "amenity=ferry_terminal, cargo=passengers, ferry=yes, harbour=yes, harbour:operator=Batobus, name=Notre-Dame",
+      "lat": 48.851834,
+      "lon": 2.3500556,
+      "tags": {
+        "amenity": "ferry_terminal",
+        "cargo": "passengers",
+        "ferry": "yes",
+        "harbour": "yes",
+        "harbour:operator": "Batobus",
+        "name": "Notre-Dame",
+        "operator": "Batobus",
+        "port_of_entry": "no",
+        "public_transport": "station",
+        "website": "https://www.batobus.com/fr/station/notre-dame",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:24910582",
+      "title": "Embarcadère du Chalet des Îles",
+      "text": "amenity=ferry_terminal, cargo=passengers, name=Embarcadère du Chalet des Îles, website=https://chalet-des-iles.com/acces/, wheelchair=yes",
+      "lat": 48.8629885,
+      "lon": 2.2614737,
+      "tags": {
+        "amenity": "ferry_terminal",
+        "cargo": "passengers",
+        "name": "Embarcadère du Chalet des Îles",
+        "website": "https://chalet-des-iles.com/acces/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:25213384",
+      "title": "Relais Total Du Pont Aval",
+      "text": "addr:postcode=75015, address=Quai d'Issy-les-Moulineaux - Porte d'Issy, amenity=fuel, brand=Total Access, brand:wikidata=Q154037, brand:wikipedia=fr:TotalEnergies",
+      "lat": 48.8346767,
+      "lon": 2.266146,
+      "tags": {
+        "addr:postcode": "75015",
+        "address": "Quai d'Issy-les-Moulineaux - Porte d'Issy",
+        "amenity": "fuel",
+        "brand": "Total Access",
+        "brand:wikidata": "Q154037",
+        "brand:wikipedia": "fr:TotalEnergies",
+        "compressed_air": "yes",
+        "fuel:GTL_diesel": "yes",
+        "fuel:adblue": "yes",
+        "fuel:diesel": "yes",
+        "fuel:e10": "yes",
+        "fuel:e85": "yes",
+        "fuel:octane_98": "yes",
+        "name": "Relais Total Du Pont Aval",
+        "opening_hours": "24/7",
+        "operator": "Total",
+        "phone": "+33 1 53 78 05 01",
+        "ref:FR:prix-carburants": "75015026",
+        "shop": "convenience",
+        "source": "Ministère de l'Economie, de l'Industrie et du Numérique - 03/2020",
+        "toilets": "yes",
+        "vending": "fuel",
+        "vending_machine": "fuel",
+        "website": "https://store.totalenergies.fr/en_EN/NF078037"
+      }
+    },
+    {
+      "id": "node:25213823",
+      "title": "Avia",
+      "text": "addr:city=Charenton-le-Pont, addr:housenumber=114, addr:postcode=94220, addr:street=Rue de Paris, address=N 6 , 114, rue de Paris - Porte de Charenton, amenity=fuel",
+      "lat": 48.8256612,
+      "lon": 2.4077565,
+      "tags": {
+        "addr:city": "Charenton-le-Pont",
+        "addr:housenumber": "114",
+        "addr:postcode": "94220",
+        "addr:street": "Rue de Paris",
+        "address": "N 6 , 114, rue de Paris - Porte de Charenton",
+        "amenity": "fuel",
+        "brand": "Avia",
+        "brand:wikidata": "Q300147",
+        "brand:wikipedia": "de:Avia International",
+        "compressed_air": "yes",
+        "fuel:diesel": "yes",
+        "fuel:e10": "yes",
+        "fuel:e85": "yes",
+        "fuel:lpg": "yes",
+        "fuel:octane_98": "yes",
+        "name": "Avia",
+        "opening_hours": "24/7",
+        "operator": "Avia",
+        "ref:FR:prix-carburants": "94220003",
+        "self_service": "yes",
+        "shop": "convenience;gas",
+        "toilets": "yes",
+        "vacuum_cleaner": "yes",
+        "vacuum_cleaner:fee": "yes",
+        "vacuum_cleaner:self_service": "yes"
+      }
+    },
+    {
+      "id": "node:25214653",
+      "title": "Relais des Chaufourniers",
+      "text": "addr:postcode=75019, address=152/162, boulevard de la Villette, amenity=fuel, brand=Total, brand:wikidata=Q154037, brand:wikipedia=fr:Total (entreprise)",
+      "lat": 48.8801814,
+      "lon": 2.3707442,
+      "tags": {
+        "addr:postcode": "75019",
+        "address": "152/162, boulevard de la Villette",
+        "amenity": "fuel",
+        "brand": "Total",
+        "brand:wikidata": "Q154037",
+        "brand:wikipedia": "fr:Total (entreprise)",
+        "check_date": "2023-05-17",
+        "compressed_air": "yes",
+        "fuel:diesel": "yes",
+        "fuel:e10": "yes",
+        "fuel:lpg": "yes",
+        "fuel:octane_98": "yes",
+        "name": "Relais des Chaufourniers",
+        "opening_hours": "24/7",
+        "operator": "Total",
+        "ref:FR:prix-carburants": "75019017",
+        "shop": "convenience;gas",
+        "source": "stations.gpl.online.fr",
+        "toilets": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:27091941",
+      "title": "Le Capitole",
+      "text": "addr:housenumber=3, addr:postcode=92150, addr:street=Rue Ledru-Rollin, amenity=cinema, check_date:opening_hours=2023-02-22, name=Le Capitole",
+      "lat": 48.8705516,
+      "lon": 2.2287072,
+      "tags": {
+        "addr:housenumber": "3",
+        "addr:postcode": "92150",
+        "addr:street": "Rue Ledru-Rollin",
+        "amenity": "cinema",
+        "check_date:opening_hours": "2023-02-22",
+        "name": "Le Capitole",
+        "opening_hours": "Mo-Su 13:00-23:00",
+        "ref:FR:CNC": "370411",
+        "website": "https://cinema-lecapitole.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q61859584"
+      }
+    },
+    {
+      "id": "node:27091971",
+      "title": "La Poste",
+      "text": "addr:housenumber=1, addr:postcode=92150, addr:street=Rue Fizeau, amenity=post_office, atm=yes, branch=Suresnes Hôtel-de-Ville",
+      "lat": 48.8700181,
+      "lon": 2.2255658,
+      "tags": {
+        "addr:housenumber": "1",
+        "addr:postcode": "92150",
+        "addr:street": "Rue Fizeau",
+        "amenity": "post_office",
+        "atm": "yes",
+        "branch": "Suresnes Hôtel-de-Ville",
+        "brand": "La Poste",
+        "change_machine": "yes",
+        "check_date:opening_hours": "2023-11-25",
+        "copy_facility": "yes",
+        "name": "La Poste",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-12:30; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "17096A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "website": "https://localiser.laposte.fr/hauts-de-seine/suresnes/suresnes-hotel-de-ville-920730",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:27091978",
+      "title": "Jules Ferry",
+      "text": "access=yes, amenity=parking, fee=yes, layer=-1, name=Jules Ferry, parking=underground",
+      "lat": 48.8695551,
+      "lon": 2.2249609,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "fee": "yes",
+        "layer": "-1",
+        "name": "Jules Ferry",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:27415802",
+      "title": "Paris 17 Wagram",
+      "text": "situation : 108 AVENUE DE WAGRAM",
+      "lat": 48.8832844,
+      "lon": 2.3022074,
+      "tags": {
+        "addr:postcode": "75017",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris 17 Wagram",
+        "note": "situation : 108 AVENUE DE WAGRAM",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-13:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14237A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:27415805",
+      "title": "Edmond Rostand",
+      "text": "addr:housenumber=11, addr:postcode=75017, addr:street=Rue Nicolas Chuquet, amenity=library, email=mediatheque.edmond-rostand@paris.fr, internet_access=wlan",
+      "lat": 48.8883391,
+      "lon": 2.3034488,
+      "tags": {
+        "addr:housenumber": "11",
+        "addr:postcode": "75017",
+        "addr:street": "Rue Nicolas Chuquet",
+        "amenity": "library",
+        "email": "mediatheque.edmond-rostand@paris.fr",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "name": "Edmond Rostand",
+        "phone": "+33 1 48 88 07 17",
+        "source:internet_access": "Paris Open Data",
+        "website": "https://www.paris.fr/equipements/mediatheque-edmond-rostand-1741",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:29434739",
+      "title": "Paris École Militaire",
+      "text": "addr:postcode=75007, amenity=post_office, atm=yes, change_machine=yes, copy_facility=yes, name=Paris École Militaire",
+      "lat": 48.85562,
+      "lon": 2.3068506,
+      "tags": {
+        "addr:postcode": "75007",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris École Militaire",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-12:30; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14227A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:60769229",
+      "title": "Paris Duhesme",
+      "text": "addr:postcode=75018, amenity=post_office, atm=yes, check_date:opening_hours=2023-05-11, copy_facility=yes, name=Paris Duhesme",
+      "lat": 48.8950117,
+      "lon": 2.3447919,
+      "tags": {
+        "addr:postcode": "75018",
+        "amenity": "post_office",
+        "atm": "yes",
+        "check_date:opening_hours": "2023-05-11",
+        "copy_facility": "yes",
+        "name": "Paris Duhesme",
+        "opening_hours": "Mo-Fr 09:00-18:00; Sa 09:00-12:30; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "14197A",
+        "source": "LaPoste - 03/2019",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:66492656",
+      "title": "Total",
+      "text": "amenity=fuel, brand=Total, brand:wikidata=Q154037, check_date=2025-07-13, compressed_air=yes, fuel:diesel=yes",
+      "lat": 48.8315802,
+      "lon": 2.3158225,
+      "tags": {
+        "amenity": "fuel",
+        "brand": "Total",
+        "brand:wikidata": "Q154037",
+        "check_date": "2025-07-13",
+        "compressed_air": "yes",
+        "fuel:diesel": "yes",
+        "fuel:e10": "yes",
+        "fuel:octane_98": "yes",
+        "name": "Total",
+        "opening_hours": "24/7",
+        "ref:FR:prix-carburants": "75014012",
+        "shop": "convenience;gas",
+        "source": "Ministère de l'Economie, de l'Industrie et du Numérique - 03/2020",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:130102845",
+      "title": "Musée de l'Armée",
+      "text": "fr:Musée de l'Armée (Paris)",
+      "lat": 48.8570374,
+      "lon": 2.3118779,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "129",
+        "addr:postcode": "75007",
+        "addr:street": "Rue de Grenelle",
+        "fee": "full:12;discount:10;free: under 26, handicap, press, unemployment",
+        "name": "Musée de l'Armée",
+        "name:de": "Armeemuseum",
+        "name:en": "The Army Museum",
+        "name:fr": "Musée de l'Armée (Les Invalides)",
+        "name:ru": "Музей Армии",
+        "opening_hours": "Nov-Mar: Mo-Su 10:00-17:00; Apr-Oct: Mo-Su 10:00-18:00; Apr-Sep: Tu 21:00+; Jan 1 off; May 1 off; Dec 25 off",
+        "source": "survey",
+        "toilets:wheelchair": "yes",
+        "tourism": "museum",
+        "website": "http://www.musee-armee.fr/",
+        "wheelchair": "yes",
+        "wheelchair:description:de": "Barrierefreier Zugang nur über Avenue de Tourville möglich",
+        "wikidata": "Q1996069",
+        "wikipedia": "fr:Musée de l'Armée (Paris)"
+      }
+    },
+    {
+      "id": "node:158268042",
+      "title": "Haltes-garderie municipale",
+      "text": "amenity=kindergarten, check_date=2025-05-20, name=Haltes-garderie municipale, website=https://mairie14.paris.fr/pages/creches-du-14e-11074",
+      "lat": 48.8314626,
+      "lon": 2.3165971,
+      "tags": {
+        "amenity": "kindergarten",
+        "check_date": "2025-05-20",
+        "name": "Haltes-garderie municipale",
+        "website": "https://mairie14.paris.fr/pages/creches-du-14e-11074"
+      }
+    },
+    {
+      "id": "node:158603712",
+      "title": "The Village Terrazza",
+      "text": "air_conditioning=yes, alt_name=Le Moulin Vert, amenity=restaurant, cuisine=pizza, diet:halal=no, diet:kosher=no",
+      "lat": 48.8298353,
+      "lon": 2.3228662,
+      "tags": {
+        "air_conditioning": "yes",
+        "alt_name": "Le Moulin Vert",
+        "amenity": "restaurant",
+        "cuisine": "pizza",
+        "diet:halal": "no",
+        "diet:kosher": "no",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "happy_hours": "15:00-20:00",
+        "indoor_seating": "yes",
+        "name": "The Village Terrazza",
+        "opening_hours": "Mo-Sa 11:30-23:30",
+        "outdoor_seating": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+33 1 45 39 31 31",
+        "smoking": "outside",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:165738645",
+      "title": "Big Fernand",
+      "text": "addr:city=Nanterre, addr:housenumber=261, addr:postcode=92000, addr:street=Jardin de l'Arche, amenity=fast_food, brand=Big Fernand",
+      "lat": 48.8942633,
+      "lon": 2.2311932,
+      "tags": {
+        "addr:city": "Nanterre",
+        "addr:housenumber": "261",
+        "addr:postcode": "92000",
+        "addr:street": "Jardin de l'Arche",
+        "amenity": "fast_food",
+        "brand": "Big Fernand",
+        "brand:wikidata": "Q19521346",
+        "brand:wikipedia": "fr:Big Fernand",
+        "cuisine": "burger",
+        "delivery": "yes",
+        "drive_through": "no",
+        "name": "Big Fernand",
+        "opening_hours": "Mo-Su 12:00-15:00,19:00-22:30",
+        "phone": "+33 1 41 20 83 67",
+        "takeaway": "yes",
+        "website": "https://bigfernand.com/restaurants/nanterre-2/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:165749275",
+      "title": "Buffalo Grill",
+      "text": "amenity=restaurant, brand=Buffalo Grill, brand:wikidata=Q944655, brand:wikipedia=en:Buffalo Grill, contact:phone=+33 9 74 64 10 89, cuisine=steak_house",
+      "lat": 48.9004177,
+      "lon": 2.2243311,
+      "tags": {
+        "amenity": "restaurant",
+        "brand": "Buffalo Grill",
+        "brand:wikidata": "Q944655",
+        "brand:wikipedia": "en:Buffalo Grill",
+        "contact:phone": "+33 9 74 64 10 89",
+        "cuisine": "steak_house",
+        "name": "Buffalo Grill"
+      }
+    },
+    {
+      "id": "node:165749285",
+      "title": "McDonald's",
+      "text": "addr:postcode=92000, amenity=fast_food, brand=McDonald's, brand:wikidata=Q38076, brand:wikipedia=en:McDonald's, check_date=2025-08-13",
+      "lat": 48.9012749,
+      "lon": 2.2258409,
+      "tags": {
+        "addr:postcode": "92000",
+        "amenity": "fast_food",
+        "brand": "McDonald's",
+        "brand:wikidata": "Q38076",
+        "brand:wikipedia": "en:McDonald's",
+        "check_date": "2025-08-13",
+        "cuisine": "burger",
+        "internet_access": "wlan",
+        "name": "McDonald's",
+        "opening_hours": "Mo-Th,Su 09:00-24:00; Fr-Sa 09:00-01:00",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "phone": "+33 1 81 93 12 78",
+        "source": "survey;knowledge",
+        "takeaway": "yes",
+        "website": "https://www.mcdonalds.fr/restaurants/mcdonalds-nanterre-prefecture/818"
+      }
+    },
+    {
+      "id": "node:165749286",
+      "title": "Renault Minute",
+      "text": "brand=Renault, brand:wikidata=Q6686, brand:wikipedia=en:Renault, name=Renault Minute, shop=car_repair",
+      "lat": 48.9016213,
+      "lon": 2.2264857,
+      "tags": {
+        "brand": "Renault",
+        "brand:wikidata": "Q6686",
+        "brand:wikipedia": "en:Renault",
+        "name": "Renault Minute",
+        "shop": "car_repair"
+      }
+    },
+    {
+      "id": "node:175539450",
+      "title": "Le Severo",
+      "text": "addr:housenumber=8, addr:postcode=75014, addr:street=Rue des Plantes, air_conditioning=yes, amenity=restaurant, cuisine=french",
+      "lat": 48.8319911,
+      "lon": 2.3245334,
+      "tags": {
+        "addr:housenumber": "8",
+        "addr:postcode": "75014",
+        "addr:street": "Rue des Plantes",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Le Severo",
+        "opening_hours": "Mo-Fr 12:00-14:00,19:30-21:30",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "smoking": "no",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:176476540",
+      "title": "Le Sancerre",
+      "text": "amenity=restaurant, check_date=2023-10-24, name=Le Sancerre, ref:FR:SIRET=94975049100019, source=survey, wheelchair=yes",
+      "lat": 48.896284,
+      "lon": 2.2250919,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2023-10-24",
+        "name": "Le Sancerre",
+        "ref:FR:SIRET": "94975049100019",
+        "source": "survey",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:176476541",
+      "title": "La Terrasse",
+      "text": "amenity=restaurant, check_date=2023-10-24, name=La Terrasse, ref:FR:SIRET=90304870000012",
+      "lat": 48.8965817,
+      "lon": 2.2241626,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2023-10-24",
+        "name": "La Terrasse",
+        "ref:FR:SIRET": "90304870000012"
+      }
+    },
+    {
+      "id": "node:178772890",
+      "title": "Parking Saint-Rémy",
+      "text": "access=yes, amenity=parking, fee=yes, name=Parking Saint-Rémy, parking=underground",
+      "lat": 48.8216723,
+      "lon": 2.2875152,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "fee": "yes",
+        "name": "Parking Saint-Rémy",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:181805216",
+      "title": "Grande Arche",
+      "text": "created_by=JOSM, layer=5, name=Grande Arche, tourism=viewpoint, wheelchair=yes",
+      "lat": 48.8925554,
+      "lon": 2.2358933,
+      "tags": {
+        "created_by": "JOSM",
+        "layer": "5",
+        "name": "Grande Arche",
+        "tourism": "viewpoint",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:191031796",
+      "title": "Point zéro des Routes de France",
+      "text": "fr:Point zéro des routes de France",
+      "lat": 48.8533973,
+      "lon": 2.3487972,
+      "tags": {
+        "historic": "milestone",
+        "latitude": "48.853402",
+        "longitude": "2.348785",
+        "man_made": "survey_point",
+        "name": "Point zéro des Routes de France",
+        "name:el": "Σημείο μηδέν για την μέτρηση αποστάσεων στην Γαλλία",
+        "name:en": "Point Zero for French Road Measurements",
+        "name:es": "Punto kilométrico cero de las carreteras francesas",
+        "name:fr": "Point zéro des Routes de France",
+        "name:sk": "Nulový kilometrovník francúzskych ciest",
+        "name:zh": "巴黎 原點",
+        "start_date": "1924",
+        "subject:wikidata": "Q329477",
+        "survey_point:structure": "medallion",
+        "tourism": "attraction",
+        "wheelchair": "yes",
+        "wikidata": "Q2467833",
+        "wikipedia": "fr:Point zéro des routes de France"
+      }
+    },
+    {
+      "id": "node:199240494",
+      "title": "Puteaux Hôtel-de-Ville",
+      "text": "doublon avec 13790D",
+      "lat": 48.8841512,
+      "lon": 2.2372313,
+      "tags": {
+        "addr:postcode": "92800",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "check_date:opening_hours": "2022-10-22",
+        "copy_facility": "yes",
+        "name": "Puteaux Hôtel-de-Ville",
+        "note": "doublon avec 13790D",
+        "opening_hours": "Mo-Fr 08:30-19:00, Sa 08:30-12:30",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone": "3631",
+        "ref:FR:LaPoste": "17091A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:202289605",
+      "title": "Police nationale",
+      "text": "amenity=police, layer=5, name=Police nationale, official_name=Commissariat de police de La Défense, operator=Police nationale, operator:wikidata=Q121484",
+      "lat": 48.891299,
+      "lon": 2.2422117,
+      "tags": {
+        "amenity": "police",
+        "layer": "5",
+        "name": "Police nationale",
+        "official_name": "Commissariat de police de La Défense",
+        "operator": "Police nationale",
+        "operator:wikidata": "Q121484",
+        "operator:wikipedia": "fr:Police nationale (France)",
+        "phone": "+33 1 47 75 51 00",
+        "police:FR": "police",
+        "wikidata": "Q61954576"
+      }
+    },
+    {
+      "id": "node:202289608",
+      "title": "BNP Paribas",
+      "text": "addr:housenumber=3, amenity=bank, atm=yes, brand=BNP Paribas, brand:wikidata=Q499707, brand:wikipedia=en:BNP Paribas",
+      "lat": 48.8916652,
+      "lon": 2.2407215,
+      "tags": {
+        "addr:housenumber": "3",
+        "amenity": "bank",
+        "atm": "yes",
+        "brand": "BNP Paribas",
+        "brand:wikidata": "Q499707",
+        "brand:wikipedia": "en:BNP Paribas",
+        "check_date": "2025-08-27",
+        "check_date:opening_hours": "2023-11-07",
+        "layer": "5",
+        "name": "BNP Paribas",
+        "opening_hours": "Mo-Fr 09:00-18:00",
+        "operator": "BNP Paribas",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:203123010",
+      "title": "Avant Seine",
+      "text": "amenity=restaurant, created_by=JOSM, layer=4, name=Avant Seine",
+      "lat": 48.8948889,
+      "lon": 2.2387542,
+      "tags": {
+        "amenity": "restaurant",
+        "created_by": "JOSM",
+        "layer": "4",
+        "name": "Avant Seine"
+      }
+    },
+    {
+      "id": "node:203902533",
+      "title": "Théâtre par le Bas",
+      "text": "amenity=theatre, email=theatreparlebas@gmail.com, name=Théâtre par le Bas, phone=+33147787088, ref:FR:SIRET=32445751400010, source=survey",
+      "lat": 48.8904333,
+      "lon": 2.2272798,
+      "tags": {
+        "amenity": "theatre",
+        "email": "theatreparlebas@gmail.com",
+        "name": "Théâtre par le Bas",
+        "phone": "+33147787088",
+        "ref:FR:SIRET": "32445751400010",
+        "source": "survey",
+        "website": "http://theatreparlebas.free.fr/"
+      }
+    },
+    {
+      "id": "node:204128496",
+      "title": "Tusk",
+      "text": "addr:housenumber=16, addr:street=Place de La Défense, air_conditioning=yes, amenity=restaurant, bar=no, check_date=2022-08-29",
+      "lat": 48.8907062,
+      "lon": 2.242646,
+      "tags": {
+        "addr:housenumber": "16",
+        "addr:street": "Place de La Défense",
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "bar": "no",
+        "check_date": "2022-08-29",
+        "cuisine": "french",
+        "internet_access": "no",
+        "layer": "4",
+        "name": "Tusk",
+        "opening_hours": "Mo-Fr 08:00-21:00",
+        "outdoor_seating": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "phone": "+33 1 47 75 00 10",
+        "reservation": "yes",
+        "website": "https://restauranttusk.com/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:204128499",
+      "title": "EPAD Info",
+      "text": "information=office, layer=4, name=EPAD Info, tourism=information",
+      "lat": 48.8908397,
+      "lon": 2.2423805,
+      "tags": {
+        "information": "office",
+        "layer": "4",
+        "name": "EPAD Info",
+        "tourism": "information"
+      }
+    },
+    {
+      "id": "node:205106393",
+      "title": "Conservatoire Niedermeyer;Auditorium",
+      "text": "Musique",
+      "lat": 48.8255471,
+      "lon": 2.2703527,
+      "tags": {
+        "addr:housenumber": "11-13",
+        "addr:street": "Rue Danton",
+        "amenity": "arts_centre",
+        "check_date": "2025-06-22",
+        "contact:email": "crd-issy@agglo-gpso.fr",
+        "contact:housenumber": "11/13",
+        "contact:phone": "+33 1 41 09 99 30;+33 1 41 23 85 48",
+        "contact:street": "Rue Danton",
+        "contact:website": "http://www.agglo-gpso.fr;www.issy.com/ma-ville/equipements-culturels",
+        "fixme": "11/13 rue Danton",
+        "name": "Conservatoire Niedermeyer;Auditorium",
+        "note": "Musique",
+        "source": "Open Data - Issy-les-Moulineaux - Lieux Culturels - Février2015",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:205106396",
+      "title": "Ciné d'Issy",
+      "text": "addr:housenumber=13, addr:street=Rue Danton, amenity=cinema, check_date:opening_hours=2024-08-14, contact:phone=+33 1 46 62 97 05, name=Ciné d'Issy",
+      "lat": 48.8254063,
+      "lon": 2.2701921,
+      "tags": {
+        "addr:housenumber": "13",
+        "addr:street": "Rue Danton",
+        "amenity": "cinema",
+        "check_date:opening_hours": "2024-08-14",
+        "contact:phone": "+33 1 46 62 97 05",
+        "name": "Ciné d'Issy",
+        "opening_hours:signed": "no",
+        "ref:FR:CNC": "202214",
+        "source": "Open Data - Issy-les-Moulineaux - Lieux Culturels - Février2015",
+        "website": "https://www.issy.com/ma-ville/equipements-culturels",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:205462084",
+      "title": "Soleil d'Or",
+      "text": "amenity=restaurant, layer=3, name=Soleil d'Or, ref:FR:SIRET=42467257400011",
+      "lat": 48.8964233,
+      "lon": 2.2372254,
+      "tags": {
+        "amenity": "restaurant",
+        "layer": "3",
+        "name": "Soleil d'Or",
+        "ref:FR:SIRET": "42467257400011"
+      }
+    },
+    {
+      "id": "node:207782744",
+      "title": "Paris Sentier",
+      "text": "addr:city=Paris, addr:housenumber=54, addr:postcode=75002, addr:street=Rue d'Aboukir, amenity=post_office, atm=yes",
+      "lat": 48.8672995,
+      "lon": 2.3458554,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "54",
+        "addr:postcode": "75002",
+        "addr:street": "Rue d'Aboukir",
+        "amenity": "post_office",
+        "atm": "yes",
+        "check_date": "2025-09-26",
+        "contact:city": "Paris",
+        "contact:housenumber": "54",
+        "contact:phone:FR": "36 31",
+        "contact:postcode": "75002",
+        "contact:street": "Rue d'Aboukir",
+        "contact:website": "https://localiser.laposte.fr/paris/paris/2eme-arrondissement/paris-sentier-756240",
+        "copy_facility": "yes",
+        "name": "Paris Sentier",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-12:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "ref:FR:LaPoste": "14251A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:218117881",
+      "title": "Parking Hôtel de Ville",
+      "text": "access=yes, addr:city=Paris, addr:housenumber=6, addr:postcode=75004, addr:street=Quai de Gesvres, amenity=parking",
+      "lat": 48.8569481,
+      "lon": 2.3497138,
+      "tags": {
+        "access": "yes",
+        "addr:city": "Paris",
+        "addr:housenumber": "6",
+        "addr:postcode": "75004",
+        "addr:street": "Quai de Gesvres",
+        "amenity": "parking",
+        "capacity": "505",
+        "fee": "yes",
+        "layer": "-1",
+        "man_made": "surveillance",
+        "maxheight": "1.85",
+        "name": "Parking Hôtel de Ville",
+        "operator": "Saemes",
+        "park_ride": "no",
+        "parking": "underground",
+        "phone": "+33 1 42 71 51 96",
+        "supervised": "yes",
+        "website": "https://www.saemes.fr/fr"
+      }
+    },
+    {
+      "id": "node:218119662",
+      "title": "Lobau Rivoli",
+      "text": "amenity=parking_entrance, brand=Indigo, brand:wikidata=Q3559970, brand:wikipedia=fr:Indigo (entreprise), fee=yes, maxheight=1.9",
+      "lat": 48.8562998,
+      "lon": 2.3535246,
+      "tags": {
+        "amenity": "parking_entrance",
+        "brand": "Indigo",
+        "brand:wikidata": "Q3559970",
+        "brand:wikipedia": "fr:Indigo (entreprise)",
+        "fee": "yes",
+        "maxheight": "1.9",
+        "name": "Lobau Rivoli",
+        "operator": "Indigo",
+        "operator:wikidata": "Q3559970",
+        "operator:wikipedia": "fr:Indigo (entreprise)",
+        "parking": "underground",
+        "website": "https://fr.parkindigo.com/parking/lobau-rivoli-75040600"
+      }
+    },
+    {
+      "id": "node:218145208",
+      "title": "Synagogue Beit Yossef",
+      "text": "amenity=place_of_worship, contact:city=Paris, contact:postcode=75004, name=Synagogue Beit Yossef, religion=jewish",
+      "lat": 48.8569724,
+      "lon": 2.3588681,
+      "tags": {
+        "amenity": "place_of_worship",
+        "contact:city": "Paris",
+        "contact:postcode": "75004",
+        "name": "Synagogue Beit Yossef",
+        "religion": "jewish"
+      }
+    },
+    {
+      "id": "node:218147750",
+      "title": "Synagogue",
+      "text": "addr:city=Paris, addr:postcode=75004, amenity=place_of_worship, building:part=synagogue, check_date=2024-05-11, name=Synagogue",
+      "lat": 48.8570939,
+      "lon": 2.35923,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75004",
+        "amenity": "place_of_worship",
+        "building:part": "synagogue",
+        "check_date": "2024-05-11",
+        "name": "Synagogue",
+        "religion": "jewish"
+      }
+    },
+    {
+      "id": "node:224711659",
+      "title": "Ibis",
+      "text": "brand=Ibis, brand:wikidata=Q920166, brand:wikipedia=en:Ibis (hotel), check_date=2025-06-19, name=Ibis, tourism=hotel",
+      "lat": 48.8403064,
+      "lon": 2.3155776,
+      "tags": {
+        "brand": "Ibis",
+        "brand:wikidata": "Q920166",
+        "brand:wikipedia": "en:Ibis (hotel)",
+        "check_date": "2025-06-19",
+        "name": "Ibis",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:227420651",
+      "title": "Crèche des Jardins",
+      "text": "amenity=kindergarten, check_date=2024-09-21, kindergarten:FR=crèche, name=Crèche des Jardins",
+      "lat": 48.8896116,
+      "lon": 2.2333391,
+      "tags": {
+        "amenity": "kindergarten",
+        "check_date": "2024-09-21",
+        "kindergarten:FR": "crèche",
+        "name": "Crèche des Jardins"
+      }
+    },
+    {
+      "id": "node:227450780",
+      "title": "Boldère",
+      "text": "amenity=restaurant, created_by=JOSM, name=Boldère",
+      "lat": 48.8907277,
+      "lon": 2.23561,
+      "tags": {
+        "amenity": "restaurant",
+        "created_by": "JOSM",
+        "name": "Boldère"
+      }
+    },
+    {
+      "id": "node:228451861",
+      "title": "Police nationale",
+      "text": "addr:city=Puteaux, addr:housenumber=2, addr:postcode=92800, addr:street=Rue Chante Coq, amenity=police, name=Police nationale",
+      "lat": 48.8838273,
+      "lon": 2.2376043,
+      "tags": {
+        "addr:city": "Puteaux",
+        "addr:housenumber": "2",
+        "addr:postcode": "92800",
+        "addr:street": "Rue Chante Coq",
+        "amenity": "police",
+        "name": "Police nationale",
+        "official_name": "Commissariat de police de Puteaux",
+        "operator": "Police nationale",
+        "operator:wikidata": "Q121484",
+        "operator:wikipedia": "en:National Police (France)",
+        "phone": "+33 1 55 91 91 40",
+        "police:FR": "police",
+        "wikidata": "Q61954585"
+      }
+    },
+    {
+      "id": "node:232928765",
+      "title": "Pathé Aquaboulevard",
+      "text": "fr:Pathé Aquaboulevard",
+      "lat": 48.8307302,
+      "lon": 2.276181,
+      "tags": {
+        "amenity": "cinema",
+        "brand": "Pathé",
+        "brand:website": "https://www.pathe.fr/",
+        "brand:wikidata": "Q3060526",
+        "brand:wikipedia": "fr:Pathé Cinémas",
+        "capacity": "2583",
+        "name": "Pathé Aquaboulevard",
+        "old_name": "Gaumont Aquaboulevard",
+        "payment:discover_card": "yes",
+        "ref:FR:CNC": "7491",
+        "screen": "14",
+        "website": "https://www.pathe.fr/cinemas/cinema-pathe-aquaboulevard",
+        "wheelchair": "limited",
+        "wikidata": "Q41102662",
+        "wikipedia": "fr:Pathé Aquaboulevard"
+      }
+    },
+    {
+      "id": "node:240505455",
+      "title": "Salle polyvalente Espace Gorki",
+      "text": "addr:city=Nanterre, addr:housenumber=70, addr:postcode=92000, addr:street=Boulevard de Pesaro, amenity=community_centre, name=Salle polyvalente Espace Gorki",
+      "lat": 48.891102,
+      "lon": 2.2282178,
+      "tags": {
+        "addr:city": "Nanterre",
+        "addr:housenumber": "70",
+        "addr:postcode": "92000",
+        "addr:street": "Boulevard de Pesaro",
+        "amenity": "community_centre",
+        "name": "Salle polyvalente Espace Gorki",
+        "opening_hours": "Mo-Su 08:00-23:00"
+      }
+    },
+    {
+      "id": "node:241110355",
+      "title": "Bibliothèque Vaugirard",
+      "text": "amenity=library, check_date=2025-06-07, contact:city=Paris, contact:email=bibliotheque.vaugirard@paris.fr, contact:housenumber=154, contact:phone=+33 1 48 28 77 42",
+      "lat": 48.8417324,
+      "lon": 2.2993385,
+      "tags": {
+        "amenity": "library",
+        "check_date": "2025-06-07",
+        "contact:city": "Paris",
+        "contact:email": "bibliotheque.vaugirard@paris.fr",
+        "contact:housenumber": "154",
+        "contact:phone": "+33 1 48 28 77 42",
+        "contact:postcode": "75015",
+        "contact:street": "Rue Lecourbe",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "internet_access:operator": "Mairie de Paris",
+        "name": "Bibliothèque Vaugirard",
+        "opening_hours": "Tu,Th-Fr 13:00-19:00; We 10:00-19:00; Sa 10:00-18:00",
+        "source:internet_access": "Paris Open Data",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:241110562",
+      "title": "Parking Lecourbe - Mairie du XVème",
+      "text": "amenity=parking_entrance, maxheight=1.9, name=Parking Lecourbe - Mairie du XVème, parking=underground",
+      "lat": 48.8414636,
+      "lon": 2.2996634,
+      "tags": {
+        "amenity": "parking_entrance",
+        "maxheight": "1.9",
+        "name": "Parking Lecourbe - Mairie du XVème",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:241872747",
+      "title": "Maubert Collège des Bernardins",
+      "text": "amenity=parking_entrance, capacity=655, contact:city=Paris, contact:housenumber=37, contact:phone=+33 1 43 26 97 01, contact:postcode=75005",
+      "lat": 48.8494609,
+      "lon": 2.3513201,
+      "tags": {
+        "amenity": "parking_entrance",
+        "capacity": "655",
+        "contact:city": "Paris",
+        "contact:housenumber": "37",
+        "contact:phone": "+33 1 43 26 97 01",
+        "contact:postcode": "75005",
+        "contact:street": "Boulevard Saint-Germain",
+        "contact:website": "https://www.saemes.fr/fr",
+        "name": "Maubert Collège des Bernardins",
+        "operator": "Saemes",
+        "park_ride": "no"
+      }
+    },
+    {
+      "id": "node:242919824",
+      "title": "Marché Saint-Germain",
+      "text": "access=private, amenity=parking, capacity=113, description:fr=Parking réservé aux abonnés, layer=-1, name=Marché Saint-Germain",
+      "lat": 48.8521302,
+      "lon": 2.3358217,
+      "tags": {
+        "access": "private",
+        "amenity": "parking",
+        "capacity": "113",
+        "description:fr": "Parking réservé aux abonnés",
+        "layer": "-1",
+        "name": "Marché Saint-Germain",
+        "parking": "underground",
+        "website": "https://www.saemes.fr/fr/parking/parking-marche-saint-germain"
+      }
+    },
+    {
+      "id": "node:243066043",
+      "title": "Issy-les-Moulineaux Corentin Celton",
+      "text": "addr:postcode=92130, amenity=post_office, atm=yes, copy_facility=yes, name=Issy-les-Moulineaux Corentin Celton, opening_hours=Mo-Fr 08:30-18:30; Sa 08:30-12:30; Su off",
+      "lat": 48.8278684,
+      "lon": 2.2797721,
+      "tags": {
+        "addr:postcode": "92130",
+        "amenity": "post_office",
+        "atm": "yes",
+        "copy_facility": "yes",
+        "name": "Issy-les-Moulineaux Corentin Celton",
+        "opening_hours": "Mo-Fr 08:30-18:30; Sa 08:30-12:30; Su off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "17140A",
+        "source": "data.gouv.fr:LaPoste - 06/2015;survey",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:243360790",
+      "title": "Ohaley Yaakov",
+      "text": "amenity=place_of_worship, denomination=lubavitch, name=Ohaley Yaakov, religion=jewish",
+      "lat": 48.8792943,
+      "lon": 2.3753509,
+      "tags": {
+        "amenity": "place_of_worship",
+        "denomination": "lubavitch",
+        "name": "Ohaley Yaakov",
+        "religion": "jewish"
+      }
+    },
+    {
+      "id": "node:243461578",
+      "title": "Lutèce",
+      "text": "amenity=parking_entrance, maxheight=1.9, name=Lutèce, parking=underground",
+      "lat": 48.8553332,
+      "lon": 2.3464366,
+      "tags": {
+        "amenity": "parking_entrance",
+        "maxheight": "1.9",
+        "name": "Lutèce",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:243573513",
+      "title": "Saint-Michel",
+      "text": "access=yes, amenity=parking, fee=yes, layer=-1, name=Saint-Michel, parking=underground",
+      "lat": 48.8528687,
+      "lon": 2.3435246,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "fee": "yes",
+        "layer": "-1",
+        "name": "Saint-Michel",
+        "parking": "underground",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:243842886",
+      "title": "Parking Quai branly-Tour Eiffel",
+      "text": "access=yes, addr:city=Paris, addr:housenumber=25, addr:postcode=75007, addr:street=Quai Branly, amenity=parking",
+      "lat": 48.8614418,
+      "lon": 2.2990188,
+      "tags": {
+        "access": "yes",
+        "addr:city": "Paris",
+        "addr:housenumber": "25",
+        "addr:postcode": "75007",
+        "addr:street": "Quai Branly",
+        "amenity": "parking",
+        "capacity": "543",
+        "fee": "yes",
+        "layer": "-1",
+        "name": "Parking Quai branly-Tour Eiffel",
+        "operator": "Saemes",
+        "park_ride": "no",
+        "parking": "underground",
+        "phone": "+33 1 44 42 99 30",
+        "website": "https://www.saemes.fr/fr",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:245460197",
+      "title": "Sèvres-Babylone",
+      "text": "access=yes, addr:city=Paris, addr:postcode=75007, addr:street=Rue Velpeau, amenity=parking, brand=Indigo",
+      "lat": 48.8513763,
+      "lon": 2.3250565,
+      "tags": {
+        "access": "yes",
+        "addr:city": "Paris",
+        "addr:postcode": "75007",
+        "addr:street": "Rue Velpeau",
+        "amenity": "parking",
+        "brand": "Indigo",
+        "brand:wikidata": "Q3559970",
+        "capacity": "866",
+        "capacity:charging": "13",
+        "capacity:disabled": "18",
+        "fee": "yes",
+        "layer": "-1",
+        "maxheight": "1.9",
+        "name": "Sèvres-Babylone",
+        "operator": "Indigo",
+        "operator:wikidata": "Q3559970",
+        "parking": "underground",
+        "ref:FR:BNLS": "75107-P-155",
+        "source": "Équipe du Point d'Accès National - 2024-01",
+        "supervised": "yes",
+        "website": "https://fr.parkindigo.com/parking/paris-75007/sevres-babylone-75071100"
+      }
+    },
+    {
+      "id": "node:246849942",
+      "title": "Saint-Sulpice",
+      "text": "amenity=parking_entrance, maxheight:signed=no, name=Saint-Sulpice, parking=underground",
+      "lat": 48.8511618,
+      "lon": 2.3332375,
+      "tags": {
+        "amenity": "parking_entrance",
+        "maxheight:signed": "no",
+        "name": "Saint-Sulpice",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:247347521",
+      "title": "Parking Bastille",
+      "text": "access=yes, amenity=parking, fee=yes, layer=-1, name=Parking Bastille, parking=underground",
+      "lat": 48.8496512,
+      "lon": 2.3682504,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "fee": "yes",
+        "layer": "-1",
+        "name": "Parking Bastille",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:247435032",
+      "title": "Hôtel Saint-Honoré",
+      "text": "check_date=2025-06-04, contact:city=Paris, contact:housenumber=85, contact:phone=+33 1 42 36 20 38, contact:postcode=75001, contact:street=Rue Saint-Honoré",
+      "lat": 48.8611819,
+      "lon": 2.3436118,
+      "tags": {
+        "check_date": "2025-06-04",
+        "contact:city": "Paris",
+        "contact:housenumber": "85",
+        "contact:phone": "+33 1 42 36 20 38",
+        "contact:postcode": "75001",
+        "contact:street": "Rue Saint-Honoré",
+        "contact:website": "https://www.hotelsthonore.com",
+        "name": "Hôtel Saint-Honoré",
+        "stars": "3",
+        "tourism": "hotel",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:247435275",
+      "title": "Hôtel Montpensier",
+      "text": "check_date=2025-02-15, contact:housenumber=12, contact:postcode=75001, contact:street=Rue de Richelieu, email=hotel-montpensier@wanadoo.fr, name=Hôtel Montpensier",
+      "lat": 48.8643588,
+      "lon": 2.3362645,
+      "tags": {
+        "check_date": "2025-02-15",
+        "contact:housenumber": "12",
+        "contact:postcode": "75001",
+        "contact:street": "Rue de Richelieu",
+        "email": "hotel-montpensier@wanadoo.fr",
+        "name": "Hôtel Montpensier",
+        "phone": "+33 1 42 96 28 50",
+        "ref:FR:SIREN": "592016091",
+        "ref:FR:SIRET": "59201609100023",
+        "ref:vatin": "FR13592016091",
+        "stars": "2",
+        "tourism": "hotel",
+        "website": "https://www.hotelmontpensierparis.com/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:247436637",
+      "title": "Hôtel Louvre Bon Enfants",
+      "text": "check_date=2024-06-01, name=Hôtel Louvre Bon Enfants, stars=3, tourism=hotel",
+      "lat": 48.8629098,
+      "lon": 2.3381793,
+      "tags": {
+        "check_date": "2024-06-01",
+        "name": "Hôtel Louvre Bon Enfants",
+        "stars": "3",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:247437972",
+      "title": "Hôtel Costes",
+      "text": "addr:city=Paris, addr:housenumber=7, addr:postcode=75001, addr:street=Rue de Castiglione, name=Hôtel Costes, tourism=hotel",
+      "lat": 48.8662827,
+      "lon": 2.3280089,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "7",
+        "addr:postcode": "75001",
+        "addr:street": "Rue de Castiglione",
+        "name": "Hôtel Costes",
+        "tourism": "hotel",
+        "website": "https://hotelcostes.com",
+        "wikidata": "Q904945"
+      }
+    },
+    {
+      "id": "node:247439149",
+      "title": "Bar Hemingway",
+      "text": "amenity=bar, check_date=2023-09-02, name=Bar Hemingway, wheelchair=yes",
+      "lat": 48.8687856,
+      "lon": 2.3275106,
+      "tags": {
+        "amenity": "bar",
+        "check_date": "2023-09-02",
+        "name": "Bar Hemingway",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:247439841",
+      "title": "Uno",
+      "text": "addr:city=Paris, addr:housenumber=37, addr:postcode=75001, addr:street=Rue Berger, amenity=restaurant, check_date=2025-06-04",
+      "lat": 48.8618492,
+      "lon": 2.3434997,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "37",
+        "addr:postcode": "75001",
+        "addr:street": "Rue Berger",
+        "amenity": "restaurant",
+        "check_date": "2025-06-04",
+        "contact:city": "Paris",
+        "contact:housenumber": "37",
+        "contact:phone": "+33 1 42 36 20 47",
+        "contact:postcode": "75001",
+        "contact:street": "Rue Berger",
+        "cuisine": "italian;pizza",
+        "indoor_seating": "yes",
+        "name": "Uno",
+        "opening_hours": "Mo-Su 12:00-00:00",
+        "outdoor_seating": "yes",
+        "ref:FR:SIRET": "84330345400014",
+        "smoking": "outside",
+        "toilets:wheelchair": "no",
+        "website": "https://unoparis.com/",
+        "wheelchair": "limited",
+        "wheelchair:description": "only parts of the restaurant are wheelchair accessible. The toilet is not accessible."
+      }
+    },
+    {
+      "id": "node:247455913",
+      "title": "Juvéniles",
+      "text": "amenity=bar, contact:phone=+33 1 42 97 46 49, name=Juvéniles, opening_hours=Tu-Sa 12:00-23:00",
+      "lat": 48.8662564,
+      "lon": 2.3370561,
+      "tags": {
+        "amenity": "bar",
+        "contact:phone": "+33 1 42 97 46 49",
+        "name": "Juvéniles",
+        "opening_hours": "Tu-Sa 12:00-23:00"
+      }
+    },
+    {
+      "id": "node:247455916",
+      "title": "La Crypte Polska",
+      "text": "amenity=restaurant, name=La Crypte Polska, source=survey",
+      "lat": 48.8672925,
+      "lon": 2.3255509,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "La Crypte Polska",
+        "source": "survey"
+      }
+    },
+    {
+      "id": "node:247455918",
+      "title": "Le Café Marly",
+      "text": "addr:city=Paris, addr:housenumber=93, addr:postcode=75001, addr:street=Rue de Rivoli, air_conditioning=yes, amenity=cafe",
+      "lat": 48.8616428,
+      "lon": 2.3359304,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "93",
+        "addr:postcode": "75001",
+        "addr:street": "Rue de Rivoli",
+        "air_conditioning": "yes",
+        "amenity": "cafe",
+        "indoor_seating": "yes",
+        "internet_access": "yes",
+        "layer": "4",
+        "name": "Le Café Marly",
+        "name:fr": "Le Café Marly",
+        "name:ru": "Кафе Марли",
+        "opening_hours": "Mo-Su 08:00-02:00",
+        "outdoor_seating": "yes",
+        "phone": "+33149260660",
+        "website": "https://cafe-marly.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q17305044"
+      }
+    },
+    {
+      "id": "node:247455920",
+      "title": "Mystery Cuisine",
+      "text": "amenity=restaurant, contact:city=Paris, contact:housenumber=37bis, contact:phone=+33 1 40 20 03 02, contact:postcode=75001, contact:street=Rue de Montpensier",
+      "lat": 48.865893,
+      "lon": 2.3372573,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "37bis",
+        "contact:phone": "+33 1 40 20 03 02",
+        "contact:postcode": "75001",
+        "contact:street": "Rue de Montpensier",
+        "level": "-1",
+        "name": "Mystery Cuisine",
+        "opening_hours": "Tu-Sa 20:00-21:00",
+        "ref:FR:SIRET": "44866790700019",
+        "self_service": "yes",
+        "website": "https://mysterycuisine.fr"
+      }
+    },
+    {
+      "id": "node:247455923",
+      "title": "Chez Denise",
+      "text": "amenity=restaurant, contact:city=Paris, contact:housenumber=5, contact:phone=+33 1 42 36 21 82, contact:postcode=75001, contact:street=Rue des Prouvaires",
+      "lat": 48.8615239,
+      "lon": 2.3440891,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "5",
+        "contact:phone": "+33 1 42 36 21 82",
+        "contact:postcode": "75001",
+        "contact:street": "Rue des Prouvaires",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Chez Denise",
+        "opening_hours": "Mo-Su 12:00-24:00; Mo-Su 00:00-02:00",
+        "outdoor_seating": "yes",
+        "ref:FR:SIRET": "87883911700024",
+        "smoking": "outside",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:247455924",
+      "title": "La Robe et le Palais",
+      "text": "amenity=restaurant, cuisine=bistro;french, indoor_seating=yes, name=La Robe et le Palais, outdoor_seating=yes, phone=+33 1 45 08 07 41",
+      "lat": 48.8586437,
+      "lon": 2.3458501,
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "bistro;french",
+        "indoor_seating": "yes",
+        "name": "La Robe et le Palais",
+        "outdoor_seating": "yes",
+        "phone": "+33 1 45 08 07 41",
+        "ref:FR:SIRET": "80982629000029",
+        "website": "https://www.robe-et-palais.com/",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:247467737",
+      "title": "Willi's Wine Bar",
+      "text": "addr:floor=0, addr:housenumber=13, addr:street=Rue des Petits Champs, amenity=bar, check_date=2025-10-01, level=0",
+      "lat": 48.8663449,
+      "lon": 2.3382902,
+      "tags": {
+        "addr:floor": "0",
+        "addr:housenumber": "13",
+        "addr:street": "Rue des Petits Champs",
+        "amenity": "bar",
+        "check_date": "2025-10-01",
+        "level": "0",
+        "name": "Willi's Wine Bar",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:247467738",
+      "title": "Macéo",
+      "text": "addr:housenumber=15, addr:street=Rue des Petits Champs, amenity=restaurant, check_date=2025-10-01, contact:facebook=https://fr-fr.facebook.com/MaceoRestaurant.Paris/, contact:instagram=https://www.instagram.com/restaurantmaceo/",
+      "lat": 48.8664042,
+      "lon": 2.3380601,
+      "tags": {
+        "addr:housenumber": "15",
+        "addr:street": "Rue des Petits Champs",
+        "amenity": "restaurant",
+        "check_date": "2025-10-01",
+        "contact:facebook": "https://fr-fr.facebook.com/MaceoRestaurant.Paris/",
+        "contact:instagram": "https://www.instagram.com/restaurantmaceo/",
+        "contact:phone": "+33 1 42 97 53 85",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "email": "info@maceorestaurant.com",
+        "name": "Macéo",
+        "opening_hours:kitchen": "Mo-Fr 12:00-14:00, Mo-Sa 19:00-22:00",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "payment:visa": "yes",
+        "ref:FR:SIRET": "56210368900013",
+        "website": "https://www.maceorestaurant.com",
+        "website:menu": "https://www.maceorestaurant.com/menu-carte/fr",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:247584452",
+      "title": "Musée des Arts Décoratifs",
+      "text": "fr:Musée des Arts décoratifs de Paris",
+      "lat": 48.8631692,
+      "lon": 2.3329513,
+      "tags": {
+        "addr:housenumber": "107",
+        "addr:postcode": "75001",
+        "addr:street": "Rue de Rivoli",
+        "level": "4",
+        "name": "Musée des Arts Décoratifs",
+        "name:ru": "Музей декоративного искусства",
+        "phone": "+33 1 44 55 57 50",
+        "ref:FR:museofile": "M5021",
+        "source": "Ministère de la Culture - Muséofile - 11/2020",
+        "tourism": "museum",
+        "website": "https://madparis.fr/musee-des-arts-decoratifs",
+        "wheelchair": "limited",
+        "wikidata": "Q1319378",
+        "wikipedia": "fr:Musée des Arts décoratifs de Paris"
+      }
+    },
+    {
+      "id": "node:247589882",
+      "title": "Saint Laurent",
+      "text": "alt_name=Yves Saint Laurent, brand=Saint Laurent, brand:wikidata=Q2282172, name=Saint Laurent, shop=clothes, short_name=YSL",
+      "lat": 48.86534,
+      "lon": 2.3308795,
+      "tags": {
+        "alt_name": "Yves Saint Laurent",
+        "brand": "Saint Laurent",
+        "brand:wikidata": "Q2282172",
+        "name": "Saint Laurent",
+        "shop": "clothes",
+        "short_name": "YSL"
+      }
+    },
+    {
+      "id": "node:247618453",
+      "title": "Musée des Arts et Métiers",
+      "text": "fr:Musée des arts et métiers",
+      "lat": 48.8660977,
+      "lon": 2.3554138,
+      "tags": {
+        "addr:housenumber": "60",
+        "addr:postcode": "75003",
+        "addr:street": "Rue Réaumur",
+        "check_date": "2025-06-04",
+        "fax": "+33 1 53 01 82 01",
+        "fee": "yes",
+        "fee:conditional": "no @ age < 26; no @ Fr 18:00-21:00",
+        "name": "Musée des Arts et Métiers",
+        "name:en": "Museum of Arts et Métiers",
+        "name:ru": "Музей искусств и ремёсел",
+        "opening_hours": "Tu-Th 10:00-18:00; Fr 10:00-21:00; Sa-Su 10:00-18:00",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "phone": "+33 1 53 01 82 20",
+        "ref:FR:museofile": "M5065",
+        "source": "Ministère de la Culture - Muséofile - 09/2019",
+        "tourism": "museum",
+        "website": "https://www.arts-et-metiers.net",
+        "wheelchair": "yes",
+        "wikidata": "Q1538826",
+        "wikipedia": "fr:Musée des arts et métiers"
+      }
+    },
+    {
+      "id": "node:247696089",
+      "title": "Le Petit Marché",
+      "text": "addr:city=Paris, addr:housenumber=9, addr:street=Rue de Béarn, amenity=restaurant, cuisine=french, indoor_seating=yes",
+      "lat": 48.8572887,
+      "lon": 2.3660498,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "9",
+        "addr:street": "Rue de Béarn",
+        "amenity": "restaurant",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Le Petit Marché",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "node:247696090",
+      "title": "Café des Musées",
+      "text": "amenity=restaurant, check_date=2025-06-21, cuisine=french, name=Café des Musées, opening_hours=Mo-Su 12:00-15:00,19:00-23:30, phone=+33 1 42 72 96 17",
+      "lat": 48.8580708,
+      "lon": 2.3643313,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-06-21",
+        "cuisine": "french",
+        "name": "Café des Musées",
+        "opening_hours": "Mo-Su 12:00-15:00,19:00-23:30",
+        "phone": "+33 1 42 72 96 17",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:247696091",
+      "title": "Les Arts et Métiers",
+      "text": "amenity=cafe, check_date=2025-06-04, contact:phone=+33 1 48 87 83 25, diet:vegan=no, diet:vegetarian=yes, indoor_seating=yes",
+      "lat": 48.865451,
+      "lon": 2.3553243,
+      "tags": {
+        "amenity": "cafe",
+        "check_date": "2025-06-04",
+        "contact:phone": "+33 1 48 87 83 25",
+        "diet:vegan": "no",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Les Arts et Métiers",
+        "name:fr": "Les Arts et Métiers",
+        "outdoor_seating": "yes",
+        "smoking": "outside",
+        "toilets": "yes",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:247696092",
+      "title": "Camille",
+      "text": "addr:housenumber=24, addr:street=Rue des Francs Bourgeois, amenity=restaurant, check_date=2025-06-12, cuisine=french, indoor_seating=yes",
+      "lat": 48.8577772,
+      "lon": 2.3607273,
+      "tags": {
+        "addr:housenumber": "24",
+        "addr:street": "Rue des Francs Bourgeois",
+        "amenity": "restaurant",
+        "check_date": "2025-06-12",
+        "cuisine": "french",
+        "indoor_seating": "yes",
+        "name": "Camille",
+        "outdoor_seating": "sidewalk",
+        "source": "survey 2013",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:247696094",
+      "title": "Les Enfants Rouges",
+      "text": "amenity=restaurant, contact:tripadvisor=https://www.tripadvisor.com/Restaurant_Review-g187147-d1175069-Reviews-Les_Enfants_Rouges-Paris_Ile_de_France.html, contact:yelp=https://www.yelp.co.uk/biz/les-enfants-rouges-paris-3, diet:vegetarian=no, name=Les Enfants Rouges, phone=+33 1 48 87 80 61",
+      "lat": 48.8630297,
+      "lon": 2.3612527,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:tripadvisor": "https://www.tripadvisor.com/Restaurant_Review-g187147-d1175069-Reviews-Les_Enfants_Rouges-Paris_Ile_de_France.html",
+        "contact:yelp": "https://www.yelp.co.uk/biz/les-enfants-rouges-paris-3",
+        "diet:vegetarian": "no",
+        "name": "Les Enfants Rouges",
+        "phone": "+33 1 48 87 80 61"
+      }
+    },
+    {
+      "id": "node:247696096",
+      "title": "404",
+      "text": "addr:housenumber=69, addr:postcode=75003, addr:street=Rue des Gravilliers, amenity=restaurant, check_date=2025-08-12, cuisine=moroccan",
+      "lat": 48.864464,
+      "lon": 2.3543053,
+      "tags": {
+        "addr:housenumber": "69",
+        "addr:postcode": "75003",
+        "addr:street": "Rue des Gravilliers",
+        "amenity": "restaurant",
+        "check_date": "2025-08-12",
+        "cuisine": "moroccan",
+        "indoor_seating": "yes",
+        "name": "404",
+        "opening_hours": "Mo-Fr 12:00-14:30,19:30-22:30; Sa-Su 12:00-16:00,19:30-22:30",
+        "outdoor_seating": "no",
+        "phone": "+33 1 42 74 57 81",
+        "reservation": "yes",
+        "smoking": "no",
+        "website": "https://www.404-resto.com",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:247757325",
+      "title": "Paris Gobelins",
+      "text": "addr:city=Paris, addr:housenumber=37, addr:postcode=75013, addr:street=Avenue des Gobelins, amenity=post_office, atm=yes",
+      "lat": 48.8357948,
+      "lon": 2.3528766,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "37",
+        "addr:postcode": "75013",
+        "addr:street": "Avenue des Gobelins",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Gobelins",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-12:30; PH off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "14303A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "url": "https://localiser.laposte.fr/paris/paris/13eme-arrondissement/paris-gobelins-756770",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:248107559",
+      "title": "Parking Aquaboulevard",
+      "text": "amenity=parking_entrance, maxheight=1.9, name=Parking Aquaboulevard, parking=underground",
+      "lat": 48.8327885,
+      "lon": 2.2772902,
+      "tags": {
+        "amenity": "parking_entrance",
+        "maxheight": "1.9",
+        "name": "Parking Aquaboulevard",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:248170531",
+      "title": "Paris Odéon / Beaux-Arts",
+      "text": "amenity=post_office, atm=yes, change_machine=yes, contact:city=Paris, contact:housenumber=118, contact:phone:FR=36 31",
+      "lat": 48.8523125,
+      "lon": 2.3406981,
+      "tags": {
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "contact:city": "Paris",
+        "contact:housenumber": "118",
+        "contact:phone:FR": "36 31",
+        "contact:postcode": "75006",
+        "contact:street": "Boulevard Saint-Germain",
+        "name": "Paris Odéon / Beaux-Arts",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-13:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "ref:FR:LaPoste": "14252A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:248354494",
+      "title": "Parking Gaité-Montparnasse",
+      "text": "access=yes, amenity=parking, fee=yes, layer=-1, name=Parking Gaité-Montparnasse, parking=underground",
+      "lat": 48.8376583,
+      "lon": 2.3201789,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "fee": "yes",
+        "layer": "-1",
+        "name": "Parking Gaité-Montparnasse",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:248493877",
+      "title": "Onhà Dô",
+      "text": "amenity=restaurant, contact:city=Paris, contact:housenumber=55, contact:postcode=75012, contact:street=Rue Traversière, cuisine=vietnamese",
+      "lat": 48.8483768,
+      "lon": 2.3739692,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "55",
+        "contact:postcode": "75012",
+        "contact:street": "Rue Traversière",
+        "cuisine": "vietnamese",
+        "name": "Onhà Dô",
+        "opening_hours": "Mo-Fr 12:00-14:30,19:00-22:30; Sa 12:00-15:00,19:00-23:00"
+      }
+    },
+    {
+      "id": "node:248494308",
+      "title": "Le Mumtaz",
+      "text": "amenity=restaurant, cuisine=indian, name=Le Mumtaz, wheelchair=no",
+      "lat": 48.8491606,
+      "lon": 2.4165683,
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "name": "Le Mumtaz",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:249560489",
+      "title": "Paris Pernety / Plaisance",
+      "text": "addr:postcode=75014, amenity=post_office, atm=yes, brand=La Poste, change_machine=yes, copy_facility=yes",
+      "lat": 48.8346222,
+      "lon": 2.3173283,
+      "tags": {
+        "addr:postcode": "75014",
+        "amenity": "post_office",
+        "atm": "yes",
+        "brand": "La Poste",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Pernety / Plaisance",
+        "opening_hours": "Sa 09:00-12:30; Mo-Fr 09:00-19:00",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "3631",
+        "ref:FR:LaPoste": "14298A",
+        "source": "LaPoste - 03/2019",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:249661318",
+      "title": "Paris Denfert-Rochereau",
+      "text": "addr:city=Paris, addr:housenumber=15 bis, addr:postcode=75014, addr:street=Avenue du Général Leclerc, amenity=post_office, atm=yes",
+      "lat": 48.8319392,
+      "lon": 2.3309271,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "15 bis",
+        "addr:postcode": "75014",
+        "addr:street": "Avenue du Général Leclerc",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Denfert-Rochereau",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-17:00; PH off; 2024 May 06-07 12:00-19:00; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "14365A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:249881073",
+      "title": "Rennes Montparnasse",
+      "text": "access=customers, amenity=parking, brand=Indigo, brand:wikidata=Q3559970, fee=yes, layer=-1",
+      "lat": 48.8450213,
+      "lon": 2.3253519,
+      "tags": {
+        "access": "customers",
+        "amenity": "parking",
+        "brand": "Indigo",
+        "brand:wikidata": "Q3559970",
+        "fee": "yes",
+        "layer": "-1",
+        "maxheight": "1.85",
+        "maxspeed": "10",
+        "name": "Rennes Montparnasse",
+        "operator": "Indigo",
+        "operator:type": "private",
+        "operator:wikidata": "Q3559970",
+        "parking": "underground",
+        "supervised": "yes",
+        "website": "https://fr.parkindigo.com/parking/paris-75006/rennes-montparnasse-75061200"
+      }
+    },
+    {
+      "id": "node:249881132",
+      "title": "Paris Littré",
+      "text": "addr:city=Paris, addr:postcode=75006, amenity=post_office, atm=yes, change_machine=yes, copy_facility=yes",
+      "lat": 48.844537,
+      "lon": 2.3242619,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75006",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Littré",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 10:00-13:00",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "14270A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:250229129",
+      "title": "Paris Volontaires / François Bonvin",
+      "text": "addr:postcode=75015, amenity=post_office, atm=yes, change_machine=yes, name=Paris Volontaires / François Bonvin, opening_hours=Mo-Fr 09:30-19:00; Sa 09:30-13:00; PH off; 2024 May 20 off",
+      "lat": 48.8414313,
+      "lon": 2.3069539,
+      "tags": {
+        "addr:postcode": "75015",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "name": "Paris Volontaires / François Bonvin",
+        "opening_hours": "Mo-Fr 09:30-19:00; Sa 09:30-13:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14220A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:250657148",
+      "title": "Lémoni Café",
+      "text": "amenity=restaurant, contact:facebook=https://www.facebook.com/L%C3%A9moni-Paris-R%C3%A9gime-Cr%C3%A9tois-v%C3%A9g%C3%A9tarien-Healthy-175006572518111, contact:instagram=https://www.instagram.com/lemonicafeparis/, delivery=yes, delivery:email=laurent@lemonicafe.fr, delivery:phone=+33662113728",
+      "lat": 48.8647973,
+      "lon": 2.3411779,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:facebook": "https://www.facebook.com/L%C3%A9moni-Paris-R%C3%A9gime-Cr%C3%A9tois-v%C3%A9g%C3%A9tarien-Healthy-175006572518111",
+        "contact:instagram": "https://www.instagram.com/lemonicafeparis/",
+        "delivery": "yes",
+        "delivery:email": "laurent@lemonicafe.fr",
+        "delivery:phone": "+33662113728",
+        "delivery:website": "https://lemonicafe.fr/livraison/",
+        "email": "contact@lemonicafe.fr",
+        "name": "Lémoni Café",
+        "opening_hours": "Mo-Fr 11:30-15:00",
+        "phone": "+33 1 45 08 49 84",
+        "ref:FR:SIRET": "45337675800018",
+        "website": "https://www.lemonicafe.fr"
+      }
+    },
+    {
+      "id": "node:250657151",
+      "title": "Tour de Jean-sans-Peur",
+      "text": "Closed in August",
+      "lat": 48.8643016,
+      "lon": 2.3480523,
+      "tags": {
+        "alt_name": "Tour Jean-sans-Peur",
+        "check_date": "2025-06-04",
+        "fee": "yes",
+        "historic": "castle",
+        "name": "Tour de Jean-sans-Peur",
+        "note": "Closed in August",
+        "opening_hours": "We-Su 13:30-18:00",
+        "website": "http://www.tourjeansanspeur.com",
+        "wheelchair": "limited",
+        "wikidata": "Q3533101",
+        "wikipedia": "fr:Tour Jean-sans-Peur"
+      }
+    },
+    {
+      "id": "node:250861677",
+      "title": "Rani Mahal",
+      "text": "amenity=restaurant, check_date=2025-10-01, cuisine=indian, diet:vegetarian=yes, name=Rani Mahal",
+      "lat": 48.8687993,
+      "lon": 2.3373273,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-10-01",
+        "cuisine": "indian",
+        "diet:vegetarian": "yes",
+        "name": "Rani Mahal"
+      }
+    },
+    {
+      "id": "node:250861679",
+      "title": "O' Scià",
+      "text": "amenity=restaurant, check_date=2025-08-11, contact:city=Paris, contact:housenumber=42, contact:postcode=75002, contact:street=Rue Tiquetonne",
+      "lat": 48.864878,
+      "lon": 2.3475212,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-08-11",
+        "contact:city": "Paris",
+        "contact:housenumber": "42",
+        "contact:postcode": "75002",
+        "contact:street": "Rue Tiquetonne",
+        "cuisine": "pizza;italian",
+        "indoor_seating": "yes",
+        "name": "O' Scià",
+        "outdoor_seating": "no",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "payment:visa": "yes",
+        "phone": "+331 75 77 23 18",
+        "smoking": "no",
+        "website": "https://www.pizzeriaoscia.fr/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:250861680",
+      "title": "Café Moderne",
+      "text": "amenity=restaurant, contact:city=Paris, contact:housenumber=40, contact:postcode=75002, contact:street=Rue Notre-Dame-des-Victoires, cuisine=french",
+      "lat": 48.8689038,
+      "lon": 2.3422059,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "40",
+        "contact:postcode": "75002",
+        "contact:street": "Rue Notre-Dame-des-Victoires",
+        "cuisine": "french",
+        "name": "Café Moderne",
+        "toilets:wheelchair": "yes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251001754",
+      "title": "Résidence les Boulevards",
+      "text": "addr:housenumber=10, addr:street=Rue de la Villeneuve, check_date=2025-07-03, name=Résidence les Boulevards, stars=4, tourism=hotel",
+      "lat": 48.8696872,
+      "lon": 2.3486973,
+      "tags": {
+        "addr:housenumber": "10",
+        "addr:street": "Rue de la Villeneuve",
+        "check_date": "2025-07-03",
+        "name": "Résidence les Boulevards",
+        "stars": "4",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251001755",
+      "title": "Hôtel Marie",
+      "text": "addr:housenumber=6, addr:street=Rue de la Villeneuve, check_date=2025-07-03, name=Hôtel Marie, tourism=hotel, wheelchair=no",
+      "lat": 48.8695728,
+      "lon": 2.348676,
+      "tags": {
+        "addr:housenumber": "6",
+        "addr:street": "Rue de la Villeneuve",
+        "check_date": "2025-07-03",
+        "name": "Hôtel Marie",
+        "tourism": "hotel",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251023849",
+      "title": "Harry's Bar",
+      "text": "fr:Harry's New York Bar",
+      "lat": 48.8692089,
+      "lon": 2.3321714,
+      "tags": {
+        "amenity": "bar",
+        "contact:city": "Paris",
+        "contact:facebook": "https://www.facebook.com/HarrysBarParis/",
+        "contact:housenumber": "5",
+        "contact:instagram": "https://www.instagram.com/harrysbar_theoriginal/",
+        "contact:postcode": "75002",
+        "contact:street": "Rue Daunou",
+        "email": "harrysbar1911@gmail.com",
+        "name": "Harry's Bar",
+        "opening_hours": "Mo-Sa 12:00-02:00; Su 17:00-01:00",
+        "opening_hours:url": "https://www.harrysbar.com/",
+        "outdoor_seating": "no",
+        "ref:FR:SIRET": "57204384200010",
+        "toilets:wheelchair": "no",
+        "website": "www.harrysbar.fr",
+        "wheelchair": "no",
+        "wheelchair:description": "marche à l'entrée, beaucoup de monde donc impossible de faire passer un fauteuil roulant et toilettes à l'étage.",
+        "wikidata": "Q1334247",
+        "wikipedia": "fr:Harry's New York Bar"
+      }
+    },
+    {
+      "id": "node:251023850",
+      "title": "Le Café Noir",
+      "text": "addr:city=Paris, addr:postcode=75002, air_conditioning=no, amenity=cafe, bar=yes, check_date=2025-08-04",
+      "lat": 48.8663473,
+      "lon": 2.3443206,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75002",
+        "air_conditioning": "no",
+        "amenity": "cafe",
+        "bar": "yes",
+        "check_date": "2025-08-04",
+        "indoor_seating": "yes",
+        "level": "0",
+        "name": "Le Café Noir",
+        "name:fr": "Le Café Noir",
+        "opening_hours": "Mo-Fr 08:00-02:00; Sa 10:00-02:00",
+        "outdoor_seating": "yes",
+        "smoking": "outside",
+        "source": "survey 11/2017",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251043133",
+      "title": "Manteigaria - Fábrica de Pastéis de Nata Rambuteau",
+      "text": "addr:housenumber=24, addr:postcode=75003, addr:street=Rue Rambuteau, amenity=restaurant, check_date=2025-06-12, contact:facebook=manteigaria.oficial",
+      "lat": 48.860997,
+      "lon": 2.3544354,
+      "tags": {
+        "addr:housenumber": "24",
+        "addr:postcode": "75003",
+        "addr:street": "Rue Rambuteau",
+        "amenity": "restaurant",
+        "check_date": "2025-06-12",
+        "contact:facebook": "manteigaria.oficial",
+        "contact:housenumber": "24",
+        "contact:instagram": "manteigaria.fr",
+        "contact:street": "Rue Rambuteau",
+        "cuisine": "portuguese;cake",
+        "email": "info@manteigaria.com",
+        "name": "Manteigaria - Fábrica de Pastéis de Nata Rambuteau",
+        "opening_hours": "Mo-Su 08:00-20:00",
+        "phone": "+33183897631",
+        "shop": "pastry",
+        "source": "streetlevel imagery;local knowledge",
+        "website": "https://manteigaria.com/fr/"
+      }
+    },
+    {
+      "id": "node:251043135",
+      "title": "Le Loir dans la Théière",
+      "text": "addr:housenumber=3, addr:street=Rue des Rosiers, amenity=cafe, contact:city=Paris, contact:housenumber=3, contact:phone=+33 1 42 72 90 61",
+      "lat": 48.8562335,
+      "lon": 2.3610458,
+      "tags": {
+        "addr:housenumber": "3",
+        "addr:street": "Rue des Rosiers",
+        "amenity": "cafe",
+        "contact:city": "Paris",
+        "contact:housenumber": "3",
+        "contact:phone": "+33 1 42 72 90 61",
+        "contact:postcode": "75004",
+        "contact:street": "Rue des Rosiers",
+        "contact:website": "http://leloirdanslatheiere.com/",
+        "cuisine": "teahouse",
+        "name": "Le Loir dans la Théière",
+        "name:fr": "Le Loir dans la Théière",
+        "opening_hours": "Mo-Su 09:00-19:30",
+        "phone": "+33 1 42 72 90 61",
+        "website": "http://leloirdanslatheiere.com/"
+      }
+    },
+    {
+      "id": "node:251043137",
+      "title": "La Perla",
+      "text": "amenity=restaurant, check_date=2024-02-13, contact:facebook=https://www.facebook.com/pages/La-Perla-Bar/165869840923, contact:phone=+33 1 42 77 59 40, contact:website=https://www.cafepacifico-laperla.com/, cuisine=mexican",
+      "lat": 48.8557588,
+      "lon": 2.3561398,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2024-02-13",
+        "contact:facebook": "https://www.facebook.com/pages/La-Perla-Bar/165869840923",
+        "contact:phone": "+33 1 42 77 59 40",
+        "contact:website": "https://www.cafepacifico-laperla.com/",
+        "cuisine": "mexican",
+        "level": "0",
+        "name": "La Perla",
+        "opening_hours": "Su-Tu 12:00-24:00; Th-Sa 12:00-01:00",
+        "outdoor_seating": "yes",
+        "ref:FR:SIRET": "33000376500030",
+        "smoking": "outside",
+        "takeaway": "no",
+        "toilets:wheelchair": "no",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:251043139",
+      "title": "L'Excuse",
+      "text": "amenity=restaurant, check_date=2024-11-08, name=L'Excuse",
+      "lat": 48.8533876,
+      "lon": 2.3620076,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2024-11-08",
+        "name": "L'Excuse"
+      }
+    },
+    {
+      "id": "node:251043140",
+      "title": "Pizzou",
+      "text": "amenity=restaurant, contact:website=https://pizzou.fr/pizzerias/marais/, cuisine=pizza, name=Pizzou, opening_hours=Mo-Th 12:00-14:15, 19:00-22:30; Fr 12:00-14:15, 19:00-23:00; Sa 12:00-23:00; Su 12:00-22:30; PH closed, phone=+33 9 83 56 47 93",
+      "lat": 48.8576083,
+      "lon": 2.3562589,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:website": "https://pizzou.fr/pizzerias/marais/",
+        "cuisine": "pizza",
+        "name": "Pizzou",
+        "opening_hours": "Mo-Th 12:00-14:15, 19:00-22:30; Fr 12:00-14:15, 19:00-23:00; Sa 12:00-23:00; Su 12:00-22:30; PH closed",
+        "phone": "+33 9 83 56 47 93",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251047644",
+      "title": "Chez Marianne",
+      "text": "addr:city=Paris, addr:housenumber=2, addr:postcode=75004, addr:street=Rue des Hospitalières-Saint-Gervais, amenity=restaurant, contact:city=Paris",
+      "lat": 48.8577309,
+      "lon": 2.3586364,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "2",
+        "addr:postcode": "75004",
+        "addr:street": "Rue des Hospitalières-Saint-Gervais",
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:facebook": "https://www.facebook.com/chezmarianneparis",
+        "contact:housenumber": "2",
+        "contact:postcode": "75004",
+        "contact:street": "Rue des Hospitalières-Saint-Gervais",
+        "cuisine": "lebanese",
+        "diet:vegetarian": "yes",
+        "instagram": "https://www.instagram.com/chezmarianneparis/",
+        "name": "Chez Marianne",
+        "phone": "+33 1 42 72 18 86",
+        "ref:FR:SIRET": "41521816300012",
+        "survey:date": "2025-04-14",
+        "takeaway": "yes",
+        "website": "https://www.chezmarianne.fr",
+        "website:menu": "https://www.chezmarianne.fr/menus"
+      }
+    },
+    {
+      "id": "node:251047682",
+      "title": "Terrasse Sainte-Catherine",
+      "text": "amenity=restaurant, name=Terrasse Sainte-Catherine, outdoor_seating=yes",
+      "lat": 48.85559,
+      "lon": 2.3628253,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Terrasse Sainte-Catherine",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "node:251056295",
+      "title": "Mariage Frères",
+      "text": "addr:postcode=75004, amenity=cafe, name=Mariage Frères, name:en=Mariage Frères, name:fr=Mariage Frères, shop=tea",
+      "lat": 48.8577196,
+      "lon": 2.3565683,
+      "tags": {
+        "addr:postcode": "75004",
+        "amenity": "cafe",
+        "name": "Mariage Frères",
+        "name:en": "Mariage Frères",
+        "name:fr": "Mariage Frères",
+        "shop": "tea",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251125922",
+      "title": "The Auld Alliance",
+      "text": "amenity=pub, brewery=eidelweiss;Kith and Kin;Caledonian;Pelforth;Strongbow;Heineken, email=newauldalliance@orange.fr, happy_hours=Mo-Fr 15:00-20:00, name=The Auld Alliance, opening_hours=Mo-Fr 15:00-02:00; Sa-Su 12:00-02:00",
+      "lat": 48.8553135,
+      "lon": 2.3591057,
+      "tags": {
+        "amenity": "pub",
+        "brewery": "eidelweiss;Kith and Kin;Caledonian;Pelforth;Strongbow;Heineken",
+        "email": "newauldalliance@orange.fr",
+        "happy_hours": "Mo-Fr 15:00-20:00",
+        "name": "The Auld Alliance",
+        "opening_hours": "Mo-Fr 15:00-02:00; Sa-Su 12:00-02:00",
+        "phone": "+33 1 48 04 30 40",
+        "website": "https://theauldalliance.com/"
+      }
+    },
+    {
+      "id": "node:251125927",
+      "title": "Café des Phares",
+      "text": "amenity=cafe, brewery=Heineken;Edelweiss;Affligem, check_date=2025-01-31, check_date:opening_hours=2022-04-05, happy_hours=Mo-Su 18:00-21:00, internet_access=yes",
+      "lat": 48.8536169,
+      "lon": 2.368253,
+      "tags": {
+        "amenity": "cafe",
+        "brewery": "Heineken;Edelweiss;Affligem",
+        "check_date": "2025-01-31",
+        "check_date:opening_hours": "2022-04-05",
+        "happy_hours": "Mo-Su 18:00-21:00",
+        "internet_access": "yes",
+        "name": "Café des Phares",
+        "name:fr": "Café des Phares",
+        "opening_hours": "Mo-Su 07:00-02:00",
+        "outdoor_seating": "yes",
+        "phone": "+33 1 42 72 04 70",
+        "website": "https://www.cafe-philo-des-phares.info/",
+        "wheelchair": "yes",
+        "wikidata": "Q2932993"
+      }
+    },
+    {
+      "id": "node:251125928",
+      "title": "Le Lutétia Île Saint-Louis",
+      "text": "addr:housenumber=33, addr:postcode=75004, addr:street=Quai de Bourbon, amenity=restaurant, check_date=2023-10-31, contact:phone=+33 1 40 51 80 30",
+      "lat": 48.8532987,
+      "lon": 2.3540953,
+      "tags": {
+        "addr:housenumber": "33",
+        "addr:postcode": "75004",
+        "addr:street": "Quai de Bourbon",
+        "amenity": "restaurant",
+        "check_date": "2023-10-31",
+        "contact:phone": "+33 1 40 51 80 30",
+        "name": "Le Lutétia Île Saint-Louis",
+        "opening_hours": "Mo-Su 07:30-23:00"
+      }
+    },
+    {
+      "id": "node:251126259",
+      "title": "Le Lizard",
+      "text": "amenity=bar, contact:city=Paris 4eme Arrondissement, contact:housenumber=18, contact:phone=+33 9 74 64 18 00, contact:postcode=75004, contact:street=Rue du Bourg Tibourg",
+      "lat": 48.8573795,
+      "lon": 2.3562962,
+      "tags": {
+        "amenity": "bar",
+        "contact:city": "Paris 4eme Arrondissement",
+        "contact:housenumber": "18",
+        "contact:phone": "+33 9 74 64 18 00",
+        "contact:postcode": "75004",
+        "contact:street": "Rue du Bourg Tibourg",
+        "internet_access": "yes",
+        "name": "Le Lizard",
+        "opening_hours": "Mo-Su 17:09-02:00",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251126260",
+      "title": "Au Petit Fer à Cheval",
+      "text": "addr:city=Paris, addr:housenumber=30, addr:postcode=75004, addr:street=Rue Vieille du Temple, amenity=restaurant, bar=yes",
+      "lat": 48.8574347,
+      "lon": 2.3576107,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "30",
+        "addr:postcode": "75004",
+        "addr:street": "Rue Vieille du Temple",
+        "amenity": "restaurant",
+        "bar": "yes",
+        "check_date": "2025-07-29",
+        "cuisine": "regional",
+        "indoor_seating": "yes",
+        "name": "Au Petit Fer à Cheval",
+        "name:fr": "Au Petit Fer à Cheval",
+        "opening_hours": "Mo-Su 09:00-02:00",
+        "outdoor_seating": "yes",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251126327",
+      "title": "Dinh Van",
+      "text": "brand=Dinh Van, brand:wikidata=Q105324937, check_date=2025-07-29, name=Dinh Van, shop=jewelry",
+      "lat": 48.8577212,
+      "lon": 2.3576336,
+      "tags": {
+        "brand": "Dinh Van",
+        "brand:wikidata": "Q105324937",
+        "check_date": "2025-07-29",
+        "name": "Dinh Van",
+        "shop": "jewelry"
+      }
+    },
+    {
+      "id": "node:251126442",
+      "title": "Stolly's",
+      "text": "addr:city=Paris, addr:housenumber=16, addr:postcode=75001, addr:street=Rue Cloche Perce, amenity=pub, name=Stolly's",
+      "lat": 48.8563917,
+      "lon": 2.3573515,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "16",
+        "addr:postcode": "75001",
+        "addr:street": "Rue Cloche Perce",
+        "amenity": "pub",
+        "name": "Stolly's",
+        "name:fr": "Stolly's",
+        "opening_hours": "Mo-Fr 16:30-01:30; Sa-Su 14:30-01:30",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "node:251127867",
+      "title": "Hôtel du Loiret",
+      "text": "contact:email=contact@hotelduloiret.fr, contact:fax=+33 1 48 04 96 56, name=Hôtel du Loiret, phone=+33 1 48 87 77 00, stars=3, tourism=hotel",
+      "lat": 48.8569202,
+      "lon": 2.3552931,
+      "tags": {
+        "contact:email": "contact@hotelduloiret.fr",
+        "contact:fax": "+33 1 48 04 96 56",
+        "name": "Hôtel du Loiret",
+        "phone": "+33 1 48 87 77 00",
+        "stars": "3",
+        "tourism": "hotel",
+        "website": "https://www.hotelduloiret.fr",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251127869",
+      "title": "Charles V",
+      "text": "check_date=2024-11-08, name=Charles V, tourism=hotel",
+      "lat": 48.8534874,
+      "lon": 2.3618354,
+      "tags": {
+        "check_date": "2024-11-08",
+        "name": "Charles V",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251130907",
+      "title": "Hôtel de la Place des Vosges",
+      "text": "name=Hôtel de la Place des Vosges, tourism=hotel",
+      "lat": 48.8544261,
+      "lon": 2.3652418,
+      "tags": {
+        "name": "Hôtel de la Place des Vosges",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251132401",
+      "title": "Bibliothèque Publique d'Information",
+      "text": "amenity=library, amenity:visitors=1500000, closed=yes, closed:description=fermé pour travaux jusqu'en 2030, contact:city=Paris, contact:housenumber=1",
+      "lat": 48.8608795,
+      "lon": 2.3526163,
+      "tags": {
+        "amenity": "library",
+        "amenity:visitors": "1500000",
+        "closed": "yes",
+        "closed:description": "fermé pour travaux jusqu'en 2030",
+        "contact:city": "Paris",
+        "contact:housenumber": "1",
+        "contact:postcode": "75004",
+        "contact:street": "Rue Beaubourg",
+        "end_date": "2025-03-02",
+        "fax": "+33 1 44 78 12 15",
+        "internet_access": "yes",
+        "internet_access:fee": "no",
+        "internet_access:ssid": "Wifi-bpi",
+        "level": "1;2;3",
+        "name": "Bibliothèque Publique d'Information",
+        "opening_date": "2030-01-01",
+        "opening_hours": "Mo, We-Fr 12:00-22:00; Sa-Su 11:00-22:00",
+        "phone": "+33 1 44 78 12 75",
+        "short_name": "BPI",
+        "source": "survey",
+        "temporary": "yes",
+        "website": "https://www.bpi.fr/",
+        "wheelchair": "yes",
+        "wikidata": "Q2901506"
+      }
+    },
+    {
+      "id": "node:251318666",
+      "title": "Musée national Gustave Moreau",
+      "text": "fr:Musée Gustave-Moreau",
+      "lat": 48.8778955,
+      "lon": 2.3345468,
+      "tags": {
+        "addr:housenumber": "14",
+        "addr:street": "Rue Catherine de La Rochefoucauld",
+        "alt_name": "Musée Gustave Moreau",
+        "name": "Musée national Gustave Moreau",
+        "official_name": "Musée Gustave Moreau",
+        "phone": "+33 1 48 74 38 50",
+        "ref:FR:museofile": "M5041",
+        "short_name": "Musée Moreau",
+        "source": "Ministère de la Culture - Muséofile - 09/2019",
+        "tourism": "museum",
+        "website": "https://musee-moreau.fr",
+        "wikidata": "Q2296362",
+        "wikipedia": "fr:Musée Gustave-Moreau"
+      }
+    },
+    {
+      "id": "node:251373375",
+      "title": "La Fontaine aux Vins",
+      "text": "contact:city=Paris, contact:housenumber=107, contact:postcode=75005, contact:street=Rue Mouffetard, name=La Fontaine aux Vins, shop=alcohol",
+      "lat": 48.8407951,
+      "lon": 2.3497522,
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "107",
+        "contact:postcode": "75005",
+        "contact:street": "Rue Mouffetard",
+        "name": "La Fontaine aux Vins",
+        "shop": "alcohol"
+      }
+    },
+    {
+      "id": "node:251373376",
+      "title": "The Blind Tiger",
+      "text": "amenity=bar, name=The Blind Tiger, outdoor_seating=yes",
+      "lat": 48.8402192,
+      "lon": 2.3502633,
+      "tags": {
+        "amenity": "bar",
+        "name": "The Blind Tiger",
+        "outdoor_seating": "yes"
+      }
+    },
+    {
+      "id": "node:251373378",
+      "title": "L'Épée de Bois",
+      "text": "contact:city=Paris, contact:housenumber=12, contact:postcode=75005, contact:street=Rue de l'Epée de Bois, name=L'Épée de Bois, opening_hours=Mo 13:30-19:30; Tu-Sa 10:30-19:30; Su 11:00-13:30",
+      "lat": 48.8415751,
+      "lon": 2.3501804,
+      "tags": {
+        "contact:city": "Paris",
+        "contact:housenumber": "12",
+        "contact:postcode": "75005",
+        "contact:street": "Rue de l'Epée de Bois",
+        "name": "L'Épée de Bois",
+        "opening_hours": "Mo 13:30-19:30; Tu-Sa 10:30-19:30; Su 11:00-13:30",
+        "shop": "toys",
+        "source": "survey",
+        "website": "https://lepeedebois-75.fr",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:251373380",
+      "title": "Shakespeare and Company",
+      "text": "fr:Shakespeare and Company",
+      "lat": 48.8525747,
+      "lon": 2.3471123,
+      "tags": {
+        "addr:housenumber": "37",
+        "addr:street": "Rue de la Bûcherie",
+        "books": "english",
+        "check_date": "2024-03-16",
+        "email": "news@shakespeareandcompany.com",
+        "name": "Shakespeare and Company",
+        "name:en": "Shakespeare and Company",
+        "name:ko": "세익스피어 앤 컴패니",
+        "opening_hours": "Mo-Su 10:00-23:00",
+        "phone": "+33 1 43 25 40 93",
+        "piano": "yes",
+        "shop": "books",
+        "website": "https://www.shakespeareandcompany.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q1503157",
+        "wikipedia": "fr:Shakespeare and Company"
+      }
+    },
+    {
+      "id": "node:251474107",
+      "title": "Jardin des Pâtes",
+      "text": "amenity=restaurant, contact:city=Paris, contact:housenumber=4, contact:phone=+33 1 43 31 50 71, contact:postcode=75005, contact:street=Rue Lacépède",
+      "lat": 48.8437435,
+      "lon": 2.3544856,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "4",
+        "contact:phone": "+33 1 43 31 50 71",
+        "contact:postcode": "75005",
+        "contact:street": "Rue Lacépède",
+        "cuisine": "pasta;italian",
+        "diet:vegetarian": "yes",
+        "name": "Jardin des Pâtes",
+        "opening_hours": "Mo-Su 12:00-14:30,19:30-22:30",
+        "start_date": "1984"
+      }
+    },
+    {
+      "id": "node:251474108",
+      "title": "La Tour d'Argent",
+      "text": "amenity=restaurant, check_date=2024-07-28, contact:facebook=latourdargent, contact:housenumber=15, contact:postcode=75005, contact:street=Quai de la Tournelle",
+      "lat": 48.84983,
+      "lon": 2.3549148,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2024-07-28",
+        "contact:facebook": "latourdargent",
+        "contact:housenumber": "15",
+        "contact:postcode": "75005",
+        "contact:street": "Quai de la Tournelle",
+        "cuisine": "french",
+        "name": "La Tour d'Argent",
+        "name:zh": "银塔餐厅",
+        "opening_hours": "Tu-Sa 12:00-13:15, 19:00-21:15",
+        "phone": "+33 1 43 54 23 31",
+        "website": "http://www.latourdargent.com",
+        "wikidata": "Q1338260"
+      }
+    },
+    {
+      "id": "node:251474109",
+      "title": "Kusksi Original Couscous",
+      "text": "amenity=restaurant, contact:city=Paris, contact:housenumber=12, contact:postcode=75005, contact:street=Rue Thouin, name=Kusksi Original Couscous",
+      "lat": 48.8449458,
+      "lon": 2.3486915,
+      "tags": {
+        "amenity": "restaurant",
+        "contact:city": "Paris",
+        "contact:housenumber": "12",
+        "contact:postcode": "75005",
+        "contact:street": "Rue Thouin",
+        "name": "Kusksi Original Couscous"
+      }
+    },
+    {
+      "id": "node:251474114",
+      "title": "Drunken Bunny",
+      "text": "amenity=pub, brewery=various, contact:phone=+33 9 74 64 03 63, happy_hours=Mo-Su 18:00-21:00, internet_access=wlan, name=Drunken Bunny",
+      "lat": 48.8429884,
+      "lon": 2.3495493,
+      "tags": {
+        "amenity": "pub",
+        "brewery": "various",
+        "contact:phone": "+33 9 74 64 03 63",
+        "happy_hours": "Mo-Su 18:00-21:00",
+        "internet_access": "wlan",
+        "name": "Drunken Bunny",
+        "opening_hours": "Mo-Su 18:00-02:00",
+        "payment:cash": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "phone": "+33 1 42 72 73 36",
+        "smoking": "outside",
+        "website": "https://www.drunkenbunny.fr/"
+      }
+    },
+    {
+      "id": "node:251474115",
+      "title": "Le Vieux Chêne",
+      "text": "amenity=pub, brewery=Tripel Karmeliet;Delirium;Chouffe, name=Le Vieux Chêne, opening_hours=16:00-02:00, smoking=outside",
+      "lat": 48.8423393,
+      "lon": 2.3498473,
+      "tags": {
+        "amenity": "pub",
+        "brewery": "Tripel Karmeliet;Delirium;Chouffe",
+        "name": "Le Vieux Chêne",
+        "opening_hours": "16:00-02:00",
+        "smoking": "outside"
+      }
+    },
+    {
+      "id": "node:251474117",
+      "title": "Ces années là",
+      "text": "addr:city=Paris, addr:country=FR, addr:housenumber=18, addr:postcode=75005, addr:street=Rue Laplace, amenity=bar",
+      "lat": 48.8474659,
+      "lon": 2.3471555,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:country": "FR",
+        "addr:housenumber": "18",
+        "addr:postcode": "75005",
+        "addr:street": "Rue Laplace",
+        "amenity": "bar",
+        "level": "0",
+        "name": "Ces années là",
+        "opening_hours": "We,Th 20:00-02:00, Fr,Sa 18:00-05:00"
+      }
+    },
+    {
+      "id": "node:251474119",
+      "title": "Young and Happy Hostel",
+      "text": "name=Young and Happy Hostel, tourism=hostel",
+      "lat": 48.8423193,
+      "lon": 2.3496779,
+      "tags": {
+        "name": "Young and Happy Hostel",
+        "tourism": "hostel"
+      }
+    },
+    {
+      "id": "node:251509876",
+      "title": "Paris Desnouettes",
+      "text": "amenity=post_office, atm=yes, change_machine=yes, check_date:opening_hours=2023-04-06, contact:city=Paris, contact:phone:FR=36 31",
+      "lat": 48.8355977,
+      "lon": 2.2859594,
+      "tags": {
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "check_date:opening_hours": "2023-04-06",
+        "contact:city": "Paris",
+        "contact:phone:FR": "36 31",
+        "contact:postcode": "75015",
+        "contact:street": "Rue Desnouettes",
+        "copy_facility": "yes",
+        "name": "Paris Desnouettes",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-12:30; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "post_office": "bureau",
+        "ref:FR:LaPoste": "14262A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251531804",
+      "title": "Hôtel Port-Royal",
+      "text": "check_date=2025-09-06, name=Hôtel Port-Royal, phone=+33 1 43 31 70 06, tourism=hotel, website=https://www.port-royal-hotel.fr",
+      "lat": 48.8371263,
+      "lon": 2.350581,
+      "tags": {
+        "check_date": "2025-09-06",
+        "name": "Hôtel Port-Royal",
+        "phone": "+33 1 43 31 70 06",
+        "tourism": "hotel",
+        "website": "https://www.port-royal-hotel.fr"
+      }
+    },
+    {
+      "id": "node:251652819",
+      "title": "CityPharma",
+      "text": "amenity=pharmacy, check_date=2024-10-14, contact:city=Paris, contact:housenumber=26, contact:postcode=75006, contact:street=Rue du Four",
+      "lat": 48.8527413,
+      "lon": 2.3333559,
+      "tags": {
+        "amenity": "pharmacy",
+        "check_date": "2024-10-14",
+        "contact:city": "Paris",
+        "contact:housenumber": "26",
+        "contact:postcode": "75006",
+        "contact:street": "Rue du Four",
+        "dispensing": "yes",
+        "fax": "+33 1 40 46 94 40",
+        "healthcare": "pharmacy",
+        "level": "0;1;2",
+        "name": "CityPharma",
+        "opening_hours": "Mo-Fr 08:30-21:00; Sa 09:00-21:00; Su off",
+        "operator": "Citypharma",
+        "order_and_pickup": "yes",
+        "phone": "+33 1 46 33 06 09",
+        "ref:FR:FINESS": "750012692",
+        "ref:FR:SIREN": "452256258",
+        "ref:FR:SIRET": "45225625800016",
+        "ref:vatin": "FR07452256258",
+        "source": "Celtipharm - 10/2014;survey",
+        "toilets": "no",
+        "website": "https://pharmacie-citypharma.fr/",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:251652822",
+      "title": "Desi Road",
+      "text": "amenity=restaurant, cuisine=indian, indoor_seating=yes, name=Desi Road, outdoor_seating=no",
+      "lat": 48.8556694,
+      "lon": 2.3399888,
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "indoor_seating": "yes",
+        "name": "Desi Road",
+        "outdoor_seating": "no"
+      }
+    },
+    {
+      "id": "node:251652824",
+      "title": "Brasserie Lipp",
+      "text": "fr:Lipp",
+      "lat": 48.8537528,
+      "lon": 2.3324105,
+      "tags": {
+        "addr:housenumber": "151",
+        "addr:street": "Boulevard Saint-Germain",
+        "amenity": "restaurant",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1989",
+        "name": "Brasserie Lipp",
+        "name:en": "Brasserie Lipp",
+        "name:ja": "リップ (ブラッスリー)",
+        "name:zh": "著名咖啡馆",
+        "opening_hours": "Mo-Su 11:45-00:45",
+        "phone": "+33145485391",
+        "ref:mhs": "PA00088494",
+        "source:heritage": "data.gouv.fr:Ministère de la Culture - 08/2011",
+        "toilets:wheelchair": "no",
+        "website": "https://www.brasserielipp.fr/",
+        "wheelchair": "limited",
+        "wikidata": "Q263359",
+        "wikipedia": "fr:Lipp"
+      }
+    },
+    {
+      "id": "node:251670428",
+      "title": "Bistro des Poèmes",
+      "text": "addr:city=Paris, addr:housenumber=7, addr:postcode=75006, addr:street=Rue Corneille, amenity=restaurant, contact:phone=+33 1 71 32 32 63",
+      "lat": 48.8493501,
+      "lon": 2.3391528,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "7",
+        "addr:postcode": "75006",
+        "addr:street": "Rue Corneille",
+        "amenity": "restaurant",
+        "contact:phone": "+33 1 71 32 32 63",
+        "cuisine": "french",
+        "name": "Bistro des Poèmes",
+        "website": "https://bistrodeslettres.com/bistro-des-poemes"
+      }
+    },
+    {
+      "id": "node:251670430",
+      "title": "Silencio des Prés",
+      "text": "amenity=restaurant, name=Silencio des Prés, opening_hours=Tu-Sa 19:00-02:00, outdoor_seating=yes, website=http://www.silenciodespres.com",
+      "lat": 48.8546811,
+      "lon": 2.3332029,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Silencio des Prés",
+        "opening_hours": "Tu-Sa 19:00-02:00",
+        "outdoor_seating": "yes",
+        "website": "http://www.silenciodespres.com"
+      }
+    },
+    {
+      "id": "node:251671404",
+      "title": "Polidor",
+      "text": "amenity=restaurant, cuisine=french, diet:vegetarian=no, name=Polidor, opening_hours=Mo-Su 12:00-14:30,19:00-00:30, phone=+33 1 43 26 95 34",
+      "lat": 48.8498182,
+      "lon": 2.3401339,
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "french",
+        "diet:vegetarian": "no",
+        "name": "Polidor",
+        "opening_hours": "Mo-Su 12:00-14:30,19:00-00:30",
+        "phone": "+33 1 43 26 95 34",
+        "website": "https://www.polidor.com/",
+        "wheelchair": "limited",
+        "wikidata": "Q3394227"
+      }
+    },
+    {
+      "id": "node:251691150",
+      "title": "La Grivoiserie",
+      "text": "amenity=restaurant, name=La Grivoiserie, opening_hours=Mo-Sa 11:30-20:30, website=https://lagrivoiserie.fr, wheelchair=no",
+      "lat": 48.8441789,
+      "lon": 2.3299201,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "La Grivoiserie",
+        "opening_hours": "Mo-Sa 11:30-20:30",
+        "website": "https://lagrivoiserie.fr",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:251691155",
+      "title": "Le Trait D'Union",
+      "text": "amenity=restaurant, check_date=2025-10-10, happy_hours=Mo-Sa 17:00-24:00, name=Le Trait D'Union, opening_hours=Mo-Sa 07:00-02:00, wheelchair=limited",
+      "lat": 48.8468341,
+      "lon": 2.3265156,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-10-10",
+        "happy_hours": "Mo-Sa 17:00-24:00",
+        "name": "Le Trait D'Union",
+        "opening_hours": "Mo-Sa 07:00-02:00",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:251691837",
+      "title": "O'Tacos",
+      "text": "addr:city=Paris, addr:housenumber=12, addr:postcode=75006, addr:street=Rue Vavin, amenity=fast_food, brand=O'Tacos",
+      "lat": 48.8442685,
+      "lon": 2.3310313,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "12",
+        "addr:postcode": "75006",
+        "addr:street": "Rue Vavin",
+        "amenity": "fast_food",
+        "brand": "O'Tacos",
+        "brand:wikidata": "Q28494040",
+        "brand:wikipedia": "en:O'Tacos",
+        "cuisine": "french_tacos",
+        "name": "O'Tacos",
+        "opening_hours": "11:00-23:00; Su 12:00-23:00",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "id": "node:251699774",
+      "title": "Le 10",
+      "text": "amenity=bar, contact:housenumber=10, contact:phone=+33 9 82 43 55 77, contact:street=Rue de l'Odéon, happy_hours=17:00-20:00, name=Le 10",
+      "lat": 48.8510774,
+      "lon": 2.3385693,
+      "tags": {
+        "amenity": "bar",
+        "contact:housenumber": "10",
+        "contact:phone": "+33 9 82 43 55 77",
+        "contact:street": "Rue de l'Odéon",
+        "happy_hours": "17:00-20:00",
+        "name": "Le 10",
+        "opening_hours": "17:00-01:00, Fr-Sa 17:00-02:00",
+        "outdoor_seating": "yes",
+        "strapline": "Bar International",
+        "website": "https://le10bar.com"
+      }
+    },
+    {
+      "id": "node:251699775",
+      "title": "Les Deux Magots",
+      "text": "amenity=cafe, indoor_seating=yes, name=Les Deux Magots, name:fr=Les Deux Magots, name:zh=双叟咖啡（巴黎著名咖啡馆）, opening_hours=Mo-Su 07:30-01:00",
+      "lat": 48.854069,
+      "lon": 2.3330634,
+      "tags": {
+        "amenity": "cafe",
+        "indoor_seating": "yes",
+        "name": "Les Deux Magots",
+        "name:fr": "Les Deux Magots",
+        "name:zh": "双叟咖啡（巴黎著名咖啡馆）",
+        "opening_hours": "Mo-Su 07:30-01:00",
+        "outdoor_seating": "yes",
+        "website": "https://lesdeuxmagots.fr",
+        "wikidata": "Q1147912"
+      }
+    },
+    {
+      "id": "node:251699776",
+      "title": "Café de Flore",
+      "text": "amenity=cafe, contact:city=Paris, contact:housenumber=172, contact:phone=+33 1 45 48 55 26, contact:postcode=75006, contact:street=Boulevard Saint-Germain",
+      "lat": 48.8541444,
+      "lon": 2.3326307,
+      "tags": {
+        "amenity": "cafe",
+        "contact:city": "Paris",
+        "contact:housenumber": "172",
+        "contact:phone": "+33 1 45 48 55 26",
+        "contact:postcode": "75006",
+        "contact:street": "Boulevard Saint-Germain",
+        "contact:website": "https://cafedeflore.fr/",
+        "indoor_seating": "yes",
+        "name": "Café de Flore",
+        "name:fr": "Café de Flore",
+        "name:zh": "花神咖啡（三大著名咖啡馆之一）",
+        "opening_hours": "Mo-Su 07:30-01:30",
+        "outdoor_seating": "yes",
+        "wikidata": "Q1025686"
+      }
+    },
+    {
+      "id": "node:251733867",
+      "title": "Le Clos Medicis",
+      "text": "name=Le Clos Medicis, stars=3, tourism=hotel",
+      "lat": 48.8482841,
+      "lon": 2.3405763,
+      "tags": {
+        "name": "Le Clos Medicis",
+        "stars": "3",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251733871",
+      "title": "L'Hôtel",
+      "text": "c'est bien son nom",
+      "lat": 48.8563424,
+      "lon": 2.3352399,
+      "tags": {
+        "contact:email": "stay@l-hotel.com",
+        "contact:phone": "+33 1 44 41 99 00",
+        "name": "L'Hôtel",
+        "note": "c'est bien son nom",
+        "note:en": "this is the real name",
+        "stars": "5",
+        "tourism": "hotel",
+        "website": "https://www.l-hotel.com/",
+        "wikidata": "Q23283"
+      }
+    },
+    {
+      "id": "node:251733872",
+      "title": "Victoria Palace Hôtel",
+      "text": "beds=190, contact:phone=+33 1 45 49 70 00, contact:website=https://www.victoriapalace.com/, name=Victoria Palace Hôtel, ref:FR:SIREN=384753760, ref:FR:SIRET=38475376000014",
+      "lat": 48.8457742,
+      "lon": 2.3243407,
+      "tags": {
+        "beds": "190",
+        "contact:phone": "+33 1 45 49 70 00",
+        "contact:website": "https://www.victoriapalace.com/",
+        "name": "Victoria Palace Hôtel",
+        "ref:FR:SIREN": "384753760",
+        "ref:FR:SIRET": "38475376000014",
+        "ref:vatin": "FR92384753760",
+        "rooms": "92",
+        "stars": "4",
+        "toilets:wheelchair": "yes",
+        "tourism": "hotel",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251758241",
+      "title": "Le Petit Chomel",
+      "text": "contact:website=http://www.lepetitchomel.com/, name=Le Petit Chomel, stars=3, tourism=hotel",
+      "lat": 48.8519344,
+      "lon": 2.3253667,
+      "tags": {
+        "contact:website": "http://www.lepetitchomel.com/",
+        "name": "Le Petit Chomel",
+        "stars": "3",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758242",
+      "title": "Signature",
+      "text": "alt_name=Hôtel Signature - Saint-Germain-des-Prés, name=Signature, phone=+33 1 45 48 35 53, stars=4, tourism=hotel, website=https://www.signature-saintgermain.com",
+      "lat": 48.8521505,
+      "lon": 2.326091,
+      "tags": {
+        "alt_name": "Hôtel Signature - Saint-Germain-des-Prés",
+        "name": "Signature",
+        "phone": "+33 1 45 48 35 53",
+        "stars": "4",
+        "tourism": "hotel",
+        "website": "https://www.signature-saintgermain.com"
+      }
+    },
+    {
+      "id": "node:251758243",
+      "title": "Hôtel du Champ de Mars",
+      "text": "name=Hôtel du Champ de Mars, tourism=hotel",
+      "lat": 48.856397,
+      "lon": 2.3060759,
+      "tags": {
+        "name": "Hôtel du Champ de Mars",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758244",
+      "title": "Hôtel Saint-Dominique",
+      "text": "name=Hôtel Saint-Dominique, tourism=hotel",
+      "lat": 48.8599286,
+      "lon": 2.308788,
+      "tags": {
+        "name": "Hôtel Saint-Dominique",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758245",
+      "title": "Hôtel Duquesne Eiffel",
+      "text": "check_date=2024-04-26, name=Hôtel Duquesne Eiffel, tourism=hotel",
+      "lat": 48.8526441,
+      "lon": 2.3090461,
+      "tags": {
+        "check_date": "2024-04-26",
+        "name": "Hôtel Duquesne Eiffel",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758246",
+      "title": "Hôtel de la Tulipe",
+      "text": "name=Hôtel de la Tulipe, tourism=hotel",
+      "lat": 48.8599838,
+      "lon": 2.3062819,
+      "tags": {
+        "name": "Hôtel de la Tulipe",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758247",
+      "title": "Grand Hôtel Leveque",
+      "text": "name=Grand Hôtel Leveque, tourism=hotel",
+      "lat": 48.8571307,
+      "lon": 2.3063556,
+      "tags": {
+        "name": "Grand Hôtel Leveque",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758248",
+      "title": "Timhôtel Best Western Tour Eiffel Invalides",
+      "text": "brand=Best Western, brand:wikidata=Q830334, brand:wikipedia=fr:Best Western, check_date=2024-12-10, name=Timhôtel Best Western Tour Eiffel Invalides, tourism=hotel",
+      "lat": 48.8604075,
+      "lon": 2.3104739,
+      "tags": {
+        "brand": "Best Western",
+        "brand:wikidata": "Q830334",
+        "brand:wikipedia": "fr:Best Western",
+        "check_date": "2024-12-10",
+        "name": "Timhôtel Best Western Tour Eiffel Invalides",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251758249",
+      "title": "Buddha-Bar Paris",
+      "text": "addr:city=Paris, addr:housenumber=8-12, addr:postcode=75008, addr:street=Rue Boissy d'Anglas, amenity=restaurant, bar=yes",
+      "lat": 48.8680799,
+      "lon": 2.3215688,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "8-12",
+        "addr:postcode": "75008",
+        "addr:street": "Rue Boissy d'Anglas",
+        "amenity": "restaurant",
+        "bar": "yes",
+        "cuisine": "fusion_asiatique",
+        "facebook": "https://www.facebook.com/BuddhaBarParis",
+        "instagram": "https://www.instagram.com/buddhabarparis/",
+        "min_age": "18",
+        "name": "Buddha-Bar Paris",
+        "phone": "+33 1 53 05 90 00",
+        "website": "https://www.buddhabar.com/",
+        "wikidata": "Q851372"
+      }
+    },
+    {
+      "id": "node:251758250",
+      "title": "Qasim",
+      "text": "addr:street=Rue du Colisée, amenity=restaurant, cuisine=indian, name=Qasim",
+      "lat": 48.8710439,
+      "lon": 2.3094204,
+      "tags": {
+        "addr:street": "Rue du Colisée",
+        "amenity": "restaurant",
+        "cuisine": "indian",
+        "name": "Qasim"
+      }
+    },
+    {
+      "id": "node:251758251",
+      "title": "Diep",
+      "text": "amenity=restaurant, cuisine=chinese, name=Diep",
+      "lat": 48.8695267,
+      "lon": 2.3030036,
+      "tags": {
+        "amenity": "restaurant",
+        "cuisine": "chinese",
+        "name": "Diep"
+      }
+    },
+    {
+      "id": "node:251758255",
+      "title": "Four Seasons Hôtel George V",
+      "text": "en:Four Seasons Hotel George V",
+      "lat": 48.868784,
+      "lon": 2.3006774,
+      "tags": {
+        "addr:housenumber": "31",
+        "addr:postcode": "75008",
+        "addr:street": "Avenue George V",
+        "brand": "Four Seasons",
+        "brand:wikidata": "Q1424786",
+        "name": "Four Seasons Hôtel George V",
+        "phone": "+33 1 49 52 70 00",
+        "tourism": "hotel",
+        "website": "https://www.fourseasons.com/fr/paris/",
+        "wikidata": "Q217708",
+        "wikipedia": "en:Four Seasons Hotel George V"
+      }
+    },
+    {
+      "id": "node:251758260",
+      "title": "L'Olympia",
+      "text": "fr:Olympia (Paris)",
+      "lat": 48.8702443,
+      "lon": 2.3283595,
+      "tags": {
+        "alt_name": "Olympia Bruno Coquatrix",
+        "amenity": "theatre",
+        "contact:city": "Paris",
+        "contact:housenumber": "28",
+        "contact:phone": "+33 1 55 27 10 00",
+        "contact:postcode": "75009",
+        "contact:street": "Boulevard des Capucines",
+        "contact:website": "https://www.olympiahall.com/",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1991-05-23",
+        "name": "L'Olympia",
+        "name:he": "אולימפיה",
+        "name:uk": "Олімпія",
+        "operator": "Vivendi",
+        "ref:mhs": "PA00089012",
+        "source:heritage": "data.gouv.fr, Ministère de la Culture - 2016",
+        "start_date": "C19",
+        "wheelchair": "yes",
+        "wikidata": "Q915451",
+        "wikipedia": "fr:Olympia (Paris)"
+      }
+    },
+    {
+      "id": "node:251758263",
+      "title": "I Golosi",
+      "text": "amenity=wine_bar, name=I Golosi",
+      "lat": 48.873249,
+      "lon": 2.3415929,
+      "tags": {
+        "amenity": "wine_bar",
+        "name": "I Golosi"
+      }
+    },
+    {
+      "id": "node:251774784",
+      "title": "Paris Gare-de-Lyon",
+      "text": "amenity=post_office, atm=yes, brand=La Poste, change_machine=yes, copy_facility=yes, name=Paris Gare-de-Lyon",
+      "lat": 48.8460989,
+      "lon": 2.3742452,
+      "tags": {
+        "amenity": "post_office",
+        "atm": "yes",
+        "brand": "La Poste",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Gare-de-Lyon",
+        "opening_hours": "Mo-Fr 10:00-19:00; Sa 09:00-13:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14257A",
+        "source": "LaPoste - 03/2019",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251774849",
+      "title": "Pharmacie de la Rapée",
+      "text": "alt_name=Pharmacie Tran, amenity=pharmacy, check_date:opening_hours=2021-09-22, dispensing=yes, healthcare=pharmacy, name=Pharmacie de la Rapée",
+      "lat": 48.8468034,
+      "lon": 2.3697331,
+      "tags": {
+        "alt_name": "Pharmacie Tran",
+        "amenity": "pharmacy",
+        "check_date:opening_hours": "2021-09-22",
+        "dispensing": "yes",
+        "healthcare": "pharmacy",
+        "name": "Pharmacie de la Rapée",
+        "opening_hours": "Mo-Fr 08:30-20:30; Sa 09:00-19:30",
+        "phone": "+33143430996",
+        "ref:FR:FINESS": "750021586",
+        "source": "Celtipharm - 10/2014",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251851354",
+      "title": "Hanoi Cà Phê Opéra",
+      "text": "addr:street=Boulevard des Italiens, amenity=bar, check_date=2025-08-26, contact:city=Paris 9eme Arrondissement, contact:housenumber=30, contact:phone=+33 1 48 78 03 61",
+      "lat": 48.8714582,
+      "lon": 2.3357136,
+      "tags": {
+        "addr:street": "Boulevard des Italiens",
+        "amenity": "bar",
+        "check_date": "2025-08-26",
+        "contact:city": "Paris 9eme Arrondissement",
+        "contact:housenumber": "30",
+        "contact:phone": "+33 1 48 78 03 61",
+        "contact:postcode": "75009",
+        "contact:street": "Boulevard Des Italiens",
+        "cuisine": "vietnamese",
+        "email": "restaurant@hanoi-caphe.com",
+        "name": "Hanoi Cà Phê Opéra",
+        "opening_hours": "Mo-Su 12:00-02:00",
+        "phone": "+33 1 48 78 03 61",
+        "website": "https://www.hanoi-caphe.com/",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251851363",
+      "title": "Musée Grévin",
+      "text": "fr:Musée Grévin",
+      "lat": 48.8718365,
+      "lon": 2.3420974,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "10",
+        "addr:postcode": "75009",
+        "addr:street": "Boulevard Montmartre",
+        "fee": "yes",
+        "heritage": "3",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1964-11-23",
+        "name": "Musée Grévin",
+        "name:ru": "Музей Гревен",
+        "name:uk": "Музей Гревен",
+        "opening_hours": "Mo-Fr 09:30-18:30; Sa,Su 09:30-19:00",
+        "phone": "+33 1 47 70 85 05",
+        "ref:mhs": "PA00088993",
+        "source:heritage": "Ministère de la Culture - 07/2018",
+        "tourism": "museum",
+        "website": "https://www.grevin.com/",
+        "wheelchair": "yes",
+        "wikidata": "Q1265070",
+        "wikipedia": "fr:Musée Grévin"
+      }
+    },
+    {
+      "id": "node:251851364",
+      "title": "Le Café Zéphyr",
+      "text": "amenity=restaurant, check_date=2024-02-16, cuisine=french, name=Le Café Zéphyr, outdoor_seating=yes, smoking=outside",
+      "lat": 48.8718728,
+      "lon": 2.3418493,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2024-02-16",
+        "cuisine": "french",
+        "name": "Le Café Zéphyr",
+        "outdoor_seating": "yes",
+        "smoking": "outside",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251851365",
+      "title": "Matissia",
+      "text": "check_date=2025-09-28, contact:city=Paris, contact:email=contact@matissia.com, contact:housenumber=4, contact:phone=+33 1 42 46 48 66, contact:postcode=75009",
+      "lat": 48.876717,
+      "lon": 2.3485948,
+      "tags": {
+        "check_date": "2025-09-28",
+        "contact:city": "Paris",
+        "contact:email": "contact@matissia.com",
+        "contact:housenumber": "4",
+        "contact:phone": "+33 1 42 46 48 66",
+        "contact:postcode": "75009",
+        "contact:street": "Rue de Montholon",
+        "contact:website": "https://www.matissia.com/",
+        "name": "Matissia",
+        "stars": "4",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251851386",
+      "title": "Artazart",
+      "text": "addr:housenumber=83, addr:street=Quai de Valmy, check_date=2025-10-02, name=Artazart, opening_hours=Mo-Fr 10:30-19:30; Sa 11:00-19:30; Su 13:30-19:30, phone=+33 1 40 40 24 00",
+      "lat": 48.87268,
+      "lon": 2.3637772,
+      "tags": {
+        "addr:housenumber": "83",
+        "addr:street": "Quai de Valmy",
+        "check_date": "2025-10-02",
+        "name": "Artazart",
+        "opening_hours": "Mo-Fr 10:30-19:30; Sa 11:00-19:30; Su 13:30-19:30",
+        "phone": "+33 1 40 40 24 00",
+        "shop": "books",
+        "survey:date": "2023-05-27",
+        "website": "https://artazart.com/"
+      }
+    },
+    {
+      "id": "node:251851388",
+      "title": "Bouillon Julien",
+      "text": "fr:Restaurant Julien",
+      "lat": 48.8705409,
+      "lon": 2.3532213,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-09-04",
+        "contact:city": "Paris",
+        "contact:email": "contact@bouillon-julien.com",
+        "contact:housenumber": "16",
+        "contact:phone": "+33 1 47 70 12 06",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du Faubourg Saint-Denis",
+        "contact:website": "https://www.bouillon-julien.com/",
+        "cuisine": "coffee_shop",
+        "indoor_seating": "yes",
+        "name": "Bouillon Julien",
+        "opening_hours": "Mo-Su 11:45-24:00",
+        "outdoor_seating": "no",
+        "payment:cash": "yes",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "wheelchair": "yes",
+        "wikidata": "Q3427906",
+        "wikipedia": "fr:Restaurant Julien"
+      }
+    },
+    {
+      "id": "node:251851389",
+      "title": "Yess électrique",
+      "text": "check_date=2025-02-28, name=Yess électrique, opening_hours=Mo-Th 07:00-12:00,13:30-17:00; Fr 07:00-12:00,13:30-16:00, payment:credit_cards=yes, payment:debit_cards=yes, shop=electronics",
+      "lat": 48.8711696,
+      "lon": 2.3649409,
+      "tags": {
+        "check_date": "2025-02-28",
+        "name": "Yess électrique",
+        "opening_hours": "Mo-Th 07:00-12:00,13:30-17:00; Fr 07:00-12:00,13:30-16:00",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "shop": "electronics"
+      }
+    },
+    {
+      "id": "node:251851390",
+      "title": "Le Royal Est",
+      "text": "amenity=restaurant, indoor_seating=yes, name=Le Royal Est, opening_hours=Mo-Sa 06:00-02:00, Su 07:00-02:00, outdoor_seating=no, source=survey 2017",
+      "lat": 48.8755247,
+      "lon": 2.3590436,
+      "tags": {
+        "amenity": "restaurant",
+        "indoor_seating": "yes",
+        "name": "Le Royal Est",
+        "opening_hours": "Mo-Sa 06:00-02:00, Su 07:00-02:00",
+        "outdoor_seating": "no",
+        "source": "survey 2017"
+      }
+    },
+    {
+      "id": "node:251851391",
+      "title": "Bouillon Chartier",
+      "text": "air_conditioning=yes, amenity=restaurant, check_date=2024-08-25, contact:city=Paris, contact:housenumber=5, contact:phone=+33 1 42 05 20 02",
+      "lat": 48.8759117,
+      "lon": 2.3587708,
+      "tags": {
+        "air_conditioning": "yes",
+        "amenity": "restaurant",
+        "check_date": "2024-08-25",
+        "contact:city": "Paris",
+        "contact:housenumber": "5",
+        "contact:phone": "+33 1 42 05 20 02",
+        "contact:postcode": "75010",
+        "contact:street": "Rue du 8 Mai 1945",
+        "contact:website": "https://www.bouillon-chartier.com/gare-de-lest/",
+        "cuisine": "french;brasserie",
+        "diet:vegan": "yes",
+        "diet:vegetarian": "yes",
+        "indoor_seating": "yes",
+        "name": "Bouillon Chartier",
+        "opening_hours": "Mo-Su 11:30-00:00",
+        "outdoor_seating": "no",
+        "payment:credit_cards": "yes",
+        "payment:debit_cards": "yes",
+        "ref:FR:SIRET": "43890191000036",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:251851395",
+      "title": "Hôtel du Terrage",
+      "text": "check_date=2024-10-18, name=Hôtel du Terrage, tourism=hotel",
+      "lat": 48.8774454,
+      "lon": 2.3624214,
+      "tags": {
+        "check_date": "2024-10-18",
+        "name": "Hôtel du Terrage",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251851402",
+      "title": "Hotel Brady",
+      "text": "addr:housenumber=31, addr:street=Boulevard de Strasbourg, check_date=2025-09-22, internet_access=wlan, internet_access:fee=no, name=Hotel Brady",
+      "lat": 48.8711954,
+      "lon": 2.3550205,
+      "tags": {
+        "addr:housenumber": "31",
+        "addr:street": "Boulevard de Strasbourg",
+        "check_date": "2025-09-22",
+        "internet_access": "wlan",
+        "internet_access:fee": "no",
+        "name": "Hotel Brady",
+        "tourism": "hotel"
+      }
+    },
+    {
+      "id": "node:251861700",
+      "title": "Paris Saint-Germain-des-Prés / Médicis",
+      "text": "addr:postcode=75006, amenity=post_office, atm=yes, change_machine=yes, copy_facility=yes, name=Paris Saint-Germain-des-Prés / Médicis",
+      "lat": 48.852667,
+      "lon": 2.3323656,
+      "tags": {
+        "addr:postcode": "75006",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Saint-Germain-des-Prés / Médicis",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-13:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14335A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:252114719",
+      "title": "Paris Médicis",
+      "text": "addr:city=Paris, addr:postcode=75006, amenity=post_office, atm=yes, change_machine=yes, copy_facility=yes",
+      "lat": 48.8494031,
+      "lon": 2.3370695,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:postcode": "75006",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Médicis",
+        "opening_hours": "closed",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone:FR": "36 31",
+        "ref:FR:LaPoste": "14369A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:252115484",
+      "title": "Lyon Diderot",
+      "text": "access=yes, amenity=parking, brand=Effia, brand:wikidata=Q3045894, brand:wikipedia=fr:EFFIA, fee=yes",
+      "lat": 48.8446431,
+      "lon": 2.3721997,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "brand": "Effia",
+        "brand:wikidata": "Q3045894",
+        "brand:wikipedia": "fr:EFFIA",
+        "fee": "yes",
+        "level": "0",
+        "name": "Lyon Diderot",
+        "operator": "Effia",
+        "operator:type": "private",
+        "operator:wikidata": "Q3045894",
+        "operator:wikipedia": "fr:EFFIA",
+        "parking": "surface",
+        "surface": "asphalt",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:252115504",
+      "title": "Parc Paris-Lyon",
+      "text": "access=yes, amenity=parking, capacity=1183, fee=yes, name=Parc Paris-Lyon, operator=Urbispark",
+      "lat": 48.8439502,
+      "lon": 2.3728916,
+      "tags": {
+        "access": "yes",
+        "amenity": "parking",
+        "capacity": "1183",
+        "fee": "yes",
+        "name": "Parc Paris-Lyon",
+        "operator": "Urbispark",
+        "parking": "underground"
+      }
+    },
+    {
+      "id": "node:252211317",
+      "title": "Musée Edith Piaf",
+      "text": "fr:Musée Édith-Piaf",
+      "lat": 48.8662368,
+      "lon": 2.3817367,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "5",
+        "addr:postcode": "75011",
+        "addr:street": "rue Crespin du Gast",
+        "charge": "10 EUR",
+        "check_date": "2025-03-23",
+        "description:opening_hours": "sur rendez-vous (mention affichée sur plaque à l'entrée)",
+        "fee": "yes",
+        "name": "Musée Edith Piaf",
+        "opening_hours": "Mo-We 13:00-18:00; Th 10:00-12:00 \"mandatory reservation by phone\"",
+        "operator": "Les Amis d'Édith Piaf",
+        "phone": "+33 1 43 55 52 72",
+        "reservation": "required",
+        "tourism": "museum",
+        "website": "https://www.parisinfo.com/musee-monument-paris/71402/Musee-Edith-Piaf",
+        "wikidata": "Q3055415",
+        "wikipedia": "fr:Musée Édith-Piaf"
+      }
+    },
+    {
+      "id": "node:252214031",
+      "title": "Atelier M.",
+      "text": "addr:city=Paris, addr:housenumber=108, addr:postcode=75011, addr:street=Avenue Ledru-Rollin, female=yes, male=yes",
+      "lat": 48.8524984,
+      "lon": 2.3770609,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "108",
+        "addr:postcode": "75011",
+        "addr:street": "Avenue Ledru-Rollin",
+        "female": "yes",
+        "male": "yes",
+        "name": "Atelier M.",
+        "opening_hours": "Tu-Sa 10:00-18:00; Su,Mo off",
+        "phone": "+33 9 81 33 20 41",
+        "shop": "hairdresser"
+      }
+    },
+    {
+      "id": "node:252214032",
+      "title": "Clown-Bar",
+      "text": "fr:Clown-Bar",
+      "lat": 48.8636232,
+      "lon": 2.3671745,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-03-02",
+        "cuisine": "french",
+        "delivery": "no",
+        "heritage": "2",
+        "heritage:operator": "mhs",
+        "mhs:inscription_date": "1995-11-06",
+        "name": "Clown-Bar",
+        "opening_hours": "Mo-Fr 12:30-14:00, 19:00-23:00",
+        "phone": "+33143558735",
+        "ref:mhs": "PA00086531",
+        "smoking": "outside",
+        "source:heritage": "data.gouv.fr:Ministère de la Culture - 04/2015",
+        "takeaway": "no",
+        "website": "https://www.clown-bar-paris.fr/",
+        "wikidata": "Q13518748",
+        "wikipedia": "fr:Clown-Bar"
+      }
+    },
+    {
+      "id": "node:252263209",
+      "title": "Biondi",
+      "text": "addr:housenumber=118, addr:postcode=75011, addr:street=Rue Amelot, amenity=restaurant, check_date=2025-02-02, cuisine=argentinian",
+      "lat": 48.8638211,
+      "lon": 2.3670738,
+      "tags": {
+        "addr:housenumber": "118",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Amelot",
+        "amenity": "restaurant",
+        "check_date": "2025-02-02",
+        "cuisine": "argentinian",
+        "diet:vegetarian": "yes",
+        "level": "0",
+        "name": "Biondi",
+        "payment:credit_cards": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "phone": "+33 1 47 00 90 18",
+        "website": "https://www.biondi-restaurant.fr/",
+        "wheelchair": "no"
+      }
+    },
+    {
+      "id": "node:252550640",
+      "title": "Rang",
+      "text": "addr:housenumber=50, addr:street=Rue de la Fontaine au Roi, amenity=restaurant, brewery=no, check_date=2025-07-05, contact:phone=+33954572789",
+      "lat": 48.8680028,
+      "lon": 2.3732066,
+      "tags": {
+        "addr:housenumber": "50",
+        "addr:street": "Rue de la Fontaine au Roi",
+        "amenity": "restaurant",
+        "brewery": "no",
+        "check_date": "2025-07-05",
+        "contact:phone": "+33954572789",
+        "contact:website": "https://www.rangrestaurant.com",
+        "cuisine": "indian",
+        "diet:vegetarian": "yes",
+        "internet_access": "no",
+        "name": "Rang",
+        "name:2019": "Aux Comptoirs des Indes",
+        "outdoor_seating": "yes",
+        "payment:cash": "yes",
+        "payment:mastercard": "yes",
+        "payment:visa": "yes",
+        "reservation": "yes",
+        "takeaway": "yes"
+      }
+    },
+    {
+      "id": "node:252551795",
+      "title": "Le Troisième Bureau",
+      "text": "amenity=restaurant, name=Le Troisième Bureau",
+      "lat": 48.8656744,
+      "lon": 2.3707975,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Le Troisième Bureau"
+      }
+    },
+    {
+      "id": "node:252590177",
+      "title": "Cannibale Café",
+      "text": "addr:city=Paris, addr:housenumber=93, addr:postcode=75011, addr:street=Rue Jean-Pierre Timbaud, amenity=restaurant, bar=yes",
+      "lat": 48.86841,
+      "lon": 2.3793255,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "93",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Jean-Pierre Timbaud",
+        "amenity": "restaurant",
+        "bar": "yes",
+        "check_date": "2025-04-13",
+        "cuisine": "regional;french",
+        "email": "contact@cannibalecafe.com",
+        "indoor_seating": "yes",
+        "internet_access": "wlan",
+        "internet_access:ssid": "Cannibale_Café",
+        "level": "0",
+        "name": "Cannibale Café",
+        "opening_hours": "Mo-Su 07:30-02:00; Sa 09:00-02:00; Su 09:00-24:00",
+        "outdoor_seating": "terrace",
+        "phone": "+33 1 49 29 95 59",
+        "reservation": "yes",
+        "smoking": "outside",
+        "website": "https://www.cannibalecafe.com",
+        "wheelchair": "limited"
+      }
+    },
+    {
+      "id": "node:252591370",
+      "title": "Avé Maria",
+      "text": "amenity=restaurant, check_date=2025-01-19, name=Avé Maria, opening_hours=Mo-Su 19:00-1:30, phone=+33 1 47 00 61 73, source=cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2011",
+      "lat": 48.8644844,
+      "lon": 2.3730277,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-01-19",
+        "name": "Avé Maria",
+        "opening_hours": "Mo-Su 19:00-1:30",
+        "phone": "+33 1 47 00 61 73",
+        "source": "cadastre-dgi-fr source : Direction Générale des Impôts - Cadastre. Mise à jour : 2011"
+      }
+    },
+    {
+      "id": "node:252596129",
+      "title": "Louloute",
+      "text": "addr:city=Paris, addr:housenumber=55, addr:postcode=75011, addr:street=Rue de Charonne, amenity=bar, check_date=2024-09-22",
+      "lat": 48.8534002,
+      "lon": 2.3787862,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "55",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de Charonne",
+        "amenity": "bar",
+        "check_date": "2024-09-22",
+        "name": "Louloute"
+      }
+    },
+    {
+      "id": "node:252599980",
+      "title": "Le Café des Anges",
+      "text": "addr:city=Paris, addr:housenumber=66, addr:postcode=75011, addr:street=Rue de la Roquette, amenity=restaurant, bar=yes",
+      "lat": 48.8554359,
+      "lon": 2.3744522,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "66",
+        "addr:postcode": "75011",
+        "addr:street": "Rue de la Roquette",
+        "amenity": "restaurant",
+        "bar": "yes",
+        "changing_table": "no",
+        "check_date": "2025-04-30",
+        "cuisine": "coffee_shop;french",
+        "happy_hours": "Mo-Su 17:00-21:00",
+        "level": "0",
+        "name": "Le Café des Anges",
+        "opening_hours": "Mo-Su 07:30-02:00",
+        "outdoor_seating": "yes",
+        "phone": "+33 1 77 32 22 11",
+        "smoking": "outside",
+        "toilets": "yes",
+        "toilets:access": "customers",
+        "toilets:disposal": "flush",
+        "toilets:handwashing": "yes",
+        "toilets:position": "seated",
+        "toilets:wheelchair": "no",
+        "website": "https://www.cafedesangesparis.com"
+      }
+    },
+    {
+      "id": "node:252601888",
+      "title": "Le Cyrano",
+      "text": "amenity=restaurant, name=Le Cyrano",
+      "lat": 48.8561021,
+      "lon": 2.3751898,
+      "tags": {
+        "amenity": "restaurant",
+        "name": "Le Cyrano"
+      }
+    },
+    {
+      "id": "node:252604389",
+      "title": "Justine",
+      "text": "addr:city=Paris, addr:housenumber=96, addr:postcode=75011, addr:street=Rue Oberkampf, amenity=restaurant, cuisine=french;pizza",
+      "lat": 48.8656774,
+      "lon": 2.3778866,
+      "tags": {
+        "addr:city": "Paris",
+        "addr:housenumber": "96",
+        "addr:postcode": "75011",
+        "addr:street": "Rue Oberkampf",
+        "amenity": "restaurant",
+        "cuisine": "french;pizza",
+        "name": "Justine",
+        "opening_hours": "Mo-Su 08:00-02:00",
+        "phone": "+33 1 43 57 44 03",
+        "smoking": "outside",
+        "website": "http://www.justineparis.com/"
+      }
+    },
+    {
+      "id": "node:252608626",
+      "title": "La Mercerie",
+      "text": "amenity=bar, name=La Mercerie, source=survey",
+      "lat": 48.8657437,
+      "lon": 2.3782276,
+      "tags": {
+        "amenity": "bar",
+        "name": "La Mercerie",
+        "source": "survey"
+      }
+    },
+    {
+      "id": "node:252609212",
+      "title": "Le Scherkhan",
+      "text": "amenity=cafe, name=Le Scherkhan, name:fr=Le Scherkhan",
+      "lat": 48.8664143,
+      "lon": 2.3810502,
+      "tags": {
+        "amenity": "cafe",
+        "name": "Le Scherkhan",
+        "name:fr": "Le Scherkhan"
+      }
+    },
+    {
+      "id": "node:252625380",
+      "title": "Les marcheurs de planète",
+      "text": "amenity=wine_bar, name=Les marcheurs de planète",
+      "lat": 48.8567799,
+      "lon": 2.3773631,
+      "tags": {
+        "amenity": "wine_bar",
+        "name": "Les marcheurs de planète"
+      }
+    },
+    {
+      "id": "node:252657578",
+      "title": "Paris Moulin de la Pointe / Massena",
+      "text": "addr:postcode=75013, amenity=post_office, atm=yes, change_machine=yes, copy_facility=yes, name=Paris Moulin de la Pointe / Massena",
+      "lat": 48.8249137,
+      "lon": 2.3571341,
+      "tags": {
+        "addr:postcode": "75013",
+        "amenity": "post_office",
+        "atm": "yes",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Moulin de la Pointe / Massena",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-13:00; PH off; 2024 May 20 off",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14213A",
+        "source": "data.gouv.fr:LaPoste - 06/2015",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:252657780",
+      "title": "Paris Butte aux Cailles",
+      "text": "addr:postcode=75013, amenity=post_office, atm=yes, brand=La Poste, change_machine=yes, copy_facility=yes",
+      "lat": 48.8260261,
+      "lon": 2.3459422,
+      "tags": {
+        "addr:postcode": "75013",
+        "amenity": "post_office",
+        "atm": "yes",
+        "brand": "La Poste",
+        "change_machine": "yes",
+        "copy_facility": "yes",
+        "name": "Paris Butte aux Cailles",
+        "opening_hours": "Mo-Fr 09:00-19:00; Sa 09:00-12:30",
+        "operator": "La Poste",
+        "operator:wikidata": "Q373724",
+        "operator:wikipedia": "fr:La Poste (entreprise française)",
+        "phone": "3631",
+        "ref:FR:LaPoste": "14326A",
+        "source": "LaPoste - 03/2019",
+        "stamping_machine": "yes",
+        "wheelchair": "yes"
+      }
+    },
+    {
+      "id": "node:252683843",
+      "title": "Le Voltaire",
+      "text": "amenity=restaurant, check_date=2025-10-08, cuisine=brasserie, name=Le Voltaire",
+      "lat": 48.8651691,
+      "lon": 2.3673694,
+      "tags": {
+        "amenity": "restaurant",
+        "check_date": "2025-10-08",
+        "cuisine": "brasserie",
+        "name": "Le Voltaire"
+      }
+    },
+    {
+      "id": "node:252683844",
+      "title": "New Hotel Republique",
+      "text": "name=New Hotel Republique, tourism=hotel",
+      "lat": 48.8661043,
+      "lon": 2.3685294,
+      "tags": {
+        "name": "New Hotel Republique",
+        "tourism": "hotel"
+      }
+    }
+  ]
+}

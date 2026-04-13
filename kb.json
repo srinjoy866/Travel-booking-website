@@ -1,0 +1,97 @@
+[
+  {
+    "id": "paris_museums",
+    "title": "Paris — Top Museums",
+    "text": "Paris is home to world-class museums. Key picks are the Louvre (large classical collections; arrive at opening to avoid queues), Musée d'Orsay (impressionist paintings in a former train station), and Centre Pompidou (modern art). Buy timed-entry tickets where offered and combine nearby sites on the same day to reduce travel time."
+  },
+  {
+    "id": "paris_budget_food",
+    "title": "Paris — Budget Eats",
+    "text": "Affordable options in Paris include boulangeries for sandwiches and pastries, crêpe stands, and neighborhood bistros that offer fixed-price lunch menus (formule). Try farmer markets for fresh picnic ingredients and falafel in the Marais for a cheap, filling meal."
+  },
+  {
+    "id": "paris_3day_itinerary",
+    "title": "Paris — 3-Day Museums Itinerary",
+    "text": "Day 1: Louvre in the morning, Jardin des Tuileries and Musée de l'Orangerie in the afternoon. Day 2: Musée d'Orsay then stroll across the Seine to Île de la Cité and Sainte-Chapelle. Day 3: Centre Pompidou and a neighborhood walk in Le Marais. Each morning, arrive at opening time and reserve one afternoon for slow wandering."
+  },
+  {
+    "id": "tokyo_highlights",
+    "title": "Tokyo — Highlights",
+    "text": "Tokyo mixes ultramodern and traditional neighborhoods: Shinjuku nightlife, Shibuya crossing, Asakusa's Senso-ji temple, and the Meiji Shrine. Use the JR Yamanote line for easy travel between major districts and get a Suica card for tap-and-go transit."
+  },
+  {
+    "id": "tokyo_3day_itinerary",
+    "title": "Tokyo — 3-Day Sample Itinerary",
+    "text": "Day 1: Central Tokyo — Imperial Palace East Gardens and Ginza. Day 2: Asakusa and Ueno museums, finish in Akihabara or Kanda for electronics and manga. Day 3: Shibuya/Shinjuku, Meiji Shrine, and Harajuku. Start early to avoid rush-hour crowds in downtown museums."
+  },
+  {
+    "id": "nepal_trekking_overview",
+    "title": "Nepal — Trekking Overview",
+    "text": "Nepal offers treks from easy day-hikes to high-altitude multi-day routes like the Annapurna Circuit and Everest Base Camp. Prepare for altitude changes, hire local guides where required, and allow extra days for acclimatization. Permits (TIMS, national park) are often required depending on the route."
+  },
+  {
+    "id": "nepal_packing",
+    "title": "Nepal — Packing for Trekking",
+    "text": "Essentials: warm layered clothing, waterproof jacket, sturdy trekking boots, headlamp, sunscreen, water purification, and a good sleeping bag rated for expected temperatures. Pack light and trust local lodges for hot meals. Hire local porters if you prefer to travel lighter."
+  },
+  {
+    "id": "patagonia_photo_trip",
+    "title": "Patagonia — Photography-Focused 5-Day Plan",
+    "text": "Patagonia is a photographer's dream. Base near El Chaltén or Torres del Paine. Plan sunrise shoots for dramatic light on granite peaks and glaciers. Bring a sturdy tripod, weather-sealed gear, extra batteries (cold drains batteries), and warm layers. Allow flexible days for weather windows."
+  },
+  {
+    "id": "patagonia_weather",
+    "title": "Patagonia — Weather Tips",
+    "text": "Weather is famously changeable: expect sun, wind, rain, and snow in the same day during shoulder seasons. Check local forecasts, dress in layers, and protect camera gear against moisture and sand. Short hikes are often better than long routes when wind is strong."
+  },
+  {
+    "id": "packing_general",
+    "title": "Packing — General Checklist",
+    "text": "Passport and photocopies, travel insurance, medications, a versatile wardrobe (layers), comfortable shoes for walking, chargers and power adapter, small first-aid kit, water bottle, and a lightweight daypack. Keep important documents and medications in carry-on luggage."
+  },
+  {
+    "id": "money_and_cards",
+    "title": "Money — Cards and Cash",
+    "text": "Many cities accept cards but smaller towns and market stalls may be cash-only. Notify your bank before travel, carry a small amount of local currency for immediate needs, and use ATMs in secure locations. Consider a travel card with low foreign-transaction fees."
+  },
+  {
+    "id": "visas_and_passports",
+    "title": "Visas & Passports — Quick Advice",
+    "text": "Check visa requirements well before travel: some countries allow visa-on-arrival, others require pre-approval. Ensure passports are valid for at least six months beyond travel dates. Keep digital copies stored securely and a paper copy separate from the original."
+  },
+  {
+    "id": "public_transport_tips",
+    "title": "Public Transport — Tips",
+    "text": "Learn the local card system (eg. Suica, Oyster) and apps for transit maps. For city travel, off-peak hours are less crowded; for regional travel, book longer trains or buses in advance. Keep small change for tickets in cash-only kiosks."
+  },
+  {
+    "id": "safety_tips",
+    "title": "Safety — Basic Travel Safety",
+    "text": "Stay aware of your surroundings, keep valuables secure, and use hotel safes for passports when possible. Register travel plans with a contact, keep emergency numbers handy, and avoid isolated areas at night. Carry a photocopy of your passport when exploring."
+  },
+  {
+    "id": "budget_travel",
+    "title": "Budget Travel — Practical Tips",
+    "text": "Travel off-season for lower fares, use local transport, eat where locals eat, and choose guesthouses or hostels over hotels. Use city tourist cards only if they cover attractions you will visit. Planning flexible dates often reduces costs."
+  },
+  {
+    "id": "travel_insurance_basics",
+    "title": "Travel Insurance — Basics",
+    "text": "Travel insurance should cover medical emergencies, evacuation (for remote treks), trip interruption, and delayed baggage where appropriate. Read policy limits and exclusions carefully, especially for adventure sports or high-altitude trekking."
+  },
+  {
+    "id": "sustainable_travel",
+    "title": "Sustainable Travel — Small Actions",
+    "text": "Respect local cultures, avoid single-use plastics, support local guides and businesses, stick to trails to minimize erosion, and leave wildlife undisturbed. Small choices like reusing water bottles and shopping locally make a big difference."
+  },
+  {
+    "id": "hotel_vs_hostel",
+    "title": "Accommodation — Hotel vs Hostel",
+    "text": "Hostels are great for budget and social travel; private rooms in hostels or guesthouses can offer a balance between cost and privacy. Hotels provide more predictable amenities. Read recent reviews for cleanliness and location before booking."
+  },
+  {
+    "id": "how_to_ask_for_itinerary",
+    "title": "How to Ask the Bot for an Itinerary",
+    "text": "Be specific: include destination, trip length, interests (e.g., museums, hiking), budget, and mobility limits. Example: 'Create a 4-day family-friendly London itinerary focused on museums and free attractions with easy transit between sites.' The bot will match the request to relevant KB entries and return suggestions."
+  }
+]

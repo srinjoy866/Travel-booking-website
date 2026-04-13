@@ -1,0 +1,2697 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Guide - Home</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    
+    <!-- Add AI SDKs -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
+    
+    <style>
+        /* Additional styles for Firebase integration */
+        .loading-spinner {
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 9999;
+        }
+        
+        .loading-spinner i {
+            font-size: 48px;
+            color: white;
+            animation: spin 1s linear infinite;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        .error-message {
+            background: #ffebee;
+            color: #c62828;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+        }
+        
+        .success-message {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 14px;
+            display: none;
+            text-align: center;
+        }
+        
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-btn {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: none;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+            font-size: 20px;
+            color: white;
+        }
+        
+        .social-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .google-btn {
+            background: #db4437;
+        }
+        
+        .facebook-btn {
+            background: #3b5998;
+        }
+        
+        .twitter-btn {
+            background: #1da1f2;
+        }
+        
+        .divider {
+            display: flex;
+            align-items: center;
+            margin: 20px 0;
+        }
+        
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background-color: #ddd;
+        }
+        
+        .divider span {
+            padding: 0 15px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .user-menu {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-menu-content {
+            display: none;
+            position: absolute;
+            right: 0;
+            background-color: white;
+            min-width: 160px;
+            box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+            z-index: 1;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .user-menu-content a {
+            color: #333;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+            transition: background 0.3s;
+        }
+        
+        .user-menu-content a:hover {
+            background-color: #f1f1f1;
+        }
+        
+        .user-menu.show .user-menu-content {
+            display: block;
+        }
+        
+        .user-profile {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .user-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background-color: #2ebf91;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 8px;
+            font-weight: bold;
+        }
+        
+        /* AI Feature Modal Styles */
+        .ai-feature-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.5);
+            overflow: auto;
+        }
+        
+        .ai-feature-content {
+            background-color: white;
+            margin: 10% auto;
+            padding: 30px;
+            border-radius: 12px;
+            width: 80%;
+            max-width: 800px;
+            position: relative;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+        }
+        
+        .ai-feature-close {
+            position: absolute;
+            right: 20px;
+            top: 15px;
+            font-size: 24px;
+            font-weight: bold;
+            cursor: pointer;
+            color: #aaa;
+        }
+        
+        .ai-feature-close:hover {
+            color: #333;
+        }
+        
+        .ai-feature-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .ai-feature-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #2ebf91;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 20px;
+            font-size: 24px;
+        }
+        
+        .ai-feature-title {
+            font-size: 28px;
+            color: #333;
+        }
+        
+        .ai-feature-description {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #555;
+            margin-bottom: 30px;
+        }
+        
+        .ai-feature-demo {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .ai-feature-demo h3 {
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .demo-item {
+            display: flex;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .demo-item:last-child {
+            border-bottom: none;
+        }
+        
+        .demo-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #e9ecef;
+            color: #495057;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+        }
+        
+        .demo-content {
+            flex-grow: 1;
+        }
+        
+        .demo-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .demo-description {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .ai-feature-stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+        
+        .stat-item {
+            text-align: center;
+            flex: 1;
+        }
+        
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: #2ebf91;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .try-it-btn {
+            background-color: #2ebf91;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        
+        .try-it-btn:hover {
+            background-color: #1ca874;
+        }
+        
+        /* Real-time Updates Section */
+        .real-time-updates {
+            background: linear-gradient(135deg, #2ebf91, #3498db);
+            color: white;
+            padding: 40px 0;
+            margin-top: 60px;
+        }
+        
+        .real-time-updates .container {
+            display: flex;
+            align-items: center;
+        }
+        
+        .real-time-content {
+            flex: 2;
+            padding-right: 40px;
+        }
+        
+        .real-time-content h2 {
+            font-size: 32px;
+            margin-bottom: 20px;
+        }
+        
+        .real-time-content p {
+            font-size: 18px;
+            margin-bottom: 30px;
+            opacity: 0.9;
+        }
+        
+        .real-time-demo {
+            flex: 1;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        
+        .notification-item {
+            background-color: white;
+            color: #333;
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            animation: slideIn 0.5s ease-out;
+        }
+        
+        @keyframes slideIn {
+            from {
+                transform: translateX(20px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .notification-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .notification-icon.weather {
+            background-color: #f39c12;
+            color: white;
+        }
+        
+        .notification-icon.event {
+            background-color: #9b59b6;
+            color: white;
+        }
+        
+        .notification-content {
+            flex-grow: 1;
+        }
+        
+        .notification-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .notification-message {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .notification-time {
+            font-size: 12px;
+            color: #999;
+            margin-top: 5px;
+        }
+        
+        /* Personalized Itineraries Section */
+        .personalized-itineraries {
+            padding: 60px 0;
+            background-color: #f8f9fa;
+        }
+        
+        .itinerary-demo {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
+            margin-top: 30px;
+        }
+        
+        .itinerary-header {
+            background: linear-gradient(135deg, #3498db, #2ebf91);
+            color: white;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .itinerary-title {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .itinerary-duration {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 14px;
+        }
+        
+        .itinerary-days {
+            padding: 20px;
+        }
+        
+        .itinerary-day {
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .itinerary-day:last-child {
+            margin-bottom: 0;
+            padding-bottom: 0;
+            border-bottom: none;
+        }
+        
+        .day-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .day-number {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #3498db;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+        }
+        
+        .day-title {
+            font-size: 18px;
+            font-weight: 600;
+        }
+        
+        .day-activities {
+            padding-left: 55px;
+        }
+        
+        .activity-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .activity-time {
+            width: 60px;
+            font-weight: 600;
+            color: #3498db;
+            flex-shrink: 0;
+        }
+        
+        .activity-details {
+            flex-grow: 1;
+        }
+        
+        .activity-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        
+        .activity-description {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .generate-itinerary-btn {
+            background-color: #2ebf91;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+            display: inline-block;
+        }
+        
+        .generate-itinerary-btn:hover {
+            background-color: #1ca874;
+        }
+        
+        .ai-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #2ebf91;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .ai-chatbot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        
+        .ai-chatbot i {
+            font-size: 24px;
+        }
+        
+        .chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: #2ebf91;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-close {
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .chat-message.user {
+            align-self: flex-end;
+        }
+        
+        .chat-message.bot {
+            align-self: flex-start;
+        }
+        
+        .message-bubble {
+            padding: 12px;
+            border-radius: 18px;
+            font-size: 14px;
+        }
+        
+        .chat-message.user .message-bubble {
+            background: #2ebf91;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-message.bot .message-bubble {
+            background: #f1f1f1;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+        }
+        
+        .chat-input {
+            flex-grow: 1;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .chat-send {
+            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2ebf91;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Dark mode styles */
+        body.dark-mode .ai-feature-content {
+            background-color: #2d2d2d;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .ai-feature-title {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .ai-feature-description {
+            color: #bbb;
+        }
+        
+        body.dark-mode .ai-feature-demo {
+            background-color: #252525;
+        }
+        
+        body.dark-mode .ai-feature-demo h3 {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .demo-item {
+            border-color: #444;
+        }
+        
+        body.dark-mode .demo-title {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .demo-description {
+            color: #bbb;
+        }
+        
+        body.dark-mode .personalized-itineraries {
+            background-color: #252525;
+        }
+        
+        body.dark-mode .itinerary-demo {
+            background-color: #2d2d2d;
+        }
+        
+        body.dark-mode .itinerary-day {
+            border-color: #444;
+        }
+        
+        body.dark-mode .day-title {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .activity-name {
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .activity-description {
+            color: #bbb;
+        }
+        
+        body.dark-mode .chat-container {
+            background-color: #2d2d2d;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .chat-header {
+            background-color: #1ca874;
+        }
+        
+        body.dark-mode .chat-input {
+            background-color: #252525;
+            border-color: #444;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .message-bubble {
+            background-color: #252525;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .chat-message.user .message-bubble {
+            background-color: #1ca874;
+        }
+    </style>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <i class="fas fa-spinner"></i>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-compass"></i>
+                <span>AI Travel Guide</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html" class="active">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="plan-trip.html">Plan Trip</a></li>
+                    <li><a href="travel-tips.html">Travel Tips</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <!-- Sign In/Sign Up buttons (shown when not logged in) -->
+                <div id="authButtons">
+                    <a href="#" id="signInBtn">Sign In</a>
+                    <a href="#" class="btn" id="signUpBtn">Sign Up</a>
+                </div>
+                
+                <!-- User profile menu (shown when logged in) -->
+                <div id="userProfile" class="user-menu" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                        <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                    </div>
+                    <div class="user-menu-content">
+                        <a href="#" id="myAccount">My Account</a>
+                        <a href="#" id="myTrips">My Trips</a>
+                        <a href="#" id="savedDestinations">Saved Destinations</a>
+                        <a href="#" id="signOutBtn">Sign Out</a>
+                    </div>
+                </div>
+                
+                <select class="lang-selector" id="langSelector">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                </select>
+                <button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Discover Your Perfect Journey with AI</h1>
+            <p>Personalized travel recommendations in seconds</p>
+            
+            <div class="search-container">
+                <form class="search-form" id="searchForm">
+                    <div class="form-group">
+                        <label for="destination">Where do you want to go?</label>
+                        <input type="text" id="destination" placeholder="Try 'Paris museums' or 'Japan cherry blossoms'">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="dates">Travel dates</label>
+                        <input type="text" id="dates" placeholder="Select dates">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="travelers">Who's going?</label>
+                        <select id="travelers">
+                            <option>1 Adult</option>
+                            <option>2 Adults</option>
+                            <option>Family</option>
+                            <option>Group</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="button" class="btn-secondary preferences-btn" id="preferencesBtn">
+                            <i class="fas fa-sliders-h"></i> Preferences
+                        </button>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn">Find My Adventure</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- AI Features Section -->
+    <section class="features">
+        <div class="container">
+            <div class="features-grid">
+                <div class="feature-card" data-feature="recommendations">
+                    <div class="icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>Smart Recommendations</h3>
+                    <p>AI analyzes 10M+ traveler reviews to find your perfect match</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="feature-card" data-feature="itineraries">
+                    <div class="icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <h3>Personalized Itineraries</h3>
+                    <p>Custom travel plans based on your unique style and preferences</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+                
+                <div class="feature-card" data-feature="updates">
+                    <div class="icon">
+                        <i class="fas fa-cloud-sun"></i>
+                    </div>
+                    <h3>Real-time Updates</h3>
+                    <p>Live weather alerts and event notifications during your trip</p>
+                    <button class="learn-more-btn">Learn More</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Real-time Updates Section -->
+    <section class="real-time-updates">
+        <div class="container">
+            <div class="real-time-content">
+                <h2>Real-time Travel Updates</h2>
+                <p>Stay informed with live alerts about weather changes, local events, and travel advisories during your trip.</p>
+                <button class="try-it-btn" id="tryRealTimeBtn">Try It Now</button>
+            </div>
+            
+            <div class="real-time-demo">
+                <h3>Live Notifications</h3>
+                <div id="notificationsContainer">
+                    <div class="notification-item">
+                        <div class="notification-icon weather">
+                            <i class="fas fa-cloud-rain"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Weather Alert</div>
+                            <div class="notification-message">Rain expected tomorrow in Paris. Consider indoor activities.</div>
+                            <div class="notification-time">2 minutes ago</div>
+                        </div>
+                    </div>
+                    
+                    <div class="notification-item">
+                        <div class="notification-icon event">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <div class="notification-content">
+                            <div class="notification-title">Local Event</div>
+                            <div class="notification-message">Cherry Blossom Festival starts tomorrow in Kyoto.</div>
+                            <div class="notification-time">15 minutes ago</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Personalized Itineraries Section -->
+    <section class="personalized-itineraries">
+        <div class="container">
+            <h2>Personalized Travel Itineraries</h2>
+            <p>Our AI creates custom travel plans based on your preferences, interests, and travel style.</p>
+            
+            <div class="itinerary-demo">
+                <div class="itinerary-header">
+                    <div class="itinerary-title">Tokyo Adventure</div>
+                    <div class="itinerary-duration">5 Days</div>
+                </div>
+                
+                <div class="itinerary-days">
+                    <div class="itinerary-day">
+                        <div class="day-header">
+                            <div class="day-number">1</div>
+                            <div class="day-title">Arrival in Tokyo</div>
+                        </div>
+                        <div class="day-activities">
+                            <div class="activity-item">
+                                <div class="activity-time">14:00</div>
+                                <div class="activity-details">
+                                    <div class="activity-name">Check-in at Hotel</div>
+                                    <div class="activity-description">Park Hyatt Tokyo, Shinjuku</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-time">16:00</div>
+                                <div class="activity-details">
+                                    <div class="activity-name">Explore Shinjuku</div>
+                                    <div class="activity-description">Visit Tokyo Metropolitan Government Building for city views</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-time">19:00</div>
+                                <div class="activity-details">
+                                    <div class="activity-name">Dinner at Robot Restaurant</div>
+                                    <div class="activity-description">Unique dining experience with entertainment show</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="itinerary-day">
+                        <div class="day-header">
+                            <div class="day-number">2</div>
+                            <div class="day-title">Traditional Tokyo</div>
+                        </div>
+                        <div class="day-activities">
+                            <div class="activity-item">
+                                <div class="activity-time">09:00</div>
+                                <div class="activity-details">
+                                    <div class="activity-name">Visit Asakusa</div>
+                                    <div class="activity-description">Explore Senso-ji Temple and Nakamise Shopping Street</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-time">12:00</div>
+                                <div class="activity-details">
+                                    <div class="activity-name">Lunch at Asakusa Imahan</div>
+                                    <div class="activity-description">Traditional sukiyaki restaurant</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <div class="activity-time">14:00</div>
+                                <div class="activity-details">
+                                    <div class="activity-name">Ueno Park</div>
+                                    <div class="activity-description">Visit museums and enjoy cherry blossoms (seasonal)</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button class="generate-itinerary-btn" id="generateItineraryBtn">Generate Your Itinerary</button>
+        </div>
+    </section>
+
+    <!-- Trending Destinations Section -->
+    <section class="trending">
+        <div class="container">
+            <div class="section-header">
+                <h2>Trending Now</h2>
+                <a href="destinations.html" class="view-all">View All</a>
+            </div>
+            
+            <div class="destination-cards" id="destinationCards">
+                <div class="destination-card" data-destination="bali">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1543429776-2782fc136fc5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Bali">
+                        <div class="match-score">92% match</div>
+                        <button class="save-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="card-content">
+                        <h3>Bali, Indonesia</h3>
+                        <div class="highlights">
+                            <span>Beaches</span>
+                            <span>Culture</span>
+                            <span>$</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="kyoto">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1511739001486-6bfe10ce785f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Kyoto">
+                        <div class="match-score">88% match</div>
+                        <button class="save-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="card-content">
+                        <h3>Kyoto, Japan</h3>
+                        <div class="highlights">
+                            <span>Historical</span>
+                            <span>Food</span>
+                            <span>$$</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="santorini">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Santorini">
+                        <div class="match-score">85% match</div>
+                        <button class="save-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="card-content">
+                        <h3>Santorini, Greece</h3>
+                        <div class="highlights">
+                            <span>Romance</span>
+                            <span>Islands</span>
+                            <span>$$$</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="destination-card" data-destination="banff">
+                    <div class="card-image">
+                        <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Banff">
+                        <div class="match-score">80% match</div>
+                        <button class="save-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="card-content">
+                        <h3>Banff, Canada</h3>
+                        <div class="highlights">
+                            <span>Adventure</span>
+                            <span>Nature</span>
+                            <span>$$</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Travel Categories Section -->
+    <section class="categories">
+        <div class="container">
+            <h2>Explore by Interest</h2>
+            <div class="category-grid">
+                <div class="category-card" data-category="adventure">
+                    <i class="fas fa-hiking"></i>
+                    <h3>Adventure Travel</h3>
+                </div>
+                <div class="category-card" data-category="family">
+                    <i class="fas fa-child"></i>
+                    <h3>Family Vacations</h3>
+                </div>
+                <div class="category-card" data-category="romance">
+                    <i class="fas fa-heart"></i>
+                    <h3>Romantic Getaways</h3>
+                </div>
+                <div class="category-card" data-category="budget">
+                    <i class="fas fa-piggy-bank"></i>
+                    <h3>Budget Travel</h3>
+                </div>
+                <div class="category-card" data-category="food">
+                    <i class="fas fa-utensils"></i>
+                    <h3>Food & Cuisine</h3>
+                </div>
+                <div class="category-card" data-category="historical">
+                    <i class="fas fa-landmark"></i>
+                    <h3>Historical Sites</h3>
+                </div>
+                <div class="category-card" data-category="eco">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Eco-Tourism</h3>
+                </div>
+                <div class="category-card" data-category="luxury">
+                    <i class="fas fa-gem"></i>
+                    <h3>Luxury Travel</h3>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2>How It Works</h2>
+            <div class="steps">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Tell Us Your Preferences</h3>
+                        <p>Share your travel style, interests, and budget</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>AI Analyzes & Matches</h3>
+                        <p>Our AI processes millions of data points to find your perfect destinations</p>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Get Your Perfect Plan</h3>
+                        <p>Receive a personalized itinerary with recommendations and bookings</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials">
+        <div class="container">
+            <h2>What Travelers Say</h2>
+            <div class="testimonial-carousel" id="testimonialCarousel">
+                <div class="testimonial active">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"Saved me 15 hours of planning! The AI found hidden gems I'd never discover alone."</p>
+                    <div class="user">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Sarah">
+                        <div>
+                            <h4>Sarah T.</h4>
+                            <p>Bali Trip</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"The weather predictions were spot-on! We avoided rain and had perfect beach days."</p>
+                    <div class="user">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Mike">
+                        <div>
+                            <h4>Mike R.</h4>
+                            <p>Greece Vacation</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="testimonial">
+                    <div class="stars">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <p>"As a foodie, I loved the restaurant recommendations. Every meal was exceptional!"</p>
+                    <div class="user">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="Priya">
+                        <div>
+                            <h4>Priya K.</h4>
+                            <p>Japan Tour</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="carousel-dots">
+                <span class="dot active" data-slide="0"></span>
+                <span class="dot" data-slide="1"></span>
+                <span class="dot" data-slide="2"></span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Newsletter Section -->
+    <section class="newsletter">
+        <div class="container">
+            <div class="newsletter-content">
+                <h2>Get Weekly Travel Inspiration</h2>
+                <p>Join 50K+ travelers getting AI-curated tips and destination ideas</p>
+                <form id="newsletterForm">
+                    <input type="email" placeholder="Your email address" required>
+                    <button type="submit" class="btn">Subscribe</button>
+                </form>
+                <div class="newsletter-message" id="newsletterMessage"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="#">Activities</a></li>
+                        <li><a href="#">Seasons</a></li>
+                        <li><a href="#">Travel Guides</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AI Travel Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Preferences Modal -->
+    <div class="modal" id="preferencesModal">
+        <div class="modal-content">
+            <span class="close" id="closeModal">&times;</span>
+            <h2>Travel Preferences</h2>
+            <div class="preferences-form">
+                <div class="preference-group">
+                    <h3>Interests</h3>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="interests" value="beaches"> Beaches</label>
+                        <label><input type="checkbox" name="interests" value="mountains"> Mountains</label>
+                        <label><input type="checkbox" name="interests" value="culture"> Culture</label>
+                        <label><input type="checkbox" name="interests" value="food"> Food</label>
+                        <label><input type="checkbox" name="interests" value="adventure"> Adventure</label>
+                        <label><input type="checkbox" name="interests" value="relaxation"> Relaxation</label>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <h3>Budget</h3>
+                    <div class="radio-group">
+                        <label><input type="radio" name="budget" value="budget"> Budget</label>
+                        <label><input type="radio" name="budget" value="mid-range"> Mid-range</label>
+                        <label><input type="radio" name="budget" value="luxury"> Luxury</label>
+                    </div>
+                </div>
+                
+                <div class="preference-group">
+                    <h3>Travel Style</h3>
+                    <div class="radio-group">
+                        <label><input type="radio" name="style" value="solo"> Solo Traveler</label>
+                        <label><input type="radio" name="style" value="couple"> Couple</label>
+                        <label><input type="radio" name="style" value="family"> Family</label>
+                        <label><input type="radio" name="style" value="group"> Group</label>
+                    </div>
+                </div>
+                
+                <button class="btn" id="savePreferences">Save Preferences</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignInModal">&times;</span>
+            <h2>Sign In to Your Account</h2>
+            
+            <div class="error-message" id="signInError"></div>
+            <div class="success-message" id="signInSuccess"></div>
+            
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" required>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Sign In</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleLogin" title="Login with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookLogin" title="Login with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterLogin" title="Login with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switchToSignUp">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignUpModal">&times;</span>
+            <h2>Create Your Account</h2>
+            
+            <div class="error-message" id="signUpError"></div>
+            <div class="success-message" id="signUpSuccess"></div>
+            
+            <form id="signUpForm">
+                <div class="form-group">
+                    <label for="signUpName">Full Name</label>
+                    <input type="text" id="signUpName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" required>
+                </div>
+                <button type="submit" class="btn" id="registerBtn">Sign Up</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleSignup" title="Sign Up with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookSignup" title="Sign Up with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterSignup" title="Sign Up with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switchToSignIn">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Feature Modals -->
+    <!-- Smart Recommendations Modal -->
+    <div id="recommendationsModal" class="ai-feature-modal">
+        <div class="ai-feature-content">
+            <span class="ai-feature-close">&times;</span>
+            <div class="ai-feature-header">
+                <div class="ai-feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h2 class="ai-feature-title">Smart Recommendations</h2>
+            </div>
+            <div class="ai-feature-description">
+                <p>Our advanced AI analyzes over 10 million traveler reviews, ratings, and preferences to find destinations that perfectly match your unique travel style. Using natural language processing and machine learning algorithms, we identify patterns and insights that would take humans countless hours to discover.</p>
+            </div>
+            
+            <div class="ai-feature-demo">
+                <h3>How It Works</h3>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Profile Analysis</div>
+                        <div class="demo-description">AI analyzes your travel history, preferences, and behavior patterns</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-database"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Data Processing</div>
+                        <div class="demo-description">Reviews from millions of travelers are processed in real-time</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Pattern Recognition</div>
+                        <div class="demo-description">AI identifies patterns and matches them to your preferences</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-map-marked-alt"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Personalized Matches</div>
+                        <div class="demo-description">Destinations are scored and ranked based on your compatibility</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-feature-stats">
+                <div class="stat-item">
+                    <div class="stat-number">10M+</div>
+                    <div class="stat-label">Traveler Reviews</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Match Accuracy</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">2.5M</div>
+                    <div class="stat-label">Happy Travelers</div>
+                </div>
+            </div>
+            
+            <button class="try-it-btn" id="tryRecommendationsBtn">Try It Now</button>
+        </div>
+    </div>
+    
+    <!-- Personalized Itineraries Modal -->
+    <div id="itinerariesModal" class="ai-feature-modal">
+        <div class="ai-feature-content">
+            <span class="ai-feature-close">&times;</span>
+            <div class="ai-feature-header">
+                <div class="ai-feature-icon">
+                    <i class="fas fa-route"></i>
+                </div>
+                <h2 class="ai-feature-title">Personalized Itineraries</h2>
+            </div>
+            <div class="ai-feature-description">
+                <p>Our AI creates custom travel plans tailored specifically to your interests, budget, and travel style. By analyzing thousands of successful trips and local insights, we generate day-by-day itineraries that maximize your enjoyment and minimize travel stress.</p>
+            </div>
+            
+            <div class="ai-feature-demo">
+                <h3>AI-Powered Planning</h3>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-sliders-h"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Preference Analysis</div>
+                        <div class="demo-description">AI considers your interests, pace preferences, and budget constraints</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Optimal Scheduling</div>
+                        <div class="demo-description">Activities are arranged to minimize travel time and maximize enjoyment</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Local Insights</div>
+                        <div class="demo-description">Hidden gems and local favorites are included in your itinerary</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-sync-alt"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Real-time Adjustments</div>
+                        <div class="demo-description">Itineraries adapt based on weather, availability, and your feedback</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-feature-stats">
+                <div class="stat-item">
+                    <div class="stat-number">500K+</div>
+                    <div class="stat-label">Itineraries Created</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">87%</div>
+                    <div class="stat-label">User Satisfaction</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3.2M</div>
+                    <div class="stat-label">Activities Planned</div>
+                </div>
+            </div>
+            
+            <button class="try-it-btn" id="tryItinerariesBtn">Try It Now</button>
+        </div>
+    </div>
+    
+    <!-- Real-time Updates Modal -->
+    <div id="updatesModal" class="ai-feature-modal">
+        <div class="ai-feature-content">
+            <span class="ai-feature-close">&times;</span>
+            <div class="ai-feature-header">
+                <div class="ai-feature-icon">
+                    <i class="fas fa-cloud-sun"></i>
+                </div>
+                <h2 class="ai-feature-title">Real-time Updates</h2>
+            </div>
+            <div class="ai-feature-description">
+                <p>Stay informed with live alerts about weather changes, local events, and travel advisories during your trip. Our AI monitors multiple data sources to provide you with timely, relevant information that helps you make the most of your journey.</p>
+            </div>
+            
+            <div class="ai-feature-demo">
+                <h3>Live Monitoring</h3>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-cloud-rain"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Weather Alerts</div>
+                        <div class="demo-description">Real-time weather updates and recommendations for alternative activities</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-calendar-alt"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Event Notifications</div>
+                        <div class="demo-description">Local festivals, events, and special happenings near your location</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Travel Advisories</div>
+                        <div class="demo-description">Safety alerts and important travel information for your destination</div>
+                    </div>
+                </div>
+                <div class="demo-item">
+                    <div class="demo-icon">
+                        <i class="fas fa-route"></i>
+                    </div>
+                    <div class="demo-content">
+                        <div class="demo-title">Traffic & Delays</div>
+                        <div class="demo-description">Updates on transportation issues and suggested alternative routes</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="ai-feature-stats">
+                <div class="stat-item">
+                    <div class="stat-number">24/7</div>
+                    <div class="stat-label">Monitoring</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">15 sec</div>
+                    <div class="stat-label">Alert Speed</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">98%</div>
+                    <div class="stat-label">Alert Accuracy</div>
+                </div>
+            </div>
+            
+            <button class="try-it-btn" id="tryUpdatesBtn">Try It Now</button>
+        </div>
+    </div>
+
+    <!-- Search Results Section -->
+    <section class="search-results" id="searchResults" style="display: none;">
+        <div class="container">
+            <h2>Search Results</h2>
+            <div class="results-container" id="resultsContainer">
+                <!-- Results will be dynamically inserted here -->
+            </div>
+            <button class="btn" id="clearResults">Clear Results</button>
+        </div>
+    </section>
+
+    <!-- AI Chatbot -->
+    <div class="ai-chatbot" id="aiChatbot">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div>AI Travel Assistant</div>
+            <div class="chat-close" id="chatClose">&times;</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hello! I'm your AI travel assistant. How can I help you plan your trip today?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+            <button class="chat-send" id="chatSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCB1lyyMwbrZP-ZL3MTIAT5H34p1vWbL1M",
+            authDomain: "srinjoy-46fc2.firebaseapp.com",
+            projectId: "srinjoy-46fc2",
+            storageBucket: "srinjoy-46fc2.firebasestorage.app",
+            messagingSenderId: "156421945116",
+            appId: "1:156421945116:web:0ea10bbd2f6464df362cd9",
+            measurementId: "G-KH1TDMBDW2"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // DOM Elements
+        const searchForm = document.getElementById('searchForm');
+        const newsletterForm = document.getElementById('newsletterForm');
+        const preferencesBtn = document.getElementById('preferencesBtn');
+        const modal = document.getElementById('preferencesModal');
+        const closeModal = document.getElementById('closeModal');
+        const savePreferencesBtn = document.getElementById('savePreferences');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const saveButtons = document.querySelectorAll('.save-btn');
+        const destinationCards = document.querySelectorAll('.destination-card');
+        const categoryCards = document.querySelectorAll('.category-card');
+        const testimonialCarousel = document.getElementById('testimonialCarousel');
+        const testimonials = document.querySelectorAll('.testimonial');
+        const langSelector = document.getElementById('langSelector');
+        const signInBtn = document.getElementById('signInBtn');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInModal = document.getElementById('signInModal');
+        const signUpModal = document.getElementById('signUpModal');
+        const closeSignInModal = document.getElementById('closeSignInModal');
+        const closeSignUpModal = document.getElementById('closeSignUpModal');
+        const switchToSignUp = document.getElementById('switchToSignUp');
+        const switchToSignIn = document.getElementById('switchToSignIn');
+        const signInFormEl = document.getElementById('signInForm');
+        const signUpFormEl = document.getElementById('signUpForm');
+        const searchResults = document.getElementById('searchResults');
+        const resultsContainer = document.getElementById('resultsContainer');
+        const clearResults = document.getElementById('clearResults');
+        const newsletterMessage = document.getElementById('newsletterMessage');
+        const dots = document.querySelectorAll('.dot');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const learnMoreBtns = document.querySelectorAll('.learn-more-btn');
+        const tryRealTimeBtn = document.getElementById('tryRealTimeBtn');
+        const generateItineraryBtn = document.getElementById('generateItineraryBtn');
+        const notificationsContainer = document.getElementById('notificationsContainer');
+        
+        // AI Feature Modal Elements
+        const recommendationsModal = document.getElementById('recommendationsModal');
+        const itinerariesModal = document.getElementById('itinerariesModal');
+        const updatesModal = document.getElementById('updatesModal');
+        const aiFeatureCloseBtns = document.querySelectorAll('.ai-feature-close');
+        const tryRecommendationsBtn = document.getElementById('tryRecommendationsBtn');
+        const tryItinerariesBtn = document.getElementById('tryItinerariesBtn');
+        const tryUpdatesBtn = document.getElementById('tryUpdatesBtn');
+        
+        // AI Chatbot Elements
+        const aiChatbot = document.getElementById('aiChatbot');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        
+        // Firebase Auth Elements
+        const authButtons = document.getElementById('authButtons');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const userMenu = document.querySelector('.user-menu');
+        const userProfileMenu = document.querySelector('.user-profile');
+        
+        // Firebase Auth Message Elements
+        const signInError = document.getElementById('signInError');
+        const signInSuccess = document.getElementById('signInSuccess');
+        const signUpError = document.getElementById('signUpError');
+        const signUpSuccess = document.getElementById('signUpSuccess');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        // Social Login Elements
+        const googleLogin = document.getElementById('googleLogin');
+        const facebookLogin = document.getElementById('facebookLogin');
+        const twitterLogin = document.getElementById('twitterLogin');
+        const googleSignup = document.getElementById('googleSignup');
+        const facebookSignup = document.getElementById('facebookSignup');
+        const twitterSignup = document.getElementById('twitterSignup');
+
+        // Initialize
+        let currentTestimonial = 0;
+        let userPreferences = {
+            interests: [],
+            budget: '',
+            style: ''
+        };
+        let savedDestinations = [];
+        let currentUser = null;
+        let sentenceEncoder = null;
+        let chatHistory = [];
+
+        // Mock data for search results
+        const mockDestinations = [
+            {
+                name: "Paris, France",
+                image: "https://images.unsplash.com/photo-1502602898536-47ad22581b52?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                description: "The city of lights with iconic landmarks and world-class cuisine.",
+                highlights: ["Culture", "Food", "History"],
+                price: "$$$",
+                match: 95
+            },
+            {
+                name: "Tokyo, Japan",
+                image: "https://images.unsplash.com/photo-1540959733332-eab4deabeeaf?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                description: "A vibrant metropolis blending tradition and cutting-edge technology.",
+                highlights: ["Culture", "Food", "Urban"],
+                price: "$$$",
+                match: 92
+            },
+            {
+                name: "Rome, Italy",
+                image: "https://images.unsplash.com/photo-1523906834658-6e24ef2386f9?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80",
+                description: "Ancient history comes alive in the Eternal City.",
+                highlights: ["History", "Culture", "Food"],
+                price: "$$",
+                match: 88
+            }
+        ];
+
+        // Mock notifications for real-time updates
+        const mockNotifications = [
+            {
+                type: "weather",
+                title: "Weather Alert",
+                message: "Rain expected tomorrow in Paris. Consider indoor activities.",
+                time: "2 minutes ago"
+            },
+            {
+                type: "event",
+                title: "Local Event",
+                message: "Cherry Blossom Festival starts tomorrow in Kyoto.",
+                time: "15 minutes ago"
+            },
+            {
+                type: "traffic",
+                title: "Traffic Update",
+                message: "Heavy traffic reported on Route 1. Alternative route available.",
+                time: "30 minutes ago"
+            },
+            {
+                type: "event",
+                title: "Special Offer",
+                message: "Limited time: 20% off city tours in Barcelona.",
+                time: "1 hour ago"
+            },
+            {
+                type: "weather",
+                title: "Weather Update",
+                message: "Clear skies expected for the next 3 days in Santorini.",
+                time: "2 hours ago"
+            }
+        ];
+
+        // Event Listeners
+        searchForm.addEventListener('submit', handleSearch);
+        newsletterForm.addEventListener('submit', handleNewsletterSubmit);
+        preferencesBtn.addEventListener('click', openPreferencesModal);
+        closeModal.addEventListener('click', closePreferencesModal);
+        savePreferencesBtn.addEventListener('click', saveUserPreferences);
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        langSelector.addEventListener('change', changeLanguage);
+        signInBtn.addEventListener('click', openSignInModal);
+        signUpBtn.addEventListener('click', openSignUpModal);
+        closeSignInModal.addEventListener('click', () => signInModal.style.display = 'none');
+        closeSignUpModal.addEventListener('click', () => signUpModal.style.display = 'none');
+        switchToSignUp.addEventListener('click', (e) => {
+            e.preventDefault();
+            signInModal.style.display = 'none';
+            signUpModal.style.display = 'block';
+        });
+        switchToSignIn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signUpModal.style.display = 'none';
+            signInModal.style.display = 'block';
+        });
+        
+        // Firebase Auth Event Listeners
+        signInFormEl.addEventListener('submit', handleSignIn);
+        signUpFormEl.addEventListener('submit', handleSignUp);
+        signOutBtn.addEventListener('click', handleSignOut);
+        
+        // Social Login Event Listeners
+        googleLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+        facebookLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+        twitterLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+        googleSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+        facebookSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+        twitterSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+        
+        // User menu toggle
+        userProfileMenu.addEventListener('click', () => {
+            userMenu.classList.toggle('show');
+        });
+        
+        // Close user menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
+                userMenu.classList.remove('show');
+            }
+        });
+        
+        clearResults.addEventListener('click', () => {
+            searchResults.style.display = 'none';
+            searchForm.reset();
+        });
+
+        // Save destination buttons
+        saveButtons.forEach(button => {
+            button.addEventListener('click', toggleSaveDestination);
+        });
+
+        // Destination card hover effects
+        destinationCards.forEach(card => {
+            card.addEventListener('mouseenter', showDestinationDetails);
+            card.addEventListener('mouseleave', hideDestinationDetails);
+        });
+
+        // Category card clicks
+        categoryCards.forEach(card => {
+            card.addEventListener('click', filterByCategory);
+        });
+
+        // Testimonial carousel
+        if (testimonials.length > 0) {
+            setInterval(nextTestimonial, 5000);
+        }
+
+        // Testimonial dots
+        dots.forEach(dot => {
+            dot.addEventListener('click', () => {
+                const slide = parseInt(dot.getAttribute('data-slide'));
+                showTestimonial(slide);
+            });
+        });
+
+        // AI Feature Learn More buttons
+        learnMoreBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const feature = btn.closest('.feature-card').getAttribute('data-feature');
+                openAIFeatureModal(feature);
+            });
+        });
+
+        // AI Feature modal close buttons
+        aiFeatureCloseBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                btn.closest('.ai-feature-modal').style.display = 'none';
+            });
+        });
+
+        // Try It buttons for AI features
+        tryRecommendationsBtn.addEventListener('click', () => {
+            recommendationsModal.style.display = 'none';
+            showNotification("Smart Recommendations feature activated! Try searching for a destination to see personalized matches.");
+        });
+
+        tryItinerariesBtn.addEventListener('click', () => {
+            itinerariesModal.style.display = 'none';
+            generateItineraryBtn.scrollIntoView({ behavior: 'smooth' });
+            showNotification("Personalized Itineraries feature activated! Click 'Generate Your Itinerary' to create a custom travel plan.");
+        });
+
+        tryUpdatesBtn.addEventListener('click', () => {
+            updatesModal.style.display = 'none';
+            tryRealTimeBtn.scrollIntoView({ behavior: 'smooth' });
+            showNotification("Real-time Updates feature activated! Click 'Try It Now' to see live notifications.");
+        });
+
+        // Try Real-time Updates button
+        tryRealTimeBtn.addEventListener('click', simulateRealTimeUpdates);
+
+        // Generate Itinerary button
+        generateItineraryBtn.addEventListener('click', () => {
+            showNotification("Your personalized itinerary is being generated...");
+            // In a real implementation, this would call an API to generate the itinerary
+            setTimeout(() => {
+                showNotification("Your personalized itinerary is ready! Check your email for details.");
+            }, 2000);
+        });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) closePreferencesModal();
+            if (e.target === signInModal) signInModal.style.display = 'none';
+            if (e.target === signUpModal) signUpModal.style.display = 'none';
+            if (e.target === recommendationsModal) recommendationsModal.style.display = 'none';
+            if (e.target === itinerariesModal) itinerariesModal.style.display = 'none';
+            if (e.target === updatesModal) updatesModal.style.display = 'none';
+        });
+
+        // Initialize testimonials
+        testimonials.forEach((testimonial, index) => {
+            if (index !== 0) {
+                testimonial.style.display = 'none';
+            }
+        });
+
+        // AI Chatbot Event Listeners
+        aiChatbot.addEventListener('click', () => {
+            chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        chatClose.addEventListener('click', () => {
+            chatContainer.style.display = 'none';
+        });
+        
+        chatSend.addEventListener('click', sendChatMessage);
+        
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+
+        // Firebase Auth State Listener
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                currentUser = user;
+                console.log('User logged in:', user);
+                
+                // Update UI for logged-in user
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'block';
+                
+                // Set user avatar and name
+                if (user.displayName) {
+                    userName.textContent = user.displayName;
+                    userAvatar.textContent = user.displayName.charAt(0).toUpperCase();
+                } else if (user.email) {
+                    userName.textContent = user.email;
+                    userAvatar.textContent = user.email.charAt(0).toUpperCase();
+                }
+                
+                // Close any open modals
+                signInModal.style.display = 'none';
+                signUpModal.style.display = 'none';
+                
+                // Show success message
+                showNotification(`Welcome back, ${user.displayName || user.email}!`);
+            } else {
+                // User is signed out
+                currentUser = null;
+                console.log('User logged out');
+                
+                // Update UI for logged-out user
+                authButtons.style.display = 'block';
+                userProfile.style.display = 'none';
+            }
+        });
+
+        // Functions
+        function handleSearch(e) {
+            e.preventDefault();
+            const destination = document.getElementById('destination').value;
+            const dates = document.getElementById('dates').value;
+            const travelers = document.getElementById('travelers').value;
+            
+            // Display search results
+            displaySearchResults(destination, dates, travelers);
+            
+            // Scroll to results
+            searchResults.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function displaySearchResults(destination, dates, travelers) {
+            // Clear previous results
+            resultsContainer.innerHTML = '';
+            
+            // Create result cards
+            mockDestinations.forEach(dest => {
+                const resultCard = document.createElement('div');
+                resultCard.className = 'destination-card';
+                resultCard.innerHTML = `
+                    <div class="card-image">
+                        <img src="${dest.image}" alt="${dest.name}">
+                        <div class="match-score">${dest.match}% match</div>
+                        <button class="save-btn"><i class="far fa-heart"></i></button>
+                    </div>
+                    <div class="card-content">
+                        <h3>${dest.name}</h3>
+                        <p>${dest.description}</p>
+                        <div class="highlights">
+                            ${dest.highlights.map(h => `<span>${h}</span>`).join('')}
+                            <span>${dest.price}</span>
+                        </div>
+                    </div>
+                `;
+                resultsContainer.appendChild(resultCard);
+                
+                // Add event listener to the save button
+                const saveBtn = resultCard.querySelector('.save-btn');
+                saveBtn.addEventListener('click', toggleSaveDestination);
+            });
+            
+            // Show results section
+            searchResults.style.display = 'block';
+        }
+
+        function handleNewsletterSubmit(e) {
+            e.preventDefault();
+            const email = e.target.querySelector('input[type="email"]').value;
+            
+            // Show success message
+            newsletterMessage.textContent = `Thank you for subscribing with ${email}! You'll receive our weekly travel inspiration soon.`;
+            newsletterMessage.style.color = '#28a745';
+            newsletterMessage.style.marginTop = '15px';
+            
+            // Reset form
+            e.target.reset();
+            
+            // Hide message after 5 seconds
+            setTimeout(() => {
+                newsletterMessage.textContent = '';
+            }, 5000);
+        }
+
+        function openPreferencesModal() {
+            modal.style.display = 'block';
+        }
+
+        function closePreferencesModal() {
+            modal.style.display = 'none';
+        }
+
+        function saveUserPreferences() {
+            // Get selected interests
+            const interestsCheckboxes = document.querySelectorAll('input[name="interests"]:checked');
+            userPreferences.interests = Array.from(interestsCheckboxes).map(cb => cb.value);
+            
+            // Get budget selection
+            const budgetSelection = document.querySelector('input[name="budget"]:checked');
+            userPreferences.budget = budgetSelection ? budgetSelection.value : '';
+            
+            // Get travel style selection
+            const styleSelection = document.querySelector('input[name="style"]:checked');
+            userPreferences.style = styleSelection ? styleSelection.value : '';
+            
+            // Close modal
+            closePreferencesModal();
+            
+            // Update match scores based on preferences
+            updateMatchScores();
+        }
+
+        function updateMatchScores() {
+            // This would normally use AI to calculate matches
+            // For demo, we'll just randomize them slightly
+            const matchScores = document.querySelectorAll('.match-score');
+            matchScores.forEach(score => {
+                const currentScore = parseInt(score.textContent);
+                const variation = Math.floor(Math.random() * 10) - 5; // -5 to +5
+                const newScore = Math.min(100, Math.max(70, currentScore + variation));
+                score.textContent = `${newScore}% match`;
+            });
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Save preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function toggleSaveDestination(e) {
+            const icon = e.currentTarget.querySelector('i');
+            const card = e.currentTarget.closest('.destination-card');
+            const destination = card.getAttribute('data-destination') || card.querySelector('h3').textContent;
+            
+            if (icon.classList.contains('far')) {
+                // Save destination
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                e.currentTarget.style.color = '#e74c3c';
+                savedDestinations.push(destination);
+                
+                // Show notification
+                showNotification(`${destination} added to your saved destinations!`);
+            } else {
+                // Unsave destination
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                e.currentTarget.style.color = '';
+                savedDestinations = savedDestinations.filter(d => d !== destination);
+                
+                // Show notification
+                showNotification(`${destination} removed from your saved destinations!`);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('savedDestinations', JSON.stringify(savedDestinations));
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#333';
+            notification.style.color = 'white';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s';
+            
+            // Add to DOM
+            document.body.appendChild(notification);
+            
+            // Fade in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        function showDestinationDetails() {
+            // This would show additional details in a real implementation
+            this.style.transform = 'translateY(-10px)';
+        }
+
+        function hideDestinationDetails() {
+            this.style.transform = '';
+        }
+
+        function filterByCategory() {
+            const category = this.getAttribute('data-category');
+            const categoryName = this.querySelector('h3').textContent;
+            
+            // Navigate to destinations page
+            window.location.href = `destinations.html?category=${category}`;
+            
+            // Show notification
+            showNotification(`Showing destinations for ${categoryName}`);
+        }
+
+        function nextTestimonial() {
+            testimonials[currentTestimonial].classList.remove('active');
+            dots[currentTestimonial].classList.remove('active');
+            
+            currentTestimonial = (currentTestimonial + 1) % testimonials.length;
+            
+            testimonials[currentTestimonial].classList.add('active');
+            dots[currentTestimonial].classList.add('active');
+        }
+
+        function showTestimonial(index) {
+            testimonials[currentTestimonial].classList.remove('active');
+            dots[currentTestimonial].classList.remove('active');
+            
+            currentTestimonial = index;
+            
+            testimonials[currentTestimonial].classList.add('active');
+            dots[currentTestimonial].classList.add('active');
+        }
+
+        function changeLanguage() {
+            const selectedLang = langSelector.value;
+            
+            // Simple translation for demo
+            const translations = {
+                en: {
+                    title: "Discover Your Perfect Journey with AI",
+                    subtitle: "Personalized travel recommendations in seconds",
+                    searchPlaceholder: "Where do you want to go?",
+                    findAdventure: "Find My Adventure",
+                    trending: "Trending Now",
+                    categories: "Explore by Interest",
+                    testimonials: "What Travelers Say",
+                    newsletter: "Get Weekly Travel Inspiration"
+                },
+                es: {
+                    title: "Descubre tu Viaje Perfecto con IA",
+                    subtitle: "Recomendaciones de viaje personalizadas en segundos",
+                    searchPlaceholder: "¿A dónde quieres ir?",
+                    findAdventure: "Encuentra mi Aventura",
+                    trending: "Tendencias Ahora",
+                    categories: "Explora por Interés",
+                    testimonials: "Lo que Dicen los Viajeros",
+                    newsletter: "Recibe Inspiración de Viaje Semanal"
+                },
+                fr: {
+                    title: "Découvrez Votre Parfait Voyage avec l'IA",
+                    subtitle: "Recommandations de voyage personnalisées en quelques secondes",
+                    searchPlaceholder: "Où voulez-vous aller?",
+                    findAdventure: "Trouver Mon Aventure",
+                    trending: "Tendance Maintenant",
+                    categories: "Explorer par Intérêt",
+                    testimonials: "Ce que Disent les Voyageurs",
+                    newsletter: "Recevez l'Inspiration de Voyage Hebdomadaire"
+                },
+                de: {
+                    title: "Entdecke Deine Perfekte Reise mit KI",
+                    subtitle: "Personalisierte Reiseempfehlungen in Sekunden",
+                    searchPlaceholder: "Wo möchtest du hin?",
+                    findAdventure: "Finde Mein Abenteuer",
+                    trending: "Aktuelle Trends",
+                    categories: "Nach Interesse Erkunden",
+                    testimonials: "Was Reisende Sagen",
+                    newsletter: "Erhalte Wöchentliche Reiseinspiration"
+                }
+            };
+            
+            // Update text based on selected language
+            const t = translations[selectedLang];
+            document.querySelector('.hero h1').textContent = t.title;
+            document.querySelector('.hero p').textContent = t.subtitle;
+            document.getElementById('destination').placeholder = t.searchPlaceholder;
+            document.querySelector('.search-form button[type="submit"]').textContent = t.findAdventure;
+            document.querySelector('.trending h2').textContent = t.trending;
+            document.querySelector('.categories h2').textContent = t.categories;
+            document.querySelector('.testimonials h2').textContent = t.testimonials;
+            document.querySelector('.newsletter h2').textContent = t.newsletter;
+            
+            // Show notification
+            showNotification(`Language changed to ${selectedLang.toUpperCase()}`);
+        }
+
+        function openSignInModal() {
+            signInModal.style.display = 'block';
+        }
+
+        function openSignUpModal() {
+            signUpModal.style.display = 'block';
+        }
+
+        function openAIFeatureModal(feature) {
+            switch(feature) {
+                case 'recommendations':
+                    recommendationsModal.style.display = 'block';
+                    break;
+                case 'itineraries':
+                    itinerariesModal.style.display = 'block';
+                    break;
+                case 'updates':
+                    updatesModal.style.display = 'block';
+                    break;
+            }
+        }
+
+        function simulateRealTimeUpdates() {
+            // Clear existing notifications
+            notificationsContainer.innerHTML = '';
+            
+            // Show a loading message
+            const loadingMsg = document.createElement('div');
+            loadingMsg.textContent = 'Connecting to live update system...';
+            loadingMsg.style.textAlign = 'center';
+            loadingMsg.style.padding = '20px';
+            loadingMsg.style.color = '#666';
+            notificationsContainer.appendChild(loadingMsg);
+            
+            // Simulate API call delay
+            setTimeout(() => {
+                // Remove loading message
+                notificationsContainer.innerHTML = '';
+                
+                // Add notifications one by one with animation
+                mockNotifications.forEach((notification, index) => {
+                    setTimeout(() => {
+                        const notificationEl = document.createElement('div');
+                        notificationEl.className = 'notification-item';
+                        
+                        const iconClass = notification.type === 'weather' ? 'weather' : 
+                                        notification.type === 'event' ? 'event' : 'traffic';
+                        
+                        notificationEl.innerHTML = `
+                            <div class="notification-icon ${iconClass}">
+                                <i class="fas fa-${notification.type === 'weather' ? 'cloud-rain' : 
+                                                    notification.type === 'event' ? 'calendar-alt' : 'route'}"></i>
+                            </div>
+                            <div class="notification-content">
+                                <div class="notification-title">${notification.title}</div>
+                                <div class="notification-message">${notification.message}</div>
+                                <div class="notification-time">${notification.time}</div>
+                            </div>
+                        `;
+                        
+                        notificationsContainer.appendChild(notificationEl);
+                        
+                        // Remove oldest notification if there are more than 3
+                        if (notificationsContainer.children.length > 3) {
+                            notificationsContainer.removeChild(notificationsContainer.firstChild);
+                        }
+                    }, index * 1000);
+                });
+                
+                showNotification("Real-time updates activated! You'll now receive live notifications during your trips.");
+            }, 1500);
+        }
+
+        // AI Chatbot Functions
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addChatMessage(message, 'user');
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Add to chat history
+            chatHistory.push({ role: 'user', content: message });
+            
+            // Generate bot response
+            generateBotResponse(message);
+        }
+
+        function addChatMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = message;
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function generateBotResponse(userMessage) {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message bot';
+    typingDiv.innerHTML = '<div class="message-bubble">Typing...</div>';
+    chatMessages.appendChild(typingDiv);
+
+    try {
+        const response = await fetch("http://localhost:5000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: userMessage,
+                preferences: userPreferences
+            })
+        });
+
+        const data = await response.json();
+
+        if (chatMessages.contains(typingDiv)) {
+            chatMessages.removeChild(typingDiv);
+        }
+
+        addChatMessage(data.reply, 'bot');
+
+    } catch (error) {
+        if (chatMessages.contains(typingDiv)) {
+            chatMessages.removeChild(typingDiv);
+        }
+
+        addChatMessage("Error connecting to AI server.", 'bot');
+    }
+}
+
+        // Firebase Auth Functions
+        function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            
+            // Show loading state
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            loginBtn.disabled = true;
+            
+            // Clear previous messages
+            signInError.style.display = 'none';
+            signInSuccess.style.display = 'none';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log('User signed in:', user);
+                    
+                    // Show success message
+                    signInSuccess.textContent = 'Login successful! Welcome back!';
+                    signInSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/user-not-found') {
+                        friendlyMessage = 'No account found with this email.';
+                    } else if (errorCode === 'auth/wrong-password') {
+                        friendlyMessage = 'Incorrect password. Please try again.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/user-disabled') {
+                        friendlyMessage = 'This account has been disabled.';
+                    } else if (errorCode === 'auth/too-many-requests') {
+                        friendlyMessage = 'Too many failed login attempts. Please try again later.';
+                    }
+                    
+                    signInError.textContent = friendlyMessage;
+                    signInError.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                });
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            
+            // Show loading state
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            registerBtn.disabled = true;
+            
+            // Clear previous messages
+            signUpError.style.display = 'none';
+            signUpSuccess.style.display = 'none';
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up
+                    const user = userCredential.user;
+                    console.log('User signed up:', user);
+                    
+                    // Update user profile with name
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    // Show success message
+                    signUpSuccess.textContent = 'Account created successfully! Welcome!';
+                    signUpSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign up error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Sign up failed. Please try again.';
+                    if (errorCode === 'auth/email-already-in-use') {
+                        friendlyMessage = 'An account with this email already exists.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/weak-password') {
+                        friendlyMessage = 'Password is too weak. Please use a stronger password.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'Email/password accounts are not enabled.';
+                    }
+                    
+                    signUpError.textContent = friendlyMessage;
+                    signUpError.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                });
+        }
+
+        function handleSignOut() {
+            auth.signOut()
+                .then(() => {
+                    console.log('User signed out');
+                    showNotification('You have been signed out successfully.');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showNotification('Error signing out. Please try again.');
+                });
+        }
+
+        function signInWithProvider(provider) {
+            // Show loading spinner
+            loadingSpinner.style.display = 'flex';
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // The signed-in user info
+                    const user = result.user;
+                    console.log('User signed in with provider:', user);
+                    
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Show success message
+                    showNotification(`Welcome, ${user.displayName || user.email}!`);
+                })
+                .catch((error) => {
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Provider sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/account-exists-with-different-credential') {
+                        friendlyMessage = 'An account already exists with the same email address but different sign-in credentials.';
+                    } else if (errorCode === 'auth/auth-domain-config-required') {
+                        friendlyMessage = 'Authentication domain configuration is required.';
+                    } else if (errorCode === 'auth/cancelled-popup-request') {
+                        friendlyMessage = 'Popup request was cancelled.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'This login method is not enabled. Please contact support.';
+                    } else if (errorCode === 'auth/operation-not-supported-in-this-environment') {
+                        friendlyMessage = 'This operation is not supported in the current environment.';
+                    } else if (errorCode === 'auth/popup-blocked') {
+                        friendlyMessage = 'Popup was blocked by the browser. Please allow popups and try again.';
+                    } else if (errorCode === 'auth/popup-closed-by-user') {
+                        friendlyMessage = 'Popup was closed before completing the login.';
+                    } else if (errorCode === 'auth/unauthorized-domain') {
+                        friendlyMessage = 'This domain is not authorized for OAuth operations.';
+                    }
+                    
+                    showNotification(friendlyMessage);
+                });
+        }
+
+        // Load saved preferences on page load
+        window.addEventListener('load', () => {
+            // Load dark mode preference
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Load saved destinations
+            const saved = localStorage.getItem('savedDestinations');
+            if (saved) {
+                savedDestinations = JSON.parse(saved);
+                
+                // Update UI to show saved destinations
+                saveButtons.forEach(button => {
+                    const card = button.closest('.destination-card');
+                    const destination = card.getAttribute('data-destination') || card.querySelector('h3').textContent;
+                    
+                    if (savedDestinations.includes(destination)) {
+                        button.querySelector('i').classList.remove('far');
+                        button.querySelector('i').classList.add('fas');
+                        button.style.color = '#e74c3c';
+                    }
+                });
+            }
+            
+            // Initialize TensorFlow.js models for AI features
+            initializeAIModels();
+        });
+
+        // Initialize AI Models
+        async function initializeAIModels() {
+            try {
+                // Load Universal Sentence Encoder for semantic search
+                sentenceEncoder = await use.load();
+                console.log('AI models loaded successfully');
+            } catch (error) {
+                console.error('Error loading AI models:', error);
+            }
+        }
+    </script>
+</body>
+</html>

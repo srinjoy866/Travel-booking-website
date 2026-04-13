@@ -1,0 +1,3040 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Guide - Destinations</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+        <!-- Leaflet for map markers -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <!-- Small data-URI favicon to avoid automatic /favicon.ico 404 requests -->
+    <link rel="icon" type="image/png" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGNgYAAAAAMAASsJTYQAAAAASUVORK5CYII=">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    
+    <!-- TensorFlow.js for AI features -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/mobilenet@latest"></script>
+        <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <!-- Leaflet MarkerCluster -->
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.css" />
+        <link rel="stylesheet" href="https://unpkg.com/leaflet.markercluster@1.5.3/dist/MarkerCluster.Default.css" />
+        <script src="https://unpkg.com/leaflet.markercluster@1.5.3/dist/leaflet.markercluster.js"></script>
+    
+    
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <i class="fas fa-spinner"></i>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-compass"></i>
+                <span>AI Travel Guide</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html" class="active">Destinations</a></li>
+                    <li><a href="plan-trip.html">Plan Trip</a></li>
+                    <li><a href="travel-tips.html">Travel Tips</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <!-- Sign In/Sign Up buttons (shown when not logged in) -->
+                <div id="authButtons">
+                    <a href="#" id="signInBtn">Sign In</a>
+                    <a href="#" class="btn" id="signUpBtn">Sign Up</a>
+                </div>
+                
+                <!-- User profile menu (shown when logged in) -->
+                <div id="userProfile" class="user-menu" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                        <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                    </div>
+                    <div class="user-menu-content">
+                        <a href="#" id="myAccount">My Account</a>
+                        <a href="#" id="myTrips">My Trips</a>
+                        <a href="#" id="savedDestinations">Saved Destinations</a>
+                        <a href="#" id="signOutBtn">Sign Out</a>
+                    </div>
+                </div>
+                
+                <select class="lang-selector" id="langSelector">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                </select>
+                <button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- AI Features Section -->
+        <section class="ai-section">
+            <h2>Powered by Artificial Intelligence</h2>
+            <p>Our AI-powered travel assistant helps you discover new destinations, plan your trips, and get personalized recommendations based on your preferences.</p>
+            
+            <div class="ai-features">
+                <div class="ai-feature">
+                    <i class="fas fa-brain"></i>
+                    <h3>Smart Recommendations</h3>
+                    <p>Get personalized destination suggestions based on your travel preferences and history.</p>
+                    <button class="ai-button" id="getRecommendations">Get Recommendations</button>
+                </div>
+                
+                <div class="ai-feature">
+                    <i class="fas fa-route"></i>
+                    <h3>AI Itineraries</h3>
+                    <p>Automatically generate day-by-day travel plans tailored to your interests.</p>
+                    <button class="ai-button" id="learnMoreItineraries">Learn More</button>
+                </div>
+                
+                <div class="ai-feature">
+                    <i class="fas fa-comments"></i>
+                    <h3>Travel Assistant</h3>
+                    <p>Chat with our AI assistant to get answers to all your travel questions.</p>
+                    <button class="ai-button" id="openChatbot">Chat Now</button>
+                </div>
+                
+                <div class="ai-feature">
+                    <i class="fas fa-camera"></i>
+                    <h3>Landmark Recognition</h3>
+                    <p>Upload a photo to identify landmarks and get information about them.</p>
+                    <button class="ai-button" id="tryImageRecognition">Try It Now</button>
+                </div>
+            </div>
+        </section>
+        
+        <!-- AI Recommendations Section -->
+        <section class="recommendations" id="recommendationsSection" style="display: none;">
+            <h2><i class="fas fa-magic"></i> AI Recommendations For You</h2>
+            <div class="recommendation-cards" id="recommendationCards">
+                <!-- Recommendation cards will be dynamically added here -->
+            </div>
+        </section>
+        
+        <h1>Explore Destinations</h1>
+        
+        <!-- Search Box -->
+        <div class="search-container">
+            <div class="search-box">
+                <input type="text" class="search-input" id="searchInput" placeholder="Search for any destination in the world...">
+                <button class="search-button" id="searchButton">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
+        </div>
+        
+        <!-- Search Results -->
+        <div class="search-results" id="searchResults">
+            <div class="search-loading" id="searchLoading">
+                <i class="fas fa-spinner fa-spin"></i> Searching for destinations...
+            </div>
+            
+            <div class="no-results" id="noResults">
+                <i class="fas fa-map-marked-alt" style="font-size: 48px; margin-bottom: 15px; color: #ccc;"></i>
+                <h3>No destinations found</h3>
+                <p>Try searching with a different location name</p>
+            </div>
+            
+            <div class="search-result-card" id="searchResultCard">
+                <div class="result-image">
+                    <img id="resultImage" src="" alt="Destination">
+                    <a href="#" id="imageAttribution" class="image-attribution" target="_blank">Photo by Unsplash</a>
+                </div>
+                <div class="result-content">
+                    <h2 class="result-title" id="resultTitle">Destination Name</h2>
+                    <p class="result-subtitle" id="resultSubtitle">Country, Region</p>
+                    
+                    <div class="result-details">
+                        <div class="result-detail-item">
+                            <div class="result-detail-label">Capital</div>
+                            <div class="result-detail-value" id="resultCapital">-</div>
+                        </div>
+                        <div class="result-detail-item">
+                            <div class="result-detail-label">Currency</div>
+                            <div class="result-detail-value" id="resultCurrency">-</div>
+                        </div>
+                        <div class="result-detail-item">
+                            <div class="result-detail-label">Language</div>
+                            <div class="result-detail-value" id="resultLanguage">-</div>
+                        </div>
+                        <div class="result-detail-item">
+                            <div class="result-detail-label">Population</div>
+                            <div class="result-detail-value" id="resultPopulation">-</div>
+                        </div>
+                        <div class="result-detail-item">
+                            <div class="result-detail-label">Current Weather</div>
+                            <div class="result-detail-value" id="resultWeather">-</div>
+                        </div>
+                        <div class="result-detail-item">
+                            <div class="result-detail-label">Temperature</div>
+                            <div class="result-detail-value" id="resultTemperature">-</div>
+                        </div>
+                    </div>
+                    <div style="margin-top: 20px; text-align: center;">
+                        <button class="btn" id="saveSearchResult">Save</button>
+                        <button class="itinerary-button" id="generateItinerary">
+                            <i class="fas fa-route"></i> Generate AI Itinerary
+                        </button>
+                    </div>
+                    <div id="map" style="height:300px; width:100%; margin-top:12px; border-radius:8px; overflow:hidden;"></div>
+                    <!-- Nearby points-of-interest (hotels, hostels, etc.) -->
+                    <div id="poiList" class="poi-list" style="margin-top:16px;"></div>
+                </div>
+            </div>
+        </div>
+
+        <div class="destination-filters">
+            <button class="btn-filter active" data-filter="all">All</button>
+            <button class="btn-filter" data-filter="beach">Beach</button>
+            <button class="btn-filter" data-filter="mountain">Mountain</button>
+            <button class="btn-filter" data-filter="city">City</button>
+            <button class="btn-filter" data-filter="historical">Historical</button>
+        </div>
+        
+        <div class="destination-grid" id="destinationGrid">
+            <div class="destination-card" data-category="beach" data-country="maldives">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1505228395891-9a51e7e86bf6?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Maldives">
+                    <div class="match-score">95% match</div>
+                    <button class="save-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-content">
+                    <h3>Maldives</h3>
+                    <div class="highlights">
+                        <span>Beach</span>
+                        <span>Luxury</span>
+                        <span>$$$$</span>
+                    </div>
+                    <div class="destination-details" id="details-maldives">
+                        <h4>Destination Details</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Capital:</span>
+                            <span class="detail-value capital">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value currency">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value language">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Population:</span>
+                            <span class="detail-value population">Loading...</span>
+                        </div>
+                        <div class="weather-info">
+                            <i class="weather-icon fas fa-sun"></i>
+                            <div>
+                                <div class="temperature">--°C</div>
+                                <div class="weather-desc">Loading weather...</div>
+                            </div>
+                        </div>
+                        <div class="api-error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card" data-category="mountain" data-country="switzerland">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1464822759844-d150baec0494?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Swiss Alps">
+                    <div class="match-score">90% match</div>
+                    <button class="save-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-content">
+                    <h3>Swiss Alps</h3>
+                    <div class="highlights">
+                        <span>Mountain</span>
+                        <span>Adventure</span>
+                        <span>$$$</span>
+                    </div>
+                    <div class="destination-details" id="details-switzerland">
+                        <h4>Destination Details</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Capital:</span>
+                            <span class="detail-value capital">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value currency">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value language">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Population:</span>
+                            <span class="detail-value population">Loading...</span>
+                        </div>
+                        <div class="weather-info">
+                            <i class="weather-icon fas fa-sun"></i>
+                            <div>
+                                <div class="temperature">--°C</div>
+                                <div class="weather-desc">Loading weather...</div>
+                            </div>
+                        </div>
+                        <div class="api-error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card" data-category="city" data-country="usa">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="New York">
+                    <div class="match-score">88% match</div>
+                    <button class="save-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-content">
+                    <h3>New York</h3>
+                    <div class="highlights">
+                        <span>City</span>
+                        <span>Culture</span>
+                        <span>$$$</span>
+                    </div>
+                    <div class="destination-details" id="details-usa">
+                        <h4>Destination Details</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Capital:</span>
+                            <span class="detail-value capital">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value currency">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value language">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Population:</span>
+                            <span class="detail-value population">Loading...</span>
+                        </div>
+                        <div class="weather-info">
+                            <i class="weather-icon fas fa-sun"></i>
+                            <div>
+                                <div class="temperature">--°C</div>
+                                <div class="weather-desc">Loading weather...</div>
+                            </div>
+                        </div>
+                        <div class="api-error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card" data-category="historical" data-country="egypt">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1539650116574-8efeb43e2750?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Egypt">
+                    <div class="match-score">85% match</div>
+                    <button class="save-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-content">
+                    <h3>Egypt</h3>
+                    <div class="highlights">
+                        <span>Historical</span>
+                        <span>Adventure</span>
+                        <span>$$</span>
+                    </div>
+                    <div class="destination-details" id="details-egypt">
+                        <h4>Destination Details</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Capital:</span>
+                            <span class="detail-value capital">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value currency">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value language">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Population:</span>
+                            <span class="detail-value population">Loading...</span>
+                        </div>
+                        <div class="weather-info">
+                            <i class="weather-icon fas fa-sun"></i>
+                            <div>
+                                <div class="temperature">--°C</div>
+                                <div class="weather-desc">Loading weather...</div>
+                            </div>
+                        </div>
+                        <div class="api-error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card" data-category="beach" data-country="greece">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Santorini">
+                    <div class="match-score">92% match</div>
+                    <button class="save-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-content">
+                    <h3>Santorini, Greece</h3>
+                    <div class="highlights">
+                        <span>Beach</span>
+                        <span>Romance</span>
+                        <span>$$$</span>
+                    </div>
+                    <div class="destination-details" id="details-greece">
+                        <h4>Destination Details</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Capital:</span>
+                            <span class="detail-value capital">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value currency">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value language">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Population:</span>
+                            <span class="detail-value population">Loading...</span>
+                        </div>
+                        <div class="weather-info">
+                            <i class="weather-icon fas fa-sun"></i>
+                            <div>
+                                <div class="temperature">--°C</div>
+                                <div class="weather-desc">Loading weather...</div>
+                            </div>
+                        </div>
+                        <div class="api-error"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="destination-card" data-category="mountain" data-country="canada">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1552465011-b4e21bf6e79a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1170&q=80" alt="Banff">
+                    <div class="match-score">87% match</div>
+                    <button class="save-btn"><i class="far fa-heart"></i></button>
+                </div>
+                <div class="card-content">
+                    <h3>Banff, Canada</h3>
+                    <div class="highlights">
+                        <span>Mountain</span>
+                        <span>Nature</span>
+                        <span>$$</span>
+                    </div>
+                    <div class="destination-details" id="details-canada">
+                        <h4>Destination Details</h4>
+                        <div class="detail-row">
+                            <span class="detail-label">Capital:</span>
+                            <span class="detail-value capital">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Currency:</span>
+                            <span class="detail-value currency">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Language:</span>
+                            <span class="detail-value language">Loading...</span>
+                        </div>
+                        <div class="detail-row">
+                            <span class="detail-label">Population:</span>
+                            <span class="detail-value population">Loading...</span>
+                        </div>
+                        <div class="weather-info">
+                            <i class="weather-icon fas fa-sun"></i>
+                            <div>
+                                <div class="temperature">--°C</div>
+                                <div class="weather-desc">Loading weather...</div>
+                            </div>
+                        </div>
+                        <div class="api-error"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Image Recognition Section -->
+        <section class="image-recognition" id="imageRecognitionSection" style="display: none;">
+            <h2><i class="fas fa-camera"></i> AI Landmark Recognition</h2>
+            <p>Upload a photo of a landmark to identify it and get information about it.</p>
+            
+            <div class="image-upload" id="imageUpload">
+                <i class="fas fa-cloud-upload-alt"></i>
+                <p>Click to upload an image or drag and drop</p>
+                <input type="file" id="imageInput" accept="image/*">
+            </div>
+            
+            <div class="image-preview" id="imagePreview">
+                <img id="previewImg" src="" alt="Preview">
+            </div>
+            
+            <div class="image-result" id="imageResult">
+                <h3>Recognition Result</h3>
+                <p id="landmarkName">-</p>
+                <p id="landmarkDescription">-</p>
+                <div class="confidence" id="landmarkConfidence">Confidence: -</div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="#">Activities</a></li>
+                        <li><a href="#">Seasons</a></li>
+                        <li><a href="#">Travel Guides</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AI Travel Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- POI Detail Modal -->
+    <div id="poiModal" class="modal" style="display:none;">
+        <div class="modal-content" id="poiModalContent">
+            <span class="close" id="closePoiModal">&times;</span>
+            <h3 id="poiModalTitle">Place</h3>
+            <div id="poiModalImage" style="margin:10px 0;"></div>
+            <div id="poiModalBody"></div>
+        </div>
+    </div>
+
+    <!-- Spinner for POI loading -->
+    <div id="poiSpinner" style="display:none; position:fixed; right:20px; bottom:90px; background:rgba(0,0,0,0.7); color:white; padding:8px 12px; border-radius:8px; z-index:2000;">Loading places...</div>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignInModal">&times;</span>
+            <h2>Sign In to Your Account</h2>
+            
+            <div class="error-message" id="signInError"></div>
+            <div class="success-message" id="signInSuccess"></div>
+            
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" required>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Sign In</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleLogin" title="Login with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookLogin" title="Login with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterLogin" title="Login with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switchToSignUp">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignUpModal">&times;</span>
+            <h2>Create Your Account</h2>
+            
+            <div class="error-message" id="signUpError"></div>
+            <div class="success-message" id="signUpSuccess"></div>
+            
+            <form id="signUpForm">
+                <div class="form-group">
+                    <label for="signUpName">Full Name</label>
+                    <input type="text" id="signUpName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" required>
+                </div>
+                <button type="submit" class="btn" id="registerBtn">Sign Up</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleSignup" title="Sign Up with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookSignup" title="Sign Up with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterSignup" title="Sign Up with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switchToSignIn">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Itinerary Modal -->
+    <div class="itinerary-modal" id="itineraryModal">
+        <div class="itinerary-modal-content">
+            <span class="itinerary-close" id="closeItineraryModal">&times;</span>
+            <div class="itinerary-header">
+                <h2 class="itinerary-title" id="itineraryTitle">3-Day Itinerary</h2>
+                <p class="itinerary-subtitle" id="itinerarySubtitle">Generated by AI</p>
+            </div>
+            
+            <div class="itinerary-days" id="itineraryDays">
+                <!-- Itinerary days will be dynamically added here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div class="ai-chatbot" id="aiChatbot">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div>AI Travel Assistant</div>
+            <div class="chat-close" id="chatClose">&times;</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hello! I'm your AI travel assistant. How can I help you plan your trip today?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+            <button class="chat-send" id="chatSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+        .ai-chatbot {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: #2ebf91;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 1000;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .ai-chatbot:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 16px rgba(0,0,0,0.2);
+        }
+        
+        .ai-chatbot i {
+            font-size: 24px;
+        }
+        
+        .chat-container {
+            position: fixed;
+            bottom: 90px;
+            right: 20px;
+            width: 350px;
+            height: 500px;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.15);
+            display: none;
+            flex-direction: column;
+            z-index: 1000;
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background: #2ebf91;
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .chat-close {
+            cursor: pointer;
+            font-size: 18px;
+        }
+        
+        .chat-messages {
+            flex-grow: 1;
+            padding: 15px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .chat-message {
+            margin-bottom: 15px;
+            max-width: 80%;
+        }
+        
+        .chat-message.user {
+            align-self: flex-end;
+        }
+        
+        .chat-message.bot {
+            align-self: flex-start;
+        }
+        
+        .message-bubble {
+            padding: 12px;
+            border-radius: 18px;
+            font-size: 14px;
+        }
+        
+        .chat-message.user .message-bubble {
+            background: #2ebf91;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .chat-message.bot .message-bubble {
+            background: #f1f1f1;
+            color: #333;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .chat-input-container {
+            padding: 15px;
+            border-top: 1px solid #eee;
+            display: flex;
+        }
+        
+        .chat-input {
+            flex-grow: 1;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            padding: 10px 15px;
+            font-size: 14px;
+            outline: none;
+        }
+        
+        .chat-send {
+            margin-left: 10px;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #2ebf91;
+            color: white;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        /* Dark mode styles for chatbot */
+        body.dark-mode .chat-container {
+            background-color: #2d2d2d;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .chat-header {
+            background-color: #1ca874;
+        }
+        
+        body.dark-mode .chat-input {
+            background-color: #252525;
+            border-color: #444;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .message-bubble {
+            background-color: #252525;
+            color: #f0f0f0;
+        }
+        
+        body.dark-mode .chat-message.user .message-bubble {
+            background-color: #1ca874;
+        }
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCB1lyyMwbrZP-ZL3MTIAT5H34p1vWbL1M",
+            authDomain: "srinjoy-46fc2.firebaseapp.com",
+            projectId: "srinjoy-46fc2",
+            storageBucket: "srinjoy-46fc2.firebasestorage.app",
+            messagingSenderId: "156421945116",
+            appId: "1:156421945116:web:0ea10bbd2f6464df362cd9",
+            measurementId: "G-KH1TDMBDW2"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // Initialize variables
+        let savedDestinations = [];
+        let currentUser = null;
+        let chatHistory = [];
+        const apiBaseUrl = "http://localhost:5000";
+        let currentSearchResult = null;
+        let model = null; // For image recognition
+        
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const destinationFilters = document.querySelectorAll('.btn-filter');
+            const destinationCards = document.querySelectorAll('.destination-card');
+            const saveButtons = document.querySelectorAll('.save-btn');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            const langSelector = document.getElementById('langSelector');
+            const signInBtn = document.getElementById('signInBtn');
+            const signUpBtn = document.getElementById('signUpBtn');
+            const signInModal = document.getElementById('signInModal');
+            const signUpModal = document.getElementById('signUpModal');
+            const closeSignInModal = document.getElementById('closeSignInModal');
+            const closeSignUpModal = document.getElementById('closeSignUpModal');
+            const switchToSignUp = document.getElementById('switchToSignUp');
+            const switchToSignIn = document.getElementById('switchToSignIn');
+            const signInFormEl = document.getElementById('signInForm');
+            const signUpFormEl = document.getElementById('signUpForm');
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            // Search functionality elements
+            const searchInput = document.getElementById('searchInput');
+            const searchButton = document.getElementById('searchButton');
+            const searchResults = document.getElementById('searchResults');
+            const searchLoading = document.getElementById('searchLoading');
+            const noResults = document.getElementById('noResults');
+            const searchResultCard = document.getElementById('searchResultCard');
+            const resultImage = document.getElementById('resultImage');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultSubtitle = document.getElementById('resultSubtitle');
+            const resultCapital = document.getElementById('resultCapital');
+            const resultCurrency = document.getElementById('resultCurrency');
+            const resultLanguage = document.getElementById('resultLanguage');
+            const resultPopulation = document.getElementById('resultPopulation');
+            const resultWeather = document.getElementById('resultWeather');
+            const resultTemperature = document.getElementById('resultTemperature');
+            const saveSearchResult = document.getElementById('saveSearchResult');
+            const imageAttribution = document.getElementById('imageAttribution');
+            
+            // AI Features elements
+            const getRecommendations = document.getElementById('getRecommendations');
+            const learnMoreItineraries = document.getElementById('learnMoreItineraries');
+            const openChatbot = document.getElementById('openChatbot');
+            const tryImageRecognition = document.getElementById('tryImageRecognition');
+            const recommendationsSection = document.getElementById('recommendationsSection');
+            const recommendationCards = document.getElementById('recommendationCards');
+            const generateItinerary = document.getElementById('generateItinerary');
+            const itineraryModal = document.getElementById('itineraryModal');
+            const closeItineraryModal = document.getElementById('closeItineraryModal');
+            const itineraryTitle = document.getElementById('itineraryTitle');
+            const itinerarySubtitle = document.getElementById('itinerarySubtitle');
+            const itineraryDays = document.getElementById('itineraryDays');
+            
+            const apiBaseUrl = (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') ? 'http://localhost:5000' : '';
+            
+            // Chatbot elements
+            const aiChatbot = document.getElementById('aiChatbot');
+            const chatContainer = document.getElementById('chatContainer');
+            const chatClose = document.getElementById('chatClose');
+            const chatMessages = document.getElementById('chatMessages');
+            const chatInput = document.getElementById('chatInput');
+            const chatSend = document.getElementById('chatSend');
+            
+            // Image recognition elements
+            const imageRecognitionSection = document.getElementById('imageRecognitionSection');
+            const imageUpload = document.getElementById('imageUpload');
+            const imageInput = document.getElementById('imageInput');
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const imageResult = document.getElementById('imageResult');
+            const landmarkName = document.getElementById('landmarkName');
+            const landmarkDescription = document.getElementById('landmarkDescription');
+            const landmarkConfidence = document.getElementById('landmarkConfidence');
+            
+            // Firebase Auth Elements
+            const authButtons = document.getElementById('authButtons');
+            const userProfile = document.getElementById('userProfile');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const signOutBtn = document.getElementById('signOutBtn');
+            const userMenu = document.querySelector('.user-menu');
+            const userProfileMenu = document.querySelector('.user-profile');
+            
+            // Firebase Auth Message Elements
+            const signInError = document.getElementById('signInError');
+            const signInSuccess = document.getElementById('signInSuccess');
+            const signUpError = document.getElementById('signUpError');
+            const signUpSuccess = document.getElementById('signUpSuccess');
+            const loginBtn = document.getElementById('loginBtn');
+            const registerBtn = document.getElementById('registerBtn');
+            
+            // Social Login Elements
+            const googleLogin = document.getElementById('googleLogin');
+            const facebookLogin = document.getElementById('facebookLogin');
+            const twitterLogin = document.getElementById('twitterLogin');
+            const googleSignup = document.getElementById('googleSignup');
+            const facebookSignup = document.getElementById('facebookSignup');
+            const twitterSignup = document.getElementById('twitterSignup');
+            
+            // Event Listeners
+            destinationFilters.forEach(filter => {
+                filter.addEventListener('click', () => {
+                    // Update active filter
+                    destinationFilters.forEach(f => f.classList.remove('active'));
+                    filter.classList.add('active');
+                    
+                    // Filter destinations
+                    const filterValue = filter.getAttribute('data-filter');
+                    destinationCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+                            card.style.display = 'block';
+                        } else {
+                            card.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            saveButtons.forEach(button => {
+                button.addEventListener('click', toggleSaveDestination);
+            });
+
+            if (darkModeToggle) {
+                darkModeToggle.addEventListener('click', toggleDarkMode);
+            }
+            
+            if (langSelector) {
+                langSelector.addEventListener('change', changeLanguage);
+            }
+            
+            if (signInBtn) {
+                signInBtn.addEventListener('click', openSignInModal);
+            }
+            
+            if (signUpBtn) {
+                signUpBtn.addEventListener('click', openSignUpModal);
+            }
+            
+            if (closeSignInModal) {
+                closeSignInModal.addEventListener('click', () => signInModal.style.display = 'none');
+            }
+            
+            if (closeSignUpModal) {
+                closeSignUpModal.addEventListener('click', () => signUpModal.style.display = 'none');
+            }
+            
+            if (switchToSignUp) {
+                switchToSignUp.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (signInModal) signInModal.style.display = 'none';
+                    if (signUpModal) signUpModal.style.display = 'block';
+                });
+            }
+            
+            if (switchToSignIn) {
+                switchToSignIn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (signUpModal) signUpModal.style.display = 'none';
+                    if (signInModal) signInModal.style.display = 'block';
+                });
+            }
+            
+            // Search functionality event listeners
+            if (searchButton) {
+                searchButton.addEventListener('click', performSearch);
+            }
+            
+            if (searchInput) {
+                searchInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        performSearch();
+                    }
+                });
+            }
+            
+            if (saveSearchResult) {
+                saveSearchResult.addEventListener('click', () => {
+                    if (currentSearchResult) {
+                        toggleSaveSearchDestination();
+                    }
+                });
+            }
+            
+            // AI Features event listeners
+            if (getRecommendations) {
+                getRecommendations.addEventListener('click', showRecommendations);
+            }
+            
+            if (learnMoreItineraries) {
+                learnMoreItineraries.addEventListener('click', () => {
+                    showNotification('Click "Generate AI Itinerary" on any destination to create a personalized travel plan!');
+                });
+            }
+            
+            if (openChatbot) {
+                openChatbot.addEventListener('click', () => {
+                    if (chatContainer) {
+                        chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+                    }
+                });
+            }
+            
+            if (tryImageRecognition) {
+                tryImageRecognition.addEventListener('click', () => {
+                    if (imageRecognitionSection) {
+                        imageRecognitionSection.style.display = 'block';
+                        imageRecognitionSection.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            }
+            
+            if (generateItinerary) {
+                generateItinerary.addEventListener('click', generateAIItinerary);
+            }
+            
+            if (closeItineraryModal) {
+                closeItineraryModal.addEventListener('click', () => {
+                    if (itineraryModal) {
+                        itineraryModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Chatbot event listeners
+            if (aiChatbot) {
+                aiChatbot.addEventListener('click', () => {
+                    if (chatContainer) {
+                        chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+                    }
+                });
+            }
+            
+            if (chatClose) {
+                chatClose.addEventListener('click', () => {
+                    if (chatContainer) {
+                        chatContainer.style.display = 'none';
+                    }
+                });
+            }
+            
+            if (chatSend) {
+                chatSend.addEventListener('click', sendChatMessage);
+            }
+            
+            if (chatInput) {
+                chatInput.addEventListener('keypress', (e) => {
+                    if (e.key === 'Enter') {
+                        sendChatMessage();
+                    }
+                });
+            }
+            
+            // Image recognition event listeners
+            if (imageUpload) {
+                imageUpload.addEventListener('click', () => {
+                    if (imageInput) {
+                        imageInput.click();
+                    }
+                });
+            }
+            
+            if (imageInput) {
+                imageInput.addEventListener('change', handleImageUpload);
+            }
+            
+            // Firebase Auth Event Listeners
+            if (signInFormEl) {
+                signInFormEl.addEventListener('submit', handleSignIn);
+            }
+            
+            if (signUpFormEl) {
+                signUpFormEl.addEventListener('submit', handleSignUp);
+            }
+            
+            if (signOutBtn) {
+                signOutBtn.addEventListener('click', handleSignOut);
+            }
+            
+            // Social Login Event Listeners
+            if (googleLogin) {
+                googleLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+            }
+            
+            if (facebookLogin) {
+                facebookLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+            }
+            
+            if (twitterLogin) {
+                twitterLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+            }
+            
+            if (googleSignup) {
+                googleSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+            }
+            
+            if (facebookSignup) {
+                facebookSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+            }
+            
+            if (twitterSignup) {
+                twitterSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+            }
+            
+            // User menu toggle
+            if (userProfileMenu) {
+                userProfileMenu.addEventListener('click', () => {
+                    if (userMenu) userMenu.classList.toggle('show');
+                });
+            }
+            
+            // Close user menu when clicking outside
+            document.addEventListener('click', (e) => {
+                if (userProfile && !userProfile.contains(e.target)) {
+                    if (userMenu) userMenu.classList.remove('show');
+                }
+            });
+
+            // Close modals when clicking outside
+            window.addEventListener('click', (e) => {
+                if (e.target === signInModal) signInModal.style.display = 'none';
+                if (e.target === signUpModal) signUpModal.style.display = 'none';
+                if (e.target === itineraryModal) itineraryModal.style.display = 'none';
+            });
+
+            // Check for category filter in URL
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            
+            if (category) {
+                // Apply filter
+                destinationFilters.forEach(filter => {
+                    filter.classList.remove('active');
+                    if (filter.getAttribute('data-filter') === category) {
+                        filter.classList.add('active');
+                    }
+                });
+                
+                destinationCards.forEach(card => {
+                    if (card.getAttribute('data-category') === category) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Load dark mode preference
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                if (darkModeToggle) {
+                    darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                    darkModeToggle.querySelector('i').classList.add('fa-sun');
+                }
+            }
+            
+            // Load saved destinations
+            const saved = localStorage.getItem('savedDestinations');
+            if (saved) {
+                savedDestinations = JSON.parse(saved);
+                
+                // Update UI to show saved destinations
+                saveButtons.forEach(button => {
+                    const card = button.closest('.destination-card');
+                    const destination = card.querySelector('h3').textContent;
+                    
+                    if (savedDestinations.includes(destination)) {
+                        button.querySelector('i').classList.remove('far');
+                        button.querySelector('i').classList.add('fas');
+                        button.style.color = '#e74c3c';
+                    }
+                });
+            }
+            
+            // Load destination data from APIs
+            loadDestinationData();
+            
+            // Load AI model for image recognition
+            loadAIModel();
+            
+            // Make destination cards clickable: populate search input and perform search
+            const allDestinationCards = document.querySelectorAll('.destination-card');
+            allDestinationCards.forEach(card => {
+                card.style.cursor = 'pointer';
+                card.addEventListener('click', (e) => {
+                    // Avoid clicking the internal save button or other controls
+                    if (e.target.closest('.save-btn') || e.target.closest('.save-button') || e.target.closest('button.save-btn')) return;
+                    const titleEl = card.querySelector('h3');
+                    if (titleEl) {
+                        const query = titleEl.textContent.trim();
+                        const searchInputEl = document.getElementById('searchInput');
+                        if (searchInputEl) {
+                            searchInputEl.value = query;
+                        }
+                        // Run the same search flow as the chatbot
+                        performSearch();
+                        // Scroll to results for feedback
+                        const resultsEl = document.getElementById('searchResults');
+                        if (resultsEl) resultsEl.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+        });
+
+        // Functions
+        function loadDestinationData() {
+            const destinationCards = document.querySelectorAll('.destination-card');
+            
+            destinationCards.forEach(card => {
+                const country = card.getAttribute('data-country');
+                const detailsElement = document.getElementById(`details-${country}`);
+                
+                if (detailsElement) {
+                    // Show loading spinner
+                    detailsElement.classList.add('active');
+                    
+                    // Get country data from REST Countries API
+                    getCountryData(country)
+                        .then(countryData => {
+                            if (countryData) {
+                                // Update country details
+                                detailsElement.querySelector('.capital').textContent = countryData.capital;
+                                detailsElement.querySelector('.currency').textContent = countryData.currency;
+                                detailsElement.querySelector('.language').textContent = countryData.language;
+                                detailsElement.querySelector('.population').textContent = countryData.population.toLocaleString();
+                                
+                                // Get weather data for the capital
+                                return getWeatherData(countryData.capitalLat, countryData.capitalLon);
+                            }
+                        })
+                        .then(weatherData => {
+                            if (weatherData) {
+                                // Update weather information
+                                const weatherIcon = detailsElement.querySelector('.weather-icon');
+                                const temperature = detailsElement.querySelector('.temperature');
+                                const weatherDesc = detailsElement.querySelector('.weather-desc');
+                                
+                                // Set weather icon based on weather code
+                                setWeatherIcon(weatherIcon, weatherData.weatherCode);
+                                
+                                // Set temperature
+                                temperature.textContent = `${weatherData.temperature}°C`;
+                                
+                                // Set weather description
+                                weatherDesc.textContent = weatherData.description;
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error loading destination data:', error);
+                            const errorElement = detailsElement.querySelector('.api-error');
+                            errorElement.textContent = 'Unable to load destination details. Please try again later.';
+                        });
+                }
+            });
+        }
+
+        function getCountryData(countryIdentifier) {
+            // Try to get by full name first
+            return fetch(`https://restcountries.com/v3.1/name/${countryIdentifier}`)
+                .then(response => {
+                    if (!response.ok) {
+                        // If name fails, try with country code
+                        return fetch(`https://restcountries.com/v3.1/alpha/${countryIdentifier}`);
+                    }
+                    return response;
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Country not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const country = data[0];
+                        return {
+                            name: country.name.common,
+                            capital: country.capital ? country.capital[0] : 'N/A',
+                            capitalLat: country.capitalInfo ? country.capitalInfo.latlng[0] : 0,
+                            capitalLon: country.capitalInfo ? country.capitalInfo.latlng[1] : 0,
+                            currency: country.currencies ? Object.values(country.currencies)[0].name : 'N/A',
+                            language: country.languages ? Object.values(country.languages)[0] : 'N/A',
+                            population: country.population
+                        };
+                    }
+                    return null;
+                })
+                .catch(error => {
+                    console.error('Error fetching country data:', error);
+                    return null;
+                });
+        }
+
+        function getWeatherData(lat, lon) {
+            return fetch(`https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&current_weather=true`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Weather data not available');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.current_weather) {
+                        return {
+                            temperature: data.current_weather.temperature,
+                            weatherCode: data.current_weather.weathercode,
+                            description: getWeatherDescription(data.current_weather.weathercode)
+                        };
+                    }
+                    return null;
+                })
+                .catch(error => {
+                    console.error('Error fetching weather data:', error);
+                    return null;
+                });
+        }
+
+        function getWeatherDescription(weatherCode) {
+            // WMO weather code interpretations
+            const descriptions = {
+                0: 'Clear sky',
+                1: 'Mainly clear',
+                2: 'Partly cloudy',
+                3: 'Overcast',
+                45: 'Fog',
+                48: 'Depositing rime fog',
+                51: 'Drizzle: Light',
+                53: 'Drizzle: Moderate',
+                55: 'Drizzle: Dense intensity',
+                56: 'Freezing Drizzle: Light',
+                57: 'Freezing Drizzle: Dense intensity',
+                61: 'Rain: Slight',
+                63: 'Rain: Moderate',
+                65: 'Rain: Heavy intensity',
+                66: 'Freezing Rain: Light',
+                67: 'Freezing Rain: Heavy intensity',
+                71: 'Snow fall: Slight',
+                73: 'Snow fall: Moderate',
+                75: 'Snow fall: Heavy intensity',
+                77: 'Snow grains',
+                80: 'Rain showers: Slight',
+                81: 'Rain showers: Moderate',
+                82: 'Rain showers: Violent',
+                85: 'Snow showers: Slight',
+                86: 'Snow showers: Heavy',
+                95: 'Thunderstorm: Slight',
+                96: 'Thunderstorm: Moderate',
+                99: 'Thunderstorm: Heavy'
+            };
+            
+            return descriptions[weatherCode] || 'Unknown weather condition';
+        }
+
+        function setWeatherIcon(iconElement, weatherCode) {
+            // Remove existing icon classes
+            iconElement.className = 'weather-icon fas';
+            
+            // Set appropriate icon based on weather code
+            if (weatherCode === 0) {
+                iconElement.classList.add('fa-sun');
+            } else if (weatherCode >= 1 && weatherCode <= 3) {
+                iconElement.classList.add('fa-cloud');
+            } else if (weatherCode === 45 || weatherCode === 48) {
+                iconElement.classList.add('fa-smog');
+            } else if ((weatherCode >= 51 && weatherCode <= 57) || (weatherCode >= 61 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82)) {
+                iconElement.classList.add('fa-cloud-rain');
+            } else if (weatherCode >= 71 && weatherCode <= 77) {
+                iconElement.classList.add('fa-snowflake');
+            } else if (weatherCode >= 85 && weatherCode <= 86) {
+                iconElement.classList.add('fa-snowflake');
+            } else if (weatherCode >= 95 && weatherCode <= 99) {
+                iconElement.classList.add('fa-bolt');
+            } else {
+                iconElement.classList.add('fa-question');
+            }
+        }
+
+        function toggleSaveDestination(e) {
+            const icon = e.currentTarget.querySelector('i');
+            const card = e.currentTarget.closest('.destination-card');
+            const destination = card.querySelector('h3').textContent;
+            
+            if (icon.classList.contains('far')) {
+                // Save destination
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                e.currentTarget.style.color = '#e74c3c';
+                savedDestinations.push(destination);
+                
+                // Show notification
+                showNotification(`${destination} added to your saved destinations!`);
+            } else {
+                // Unsave destination
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                e.currentTarget.style.color = '';
+                savedDestinations = savedDestinations.filter(d => d !== destination);
+                
+                // Show notification
+                showNotification(`${destination} removed from your saved destinations!`);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('savedDestinations', JSON.stringify(savedDestinations));
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#333';
+            notification.style.color = 'white';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s';
+            
+            // Add to DOM
+            document.body.appendChild(notification);
+            
+            // Fade in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const darkModeToggle = document.getElementById('darkModeToggle');
+            if (darkModeToggle) {
+                const icon = darkModeToggle.querySelector('i');
+                
+                if (document.body.classList.contains('dark-mode')) {
+                    icon.classList.remove('fa-moon');
+                    icon.classList.add('fa-sun');
+                } else {
+                    icon.classList.remove('fa-sun');
+                    icon.classList.add('fa-moon');
+                }
+            }
+            
+            // Save preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function changeLanguage() {
+            const langSelector = document.getElementById('langSelector');
+            if (langSelector) {
+                const selectedLang = langSelector.value;
+                showNotification(`Language changed to ${selectedLang.toUpperCase()}`);
+            }
+        }
+
+        function openSignInModal() {
+            const signInModal = document.getElementById('signInModal');
+            if (signInModal) {
+                signInModal.style.display = 'block';
+            }
+        }
+
+        function openSignUpModal() {
+            const signUpModal = document.getElementById('signUpModal');
+            if (signUpModal) {
+                signUpModal.style.display = 'block';
+            }
+        }
+
+        // Search functionality
+        function performSearch() {
+            const searchInput = document.getElementById('searchInput');
+            const searchResults = document.getElementById('searchResults');
+            const searchLoading = document.getElementById('searchLoading');
+            const noResults = document.getElementById('noResults');
+            const searchResultCard = document.getElementById('searchResultCard');
+            
+            
+            // Show loading state
+            if (searchLoading) searchLoading.classList.add('active');
+            if (noResults) noResults.classList.remove('active');
+            if (searchResultCard) searchResultCard.classList.remove('active');
+
+            // Read the query from the input and process it
+            const query = (searchInput && searchInput.value) ? searchInput.value.trim() : '';
+            if (!query) {
+                if (searchLoading) searchLoading.classList.remove('active');
+                showNotification('Please enter a location to search.');
+                return;
+            }
+
+            // Process natural language search
+            const processedQuery = processNaturalLanguageQuery(query);
+            
+            // First try to get geocoding data using Nominatim (OpenStreetMap)
+            getGeocodingData(processedQuery.location)
+                .then(geocodingData => {
+                    if (geocodingData) {
+                        // Get weather data for the coordinates
+                        return getWeatherData(geocodingData.latitude, geocodingData.longitude)
+                            .then(weatherData => {
+                                return { geocodingData, weatherData };
+                            });
+                    } else {
+                        throw new Error('Location not found');
+                    }
+                })
+                .then(result => {
+                    // If we have geocoding data, try to get additional country data if available
+                    if (result.geocodingData.countryCode) {
+                        return getCountryData(result.geocodingData.countryCode)
+                            .then(countryData => {
+                                result.countryData = countryData;
+                                return result;
+                            })
+                            .catch(() => {
+                                // If country data fails, we still have geocoding data
+                                return result;
+                            });
+                    } else {
+                        return result;
+                    }
+                })
+                .then(result => {
+                    // Get location image
+                    return getLocationImage(result.geocodingData.name, result.geocodingData.country)
+                        .then(imageData => {
+                            result.imageData = imageData;
+                            return result;
+                        })
+                        .catch(() => {
+                            // If image fails, we still have other data
+                            return result;
+                        });
+                })
+                .then(result => {
+                    // Fetch nearby POIs (hotels, hostels, etc.) using cached wrapper and attach to result
+                        return cachedFetchNearbyPOIs(result.geocodingData.latitude, result.geocodingData.longitude, 5000)
+                            .then(pois => {
+                                result.pois = pois || [];
+                                // Add markers to map
+                                try { addPOIMarkers(result.pois, result.geocodingData.latitude, result.geocodingData.longitude); } catch(e) { console.warn(e); }
+                                return result;
+                            })
+                            .catch(err => {
+                                console.warn('POI fetch failed:', err);
+                                result.pois = [];
+                                return result;
+                            });
+                    })
+                    .then(result => {
+                        // Display the search result
+                        displaySearchResult(result, processedQuery.location);
+                    
+                    // Hide loading state
+                    if (searchLoading) searchLoading.classList.remove('active');
+                    if (searchResultCard) searchResultCard.classList.add('active');
+                })
+                .catch(error => {
+                    console.error('Search error:', error);
+                    
+                    // Hide loading state and show no results
+                    if (searchLoading) searchLoading.classList.remove('active');
+                    if (noResults) noResults.classList.add('active');
+                });
+        }
+
+        // Process natural language queries
+        function processNaturalLanguageQuery(query) {
+            // Normalize whitespace
+            const q = (query || '').trim();
+
+            // Try to detect intent (hotels, attractions, weather, etc.)
+            const lower = q.toLowerCase();
+            let intent = 'search';
+            if (/\bhotel|hotels|hostel|hostels|accommodation|stay|lodging\b/i.test(lower)) intent = 'hotels';
+            else if (/\bweather\b/i.test(lower)) intent = 'weather';
+            else if (/\bflight|flights|airports?\b/i.test(lower)) intent = 'flights';
+
+            // Prefer explicit prepositions: "in <location>", "near <location>", "around <location>"
+            let location = '';
+            const inMatch = q.match(/\b(?:in|near|around)\s+([A-Za-z\s,()'-]+)$/i);
+            if (inMatch && inMatch[1]) {
+                location = inMatch[1].trim();
+            }
+
+            // If not found, look for patterns like "hotels in India" or "beaches in Bali" earlier in the string
+            if (!location) {
+                const middleMatch = q.match(/(?:hotels|hostels|beaches|mountains|cities|historical sites|attractions|places|things to do)\s+(?:in|near|around)\s+([A-Za-z\s,()'-]+)/i);
+                if (middleMatch && middleMatch[1]) location = middleMatch[1].trim();
+            }
+
+            // As a fallback, look for verbs that include a destination after them: "visit Paris", "travel to Tokyo"
+            if (!location) {
+                const verbMatch = q.match(/(?:visit|travel to|go to|trip to|vacation in|holiday in)\s+([A-Za-z\s,()'-]+)/i);
+                if (verbMatch && verbMatch[1]) location = verbMatch[1].trim();
+            }
+
+            // Final fallback: if the entire query looks like just a place (one or two words without other keywords), use it
+            if (!location) {
+                const simplePlace = q.match(/^([A-Za-z\s()'-]{2,})$/i);
+                if (simplePlace && simplePlace[1]) location = simplePlace[1].trim();
+            }
+
+            // If still empty, use the full query but this is last resort
+            if (!location) location = q;
+
+            return { location: location, intent: intent };
+        }
+
+        function getGeocodingData(locationName) {
+            // Use Nominatim (OpenStreetMap) for more accurate geocoding
+            const headers = new Headers();
+            headers.append('User-Agent', 'AI Travel Guide (https://example.com)');
+            
+            return fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(locationName)}&limit=1`, { headers })
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Geocoding failed');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const result = data[0];
+                        // Extract the name from the display name
+                        const nameParts = result.display_name.split(',');
+                        const name = nameParts[0].trim();
+                        
+                        // Extract the country from the address or display name
+                        let country = '';
+                        if (result.address && result.address.country) {
+                            country = result.address.country;
+                        } else {
+                            // Fallback to the last part of display name
+                            country = nameParts[nameParts.length - 1].trim();
+                        }
+                        
+                        return {
+                            name: name,
+                            latitude: parseFloat(result.lat),
+                            longitude: parseFloat(result.lon),
+                            country: country,
+                            countryCode: result.address && result.address.country_code ? result.address.country_code.toUpperCase() : null
+                        };
+                    }
+                    return null;
+                })
+                .catch(error => {
+                    console.error('Error fetching geocoding data:', error);
+                    return null;
+                });
+        }
+
+        function getLocationImage(locationName, countryName) {
+            // First try to get image from Wikimedia Commons
+            return getWikimediaImage(locationName, countryName)
+                .then(imageData => {
+                    if (imageData) {
+                        return imageData;
+                    } else {
+                        // Fallback to Unsplash
+                        return getUnsplashImage(locationName, countryName);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching location image:', error);
+                    return null;
+                });
+        }
+
+        function getWikimediaImage(locationName, countryName) {
+            // Try to get an image from Wikimedia Commons
+            const query = countryName ? `${locationName}, ${countryName}` : locationName;
+            
+            return fetch(`https://commons.wikimedia.org/w/api.php?action=query&format=json&generator=images&prop=imageinfo&iiprop=url|extmetadata&gimlimit=1&titles=${encodeURIComponent(query)}&origin=*`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Wikimedia API error');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data.query && data.query.pages) {
+                        const pages = data.query.pages;
+                        const pageIds = Object.keys(pages);
+                        
+                        if (pageIds.length > 0) {
+                            const page = pages[pageIds[0]];
+                            
+                            if (page.imageinfo && page.imageinfo.length > 0) {
+                                const imageInfo = page.imageinfo[0];
+                                
+                                // Get artist information if available
+                                let artist = 'Unknown';
+                                if (imageInfo.extmetadata && imageInfo.extmetadata.Artist) {
+                                    artist = imageInfo.extmetadata.Artist.value;
+                                }
+                                
+                                // Get license information if available
+                                let license = 'CC BY-SA';
+                                if (imageInfo.extmetadata && imageInfo.extmetadata.License) {
+                                    license = imageInfo.extmetadata.License.value;
+                                }
+                                
+                                return {
+                                    url: imageInfo.url,
+                                    attribution: `Photo by ${artist} (${license})`,
+                                    source: 'Wikimedia Commons'
+                                };
+                            }
+                        }
+                    }
+                    return null;
+                })
+                .catch(error => {
+                    console.error('Error fetching Wikimedia image:', error);
+                    return null;
+                });
+        }
+
+        function getUnsplashImage(locationName, countryName) {
+            // Use Unsplash Source API for location images
+            const query = countryName ? `${locationName}, ${countryName}` : locationName;
+            
+            // Unsplash Source API doesn't return metadata, so we create attribution
+            return {
+                url: `https://source.unsplash.com/800x400/?${encodeURIComponent(query)}`,
+                attribution: 'Photo by Unsplash',
+                source: 'Unsplash'
+            };
+        }
+
+        function displaySearchResult(result, searchTerm) {
+            // Store the current search result
+            currentSearchResult = result;
+            
+            // Get elements
+            const resultImage = document.getElementById('resultImage');
+            const resultTitle = document.getElementById('resultTitle');
+            const resultSubtitle = document.getElementById('resultSubtitle');
+            const resultCapital = document.getElementById('resultCapital');
+            const resultCurrency = document.getElementById('resultCurrency');
+            const resultLanguage = document.getElementById('resultLanguage');
+            const resultPopulation = document.getElementById('resultPopulation');
+            const resultWeather = document.getElementById('resultWeather');
+            const resultTemperature = document.getElementById('resultTemperature');
+            const saveSearchResult = document.getElementById('saveSearchResult');
+            const imageAttribution = document.getElementById('imageAttribution');
+            
+            // Set the image
+            if (resultImage && result.imageData) {
+                resultImage.src = result.imageData.url;
+                
+                // Set image attribution
+                if (imageAttribution) {
+                    imageAttribution.textContent = result.imageData.attribution;
+                    
+                    if (result.imageData.source === 'Wikimedia Commons') {
+                        imageAttribution.href = 'https://commons.wikimedia.org/';
+                    } else {
+                        imageAttribution.href = 'https://unsplash.com/';
+                    }
+                }
+                
+                // Add error handler for image loading
+                resultImage.onerror = function() {
+                    // Fallback to a generic travel image
+                    this.src = 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80';
+                    
+                    // Update attribution
+                    if (imageAttribution) {
+                        imageAttribution.textContent = 'Photo by Unsplash';
+                        imageAttribution.href = 'https://unsplash.com/';
+                    }
+                };
+            }
+            
+            // Set the title and subtitle
+            if (result.countryData) {
+                if (resultTitle) resultTitle.textContent = result.countryData.name;
+                if (resultSubtitle) resultSubtitle.textContent = 'Country';
+                
+                // Set the details
+                if (resultCapital) resultCapital.textContent = result.countryData.capital;
+                if (resultCurrency) resultCurrency.textContent = result.countryData.currency;
+                if (resultLanguage) resultLanguage.textContent = result.countryData.language;
+                if (resultPopulation) resultPopulation.textContent = result.countryData.population.toLocaleString();
+            } else if (result.geocodingData) {
+                if (resultTitle) resultTitle.textContent = result.geocodingData.name;
+                if (resultSubtitle) resultSubtitle.textContent = result.geocodingData.country || 'Location';
+                
+                // Set the details (geocoding doesn't provide all country details)
+                if (resultCapital) resultCapital.textContent = '-';
+                if (resultCurrency) resultCurrency.textContent = '-';
+                if (resultLanguage) resultLanguage.textContent = '-';
+                if (resultPopulation) resultPopulation.textContent = '-';
+            }
+            
+            // Set weather information
+            if (result.weatherData) {
+                if (resultWeather) resultWeather.textContent = result.weatherData.description;
+                if (resultTemperature) resultTemperature.textContent = `${result.weatherData.temperature}°C`;
+            } else {
+                if (resultWeather) resultWeather.textContent = 'Weather data not available';
+                if (resultTemperature) resultTemperature.textContent = '-';
+            }
+            
+            // Reset save button state
+            if (saveSearchResult && resultTitle) {
+                // Ensure there is an <i> icon inside the save button for consistent manipulation
+                let icon = saveSearchResult.querySelector('i');
+                if (!icon) {
+                    icon = document.createElement('i');
+                    // default to an outlined heart
+                    icon.className = 'far fa-heart';
+                    // place it before any text in the button
+                    saveSearchResult.insertBefore(icon, saveSearchResult.firstChild);
+                }
+
+                const destinationName = resultTitle.textContent;
+
+                if (savedDestinations.includes(destinationName)) {
+                    icon.classList.remove('far');
+                    icon.classList.add('fas');
+                    saveSearchResult.style.color = '#e74c3c';
+                } else {
+                    icon.classList.remove('fas');
+                    icon.classList.add('far');
+                    saveSearchResult.style.color = '';
+                }
+            }
+
+            // Render POIs (hotels etc.)
+            const poiList = document.getElementById('poiList');
+            if (poiList) {
+                poiList.innerHTML = '';
+
+                if (result.pois && result.pois.length > 0) {
+                    const heading = document.createElement('h3');
+                    heading.textContent = 'Nearby places & accommodations';
+                    poiList.appendChild(heading);
+
+                    result.pois.slice(0, 12).forEach(poi => {
+                        const div = document.createElement('div');
+                        div.className = 'poi-item';
+                        div.style.padding = '8px';
+                        div.style.borderBottom = '1px solid #eee';
+
+                        const title = document.createElement('div');
+                        title.style.fontWeight = '700';
+                        title.textContent = poi.name || (poi.tags && (poi.tags.name || poi.tags.brand)) || 'Unnamed place';
+
+                        const meta = document.createElement('div');
+                        meta.style.fontSize = '0.9rem';
+                        meta.style.color = 'var(--gray)';
+                        meta.textContent = `${poi.tags && poi.tags.addr_city ? poi.tags.addr_city + ', ' : ''}${poi.tags && poi.tags.addr_country ? poi.tags.addr_country : ''} • ${poi.type || ''}`;
+
+                        // Click handler to center/scroll to the destination on page
+                        div.addEventListener('click', () => {
+                            // If you want to open a modal or load details for this POI, implement here
+                            showNotification((poi.name || 'Place') + ' selected');
+                        });
+
+                        div.appendChild(title);
+                        div.appendChild(meta);
+                        poiList.appendChild(div);
+                    });
+                } else {
+                    const p = document.createElement('p');
+                    p.style.color = 'var(--gray)';
+                    p.textContent = 'No nearby places found.';
+                    poiList.appendChild(p);
+                }
+            }
+        }
+
+        // Helper: Haversine distance (meters)
+        function haversine(lat1, lon1, lat2, lon2) {
+            function toRad(x) { return x * Math.PI / 180; }
+            const R = 6371e3; // meters
+            const φ1 = toRad(lat1);
+            const φ2 = toRad(lat2);
+            const Δφ = toRad(lat2 - lat1);
+            const Δλ = toRad(lon2 - lon1);
+
+            const a = Math.sin(Δφ/2) * Math.sin(Δφ/2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ/2) * Math.sin(Δλ/2);
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+            return R * c;
+        }
+
+        // Small helper: promise-based sleep
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // Helper: fetch with timeout using AbortController
+        function fetchWithTimeout(resource, options = {}, timeout = 15000) {
+            const controller = new AbortController();
+            const id = setTimeout(() => controller.abort(), timeout);
+            const opts = Object.assign({}, options, { signal: controller.signal });
+            return fetch(resource, opts).finally(() => clearTimeout(id));
+        }
+
+        // Resilient fetch for nearby POIs using Overpass with multiple endpoints and retries
+        async function fetchNearbyPOIs(lat, lon, radius = 3000) {
+            const query = `[
+                out:json][timeout:25];(
+                    node["tourism"~"hotel|hostel|guest_house|apartment"](around:${radius},${lat},${lon});
+                    way["tourism"~"hotel|hostel|guest_house|apartment"](around:${radius},${lat},${lon});
+                    relation["tourism"~"hotel|hostel|guest_house|apartment"](around:${radius},${lat},${lon});
+                    node["amenity"="hotel"](around:${radius},${lat},${lon});
+                    way["amenity"="hotel"](around:${radius},${lat},${lon});
+                    relation["amenity"="hotel"](around:${radius},${lat},${lon});
+                );out center 50;`;
+
+            // Known public Overpass instances - we'll try multiple endpoints if one times out or responds with 5xx
+            const endpoints = [
+                'https://overpass-api.de/api/interpreter',
+                'https://overpass.kumi.systems/api/interpreter',
+                'https://lz4.overpass-api.de/api/interpreter'
+            ];
+
+            const timeoutMs = 15000; // 15s per request
+            const retriesPerEndpoint = 2;
+
+            for (const endpoint of endpoints) {
+                let attempt = 0;
+                while (attempt <= retriesPerEndpoint) {
+                    try {
+                        const url = endpoint + '?data=' + encodeURIComponent(query);
+                        const resp = await fetchWithTimeout(url, { headers: { 'Accept': 'application/json' } }, timeoutMs);
+                        if (!resp.ok) throw new Error(`Overpass API error ${resp.status}`);
+                        const data = await resp.json();
+
+                        if (!data || !data.elements) return [];
+
+                        const elements = data.elements.map(el => {
+                            const eLat = el.lat || (el.center && el.center.lat);
+                            const eLon = el.lon || (el.center && el.center.lon);
+                            return Object.assign({}, el, { latitude: eLat, longitude: eLon });
+                        }).filter(e => e.latitude && e.longitude);
+
+                        elements.sort((a,b) => {
+                            const da = haversine(lat, lon, a.latitude, a.longitude);
+                            const db = haversine(lat, lon, b.latitude, b.longitude);
+                            return da - db;
+                        });
+
+                        return elements;
+                    } catch (err) {
+                        console.warn(`Overpass endpoint ${endpoint} attempt ${attempt} failed:`, err.message || err);
+                        attempt++;
+                        // exponential backoff with jitter
+                        const wait = Math.min(2000 * Math.pow(2, attempt), 15000) + Math.floor(Math.random() * 300);
+                        await sleep(wait);
+                    }
+                }
+                // try next endpoint
+            }
+
+            // If we reach here, all endpoints failed
+            console.error('All Overpass endpoints failed or timed out.');
+            return [];
+        }
+
+        // Simple caching wrapper for Overpass queries (localStorage with TTL) with spinner and friendly fallback
+        function cachedFetchNearbyPOIs(lat, lon, radius = 3000, ttlSeconds = 600) {
+            try {
+                const key = `overpass_${Math.round(lat*100)}_${Math.round(lon*100)}_${radius}`;
+                const raw = localStorage.getItem(key);
+                if (raw) {
+                    const parsed = JSON.parse(raw);
+                    const age = (Date.now() - parsed.ts) / 1000;
+                    if (age < ttlSeconds) {
+                        return Promise.resolve(parsed.data);
+                    }
+                }
+
+                // show spinner
+                const spinner = document.getElementById('poiSpinner');
+                if (spinner) spinner.style.display = 'block';
+
+                return fetchNearbyPOIs(lat, lon, radius).then(data => {
+                    try {
+                        localStorage.setItem(key, JSON.stringify({ ts: Date.now(), data }));
+                    } catch (e) {
+                        // ignore storage write errors (quota, private mode)
+                    }
+                    if (spinner) spinner.style.display = 'none';
+                    if (!data || data.length === 0) {
+                        showNotification('Nearby places could not be loaded right now. Try again in a moment.');
+                    }
+                    return data;
+                }).catch(err => {
+                    if (spinner) spinner.style.display = 'none';
+                    console.error('cachedFetchNearbyPOIs error:', err);
+                    showNotification('Unable to load nearby places due to network or server issues.');
+                    return [];
+                });
+            } catch (e) {
+                // If something unexpected happens, fallback to direct fetch
+                return fetchNearbyPOIs(lat, lon, radius).catch(() => []);
+            }
+        }
+
+            // Initialize Leaflet map and marker layer (lazy init)
+            let __leafletMap = null;
+            let __leafletCluster = null;
+            function ensureMap(lat = 0, lon = 0, zoom = 12) {
+                if (!document.getElementById('map')) return null;
+                if (!__leafletMap) {
+                    __leafletMap = L.map('map', { zoomControl: true }).setView([lat, lon], zoom);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: '&copy; OpenStreetMap contributors'
+                    }).addTo(__leafletMap);
+                    __leafletCluster = L.markerClusterGroup();
+                    __leafletMap.addLayer(__leafletCluster);
+                } else {
+                    __leafletMap.setView([lat, lon], zoom);
+                    __leafletCluster.clearLayers();
+                }
+                return { map: __leafletMap, cluster: __leafletCluster };
+            }
+
+            // Add POI markers to map
+            function addPOIMarkers(pois, centerLat, centerLon) {
+                const m = ensureMap(centerLat, centerLon, 13);
+                if (!m) return;
+                pois.forEach((poi, idx) => {
+                    const lat = poi.latitude;
+                    const lon = poi.longitude;
+                    if (!lat || !lon) return;
+                    const name = poi.tags && (poi.tags.name || poi.tags.brand) || 'Place';
+                    const snippet = poi.tags && poi.tags.tourism ? poi.tags.tourism : (poi.tags && poi.tags.amenity ? poi.tags.amenity : 'Point of interest');
+
+                    const popupContent = document.createElement('div');
+                    popupContent.innerHTML = `<strong>${name}</strong><div style="font-size:0.9rem;color:var(--gray);">${snippet}</div>`;
+                    const detailsBtn = document.createElement('button');
+                    detailsBtn.className = 'btn';
+                    detailsBtn.style.marginTop = '8px';
+                    detailsBtn.textContent = 'Details';
+                    detailsBtn.addEventListener('click', () => openPoiModal(poi));
+                    popupContent.appendChild(detailsBtn);
+
+                    const marker = L.marker([lat, lon]);
+                    marker.bindPopup(popupContent);
+                    m.cluster.addLayer(marker);
+                });
+            }
+
+            // Open POI modal with details and try to fetch an image
+            function openPoiModal(poi) {
+                const modal = document.getElementById('poiModal');
+                const title = document.getElementById('poiModalTitle');
+                const body = document.getElementById('poiModalBody');
+                const imageWrap = document.getElementById('poiModalImage');
+
+                if (!modal || !title || !body) return;
+                title.textContent = (poi.tags && (poi.tags.name || poi.tags.brand)) || 'Place';
+                body.innerHTML = '';
+
+                const info = document.createElement('div');
+                info.innerHTML = `<p><strong>Type:</strong> ${poi.tags && poi.tags.tourism ? poi.tags.tourism : (poi.tags && poi.tags.amenity ? poi.tags.amenity : 'N/A')}</p>`;
+                if (poi.tags && poi.tags['addr:street']) info.innerHTML += `<p>${poi.tags['addr:street'] || ''} ${poi.tags['addr:housenumber'] || ''}</p>`;
+                body.appendChild(info);
+
+                // Try to fetch image from Wikimedia using POI name
+                imageWrap.innerHTML = '';
+                const candidate = (poi.tags && (poi.tags.name || ''));
+                if (candidate) {
+                    getWikimediaImage(candidate, '').then(img => {
+                        if (img && img.url) {
+                            imageWrap.innerHTML = `<img src="${img.url}" alt="${candidate}">`;
+                        }
+                    }).catch(() => {});
+                }
+
+                modal.style.display = 'block';
+            }
+
+            // Close modal handler
+            document.addEventListener('DOMContentLoaded', () => {
+                const closePoi = document.getElementById('closePoiModal');
+                const poiModal = document.getElementById('poiModal');
+                if (closePoi && poiModal) {
+                    closePoi.addEventListener('click', () => { poiModal.style.display = 'none'; });
+                }
+                window.addEventListener('click', (e) => {
+                    if (e.target === poiModal) poiModal.style.display = 'none';
+                });
+            });
+
+        function toggleSaveSearchDestination() {
+            const saveSearchResult = document.getElementById('saveSearchResult');
+            const resultTitle = document.getElementById('resultTitle');
+            
+            if (!saveSearchResult || !resultTitle) return;
+            
+            let icon = saveSearchResult.querySelector('i');
+            if (!icon) {
+                icon = document.createElement('i');
+                icon.className = 'far fa-heart';
+                saveSearchResult.insertBefore(icon, saveSearchResult.firstChild);
+            }
+            const destinationName = resultTitle.textContent;
+            
+            if (icon.classList.contains('far')) {
+                // Save destination
+                icon.classList.remove('far');
+                icon.classList.add('fas');
+                saveSearchResult.style.color = '#e74c3c';
+                savedDestinations.push(destinationName);
+                
+                // Show notification
+                showNotification(`${destinationName} added to your saved destinations!`);
+            } else {
+                // Unsave destination
+                icon.classList.remove('fas');
+                icon.classList.add('far');
+                saveSearchResult.style.color = '';
+                savedDestinations = savedDestinations.filter(d => d !== destinationName);
+                
+                // Show notification
+                showNotification(`${destinationName} removed from your saved destinations!`);
+            }
+            
+            // Save to localStorage
+            localStorage.setItem('savedDestinations', JSON.stringify(savedDestinations));
+        }
+
+        // AI Features Functions
+        
+        // Show AI recommendations
+        async function showRecommendations() {
+            const recommendationsSection = document.getElementById('recommendationsSection');
+            const recommendationCards = document.getElementById('recommendationCards');
+            
+            if (!recommendationsSection || !recommendationCards) return;
+            
+            // Show loading state
+            recommendationCards.innerHTML = '<div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Generating recommendations...</div>';
+            recommendationsSection.style.display = 'block';
+            recommendationsSection.scrollIntoView({ behavior: 'smooth' });
+            
+            try {
+                // Fetch recommendations from ollama
+                const response = await fetch(`${apiBaseUrl}/recommendations`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        preferences: {
+                            interests: userPreferences?.interests || ['travel', 'adventure'],
+                            budget: userPreferences?.budget || 'moderate',
+                            style: userPreferences?.style || 'relaxed'
+                        }
+                    })
+                });
+
+                const recommendations = await response.json();
+                
+                // Clear loading state
+                recommendationCards.innerHTML = '';
+                
+                // Add recommendation cards
+                if (Array.isArray(recommendations) && recommendations.length > 0) {
+                    recommendations.forEach(rec => {
+                        const card = document.createElement('div');
+                        card.className = 'recommendation-card';
+                        card.innerHTML = `
+                            <div class="recommendation-image">
+                                <img src="${rec.image || 'https://source.unsplash.com/featured/?travel'}" alt="${rec.name}" onerror="this.src='https://source.unsplash.com/featured/?travel'">
+                            </div>
+                            <div class="recommendation-content">
+                                <h3 class="recommendation-title">${rec.name}</h3>
+                                <p class="recommendation-reason">${rec.reason}</p>
+                                <span class="recommendation-match">${rec.match || 85}% match</span>
+                            </div>
+                        `;
+                        recommendationCards.appendChild(card);
+                    });
+                } else {
+                    recommendationCards.innerHTML = '<p style="text-align: center;">Unable to load recommendations. Please try again.</p>';
+                }
+            } catch (error) {
+                console.error('Recommendations error:', error);
+                recommendationCards.innerHTML = '<p style="text-align: center;">Error loading recommendations. Please check if the server is running.</p>';
+            }
+        }
+        
+        // AI Itinerary generation using ollama
+        async function generateAIItinerary() {
+            const itineraryModal = document.getElementById('itineraryModal');
+            const itineraryTitle = document.getElementById('itineraryTitle');
+            const itinerarySubtitle = document.getElementById('itinerarySubtitle');
+            const itineraryDays = document.getElementById('itineraryDays');
+            
+            if (!itineraryModal || !itineraryTitle || !itinerarySubtitle || !itineraryDays) return;
+            
+            // Get destination name
+            const resultTitle = document.getElementById('resultTitle');
+            const destinationName = resultTitle ? resultTitle.textContent : 'Destination';
+
+            // Ask user for number of days
+            let days = parseInt(prompt('How many days are you staying?', '3'), 10);
+            if (Number.isNaN(days) || days < 1) {
+                days = 3;
+            }
+            days = Math.min(Math.max(days, 1), 14);
+            
+            // Show modal
+            itineraryModal.style.display = 'block';
+            
+            // Set title and subtitle
+            itineraryTitle.textContent = `${days}-Day Itinerary for ${destinationName}`;
+            itinerarySubtitle.textContent = `Generated by AI based on destination type and local attractions (planning for ${days} days)`;
+            
+            // Show loading state
+            itineraryDays.innerHTML = '<div style="text-align: center; padding: 20px;"><i class="fas fa-spinner fa-spin"></i> Generating itinerary...</div>';
+            
+            try {
+                // Fetch itinerary from ollama
+                const response = await fetch(`${apiBaseUrl}/itinerary`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        destination: destinationName,
+                        days: days
+                    })
+                });
+
+                const itinerary = await response.json();
+                
+                // Clear loading state
+                itineraryDays.innerHTML = '';
+                
+                // Add itinerary days
+                if (Array.isArray(itinerary)) {
+                    itinerary.forEach((day, index) => {
+                        const dayElement = document.createElement('div');
+                        dayElement.className = 'itinerary-day';
+                        dayElement.innerHTML = `
+                            <h3 class="itinerary-day-title">
+                                <i class="fas fa-calendar-day"></i>
+                                Day ${index + 1}: ${day.title || 'Day ' + (index + 1)}
+                            </h3>
+                            <div class="itinerary-activities">
+                                ${(day.activities || []).map(activity => `
+                                    <div class="itinerary-activity">
+                                        <i class="fas ${activity.icon || 'fa-map-marker-alt'}"></i>
+                                        <div class="itinerary-activity-content">
+                                            <div class="itinerary-activity-title">${activity.title || 'Activity'}</div>
+                                            <div class="itinerary-activity-desc">${activity.description || ''}</div>
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                        `;
+                        itineraryDays.appendChild(dayElement);
+                    });
+                } else {
+                    itineraryDays.innerHTML = '<p style="text-align: center;">Unable to generate itinerary. Please try again.</p>';
+                }
+            } catch (error) {
+                console.error('Itinerary generation error:', error);
+                itineraryDays.innerHTML = '<p style="text-align: center;">Error generating itinerary. Please check if the server is running.</p>';
+            }
+        }
+        
+        // AI Chatbot Functions
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addChatMessage(message, 'user');
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Add to chat history
+            chatHistory.push({ role: 'user', content: message });
+            
+            // Generate bot response
+            generateBotResponse(message);
+        }
+
+        function addChatMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = message;
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        async function generateBotResponse(userMessage) {
+    const typingDiv = document.createElement('div');
+    typingDiv.className = 'chat-message bot';
+    typingDiv.innerHTML = '<div class="message-bubble">Typing...</div>';
+    chatMessages.appendChild(typingDiv);
+
+    try {
+        const response = await fetch("http://localhost:5000/chat", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({
+                message: userMessage,
+                preferences: userPreferences
+            })
+        });
+
+        const data = await response.json();
+
+        if (chatMessages.contains(typingDiv)) {
+            chatMessages.removeChild(typingDiv);
+        }
+
+        addChatMessage(data.reply, 'bot');
+
+    } catch (error) {
+        if (chatMessages.contains(typingDiv)) {
+            chatMessages.removeChild(typingDiv);
+        }
+
+        addChatMessage("Error connecting to AI server.", 'bot');
+    }
+}
+
+        
+        // Local Semantic KB + Rule-based chatbot
+        // Load TFJS and USE scripts dynamically and prepare KB embeddings
+        async function ensureUSEScripts() {
+            if (window.use) return;
+            // Load TFJS first
+            if (!window.tf) {
+                await new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.21.0/dist/tf.min.js';
+                    s.onload = resolve; s.onerror = reject; document.head.appendChild(s);
+                });
+            }
+            // Load Universal Sentence Encoder
+            if (!window.use) {
+                await new Promise((resolve, reject) => {
+                    const s2 = document.createElement('script');
+                    s2.src = 'https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder@1.3.3/dist/universal-sentence-encoder.js';
+                    s2.onload = resolve; s2.onerror = reject; document.head.appendChild(s2);
+                });
+            }
+        }
+
+        async function loadUSEandKB() {
+            if (window.__use_kb_ready) return;
+            try {
+                await ensureUSEScripts();
+                window.useModel = await use.load();
+
+                // load KB
+                const resp = await fetch('kb.json');
+                if (!resp.ok) throw new Error('kb.json not found');
+                const kb = await resp.json();
+                window.kb = kb;
+
+                // caching: simple versioning by length+ids
+                const cacheKey = 'kb_embeddings_v1';
+                let cached = null;
+                try { cached = JSON.parse(localStorage.getItem(cacheKey)); } catch(e) { cached = null; }
+
+                const kbHash = JSON.stringify(window.kb.map(d=>d.id)).length;
+                if (cached && cached.kbHash === kbHash && cached.embeddings && cached.embeddings.length === window.kb.length) {
+                    // attach embeddings
+                    window.kb.forEach((d,i)=>d.embedding = cached.embeddings[i]);
+                } else {
+                    const texts = window.kb.map(d=>d.text);
+                    const embTensor = await window.useModel.embed(texts);
+                    const embs = await embTensor.array();
+                    embTensor.dispose && embTensor.dispose();
+                    window.kb.forEach((d,i)=>d.embedding = embs[i]);
+                    try { localStorage.setItem(cacheKey, JSON.stringify({ kbHash, embeddings: embs })); } catch(e) { /* ignore storage errors */ }
+                }
+
+                window.__use_kb_ready = true;
+            } catch (e) {
+                console.warn('USE or KB load failed:', e);
+                // mark ready anyway to avoid retry storms
+                window.__use_kb_ready = true;
+            }
+        }
+
+        function cosine(a,b) {
+            let dot=0, na=0, nb=0;
+            for (let i=0;i<a.length;i++){ dot+=a[i]*b[i]; na+=a[i]*a[i]; nb+=b[i]*b[i]; }
+            return dot / (Math.sqrt(na)*Math.sqrt(nb) + 1e-12);
+        }
+
+        async function semanticSearch(query, k=3) {
+            try {
+                if (!window.__use_kb_ready) await loadUSEandKB();
+                if (!window.kb || !window.kb.length || !window.useModel) return [];
+                const qTensor = await window.useModel.embed([query]);
+                const qArr = (await qTensor.array())[0];
+                qTensor.dispose && qTensor.dispose();
+                const scored = window.kb.map(d => ({ doc:d, score: cosine(qArr, d.embedding) }));
+                scored.sort((a,b)=>b.score-a.score);
+                return scored.slice(0,k);
+            } catch (e) {
+                console.warn('semanticSearch failed:', e);
+                return [];
+            }
+        }
+
+        // Lightweight web search fallback using DuckDuckGo Instant Answer API (no key required)
+        // Falls back to a Google link if DuckDuckGo returns nothing.
+        async function webSearchDuckDuckGo(query, k=3) {
+            try {
+                const url = `https://api.duckduckgo.com/?q=${encodeURIComponent(query)}&format=json&no_html=1&skip_disambig=1`;
+                const resp = await fetch(url);
+                if (!resp.ok) return [];
+                const data = await resp.json();
+                const results = [];
+
+                // Primary abstract (direct answer)
+                if (data.AbstractText && data.AbstractText.trim()) {
+                    results.push({ title: data.Heading || 'Answer', snippet: data.AbstractText, url: data.AbstractURL || ('https://www.google.com/search?q='+encodeURIComponent(query)) });
+                }
+
+                // Related topics (may include nested topics)
+                const gather = (items) => {
+                    for (const it of items || []) {
+                        if (results.length >= k) break;
+                        if (it.Text && it.FirstURL) {
+                            results.push({ title: it.Result ? (it.Result.replace(/<.*?>/g, '') ) : it.Text.split(' - ')[0], snippet: it.Text, url: it.FirstURL });
+                        } else if (it.Topics) {
+                            gather(it.Topics);
+                        }
+                        if (results.length >= k) break;
+                    }
+                };
+                gather(data.RelatedTopics || []);
+
+                // If still empty, provide a Google search link as a fallback
+                if (results.length === 0) {
+                    results.push({ title: 'Search Google', snippet: 'Open Google search for: ' + query, url: 'https://www.google.com/search?q=' + encodeURIComponent(query) });
+                }
+
+                return results.slice(0, k);
+            } catch (e) {
+                console.warn('webSearchDuckDuckGo failed', e);
+                return [];
+            }
+        }
+
+        async function handleLocalChat(query) {
+            // quick math pattern
+            const mathMatch = query.match(/^(?:what is|calculate)\s+([0-9+\-*/().\s]+)\??$/i);
+            if (mathMatch) {
+                try { const val = Function('return ('+mathMatch[1]+')')(); return `Result: ${val}`; } catch(e) {}
+            }
+
+            // Try semantic search
+            const top = await semanticSearch(query, 4);
+            if (top && top.length > 0 && top[0].score > 0.55) {
+                // if confident, return concatenated summaries
+                let reply = `Here are some helpful items I found:\n\n`;
+                top.forEach((s,idx)=>{
+                    reply += `${idx+1}. ${s.doc.title}: ${s.doc.text}\n\n`;
+                });
+                return reply + 'Ask me to expand any of these.';
+            }
+
+            // If local KB didn't find a confident match, try a web-search fallback
+            try {
+                const web = await webSearchDuckDuckGo(query, 4);
+                if (web && web.length > 0) {
+                    let reply = `I couldn't find a close match in the local KB, so I searched the web and found these results:\n\n`;
+                    web.forEach((r, idx) => {
+                        reply += `${idx+1}. ${r.title}\n${r.snippet}\nLink: ${r.url}\n\n`;
+                    });
+                    reply += 'You can open any link for more details.';
+                    return reply;
+                }
+            } catch (e) {
+                console.warn('web search fallback failed', e);
+            }
+
+            // Final fallback to simple rule-based generator
+            return generateChatbotResponse(query);
+        }
+
+        // Generate chatbot response (rule-based fallback)
+        function generateChatbotResponse(message) {
+            // In a real application, this would use NLP and a knowledge base
+            // For this demo, we'll use simple pattern matching
+            
+            const lowerMessage = message.toLowerCase();
+            
+            // Travel recommendations
+            if (lowerMessage.includes('recommend') || lowerMessage.includes('suggest')) {
+                if (lowerMessage.includes('beach')) {
+                    return 'Based on your interest in beach destinations, I recommend checking out Bali, Maldives, or Santorini. These locations offer beautiful beaches and relaxing atmospheres.';
+                } else if (lowerMessage.includes('mountain')) {
+                    return 'For mountain destinations, I suggest the Swiss Alps, Canadian Rockies, or the Himalayas. These locations offer breathtaking mountain views and outdoor activities.';
+                } else if (lowerMessage.includes('city')) {
+                    return 'If you enjoy city destinations, consider Tokyo, Paris, or New York. These cities offer rich cultural experiences and diverse attractions.';
+                } else if (lowerMessage.includes('historical')) {
+                    return 'For historical destinations, I recommend Egypt, Petra, or Machu Picchu. These locations offer fascinating historical sites and rich cultural heritage.';
+                } else {
+                    return 'I can recommend destinations based on your preferences. Are you interested in beach, mountain, city, or historical destinations?';
+                }
+            }
+            
+            // Travel tips
+            if (lowerMessage.includes('tip') || lowerMessage.includes('advice')) {
+                return 'Here are some general travel tips: 1) Research your destination before you go, 2) Pack light but essentials, 3) Learn a few phrases in the local language, 4) Keep copies of important documents, 5) Stay flexible with your plans.';
+            }
+            
+            // Weather information
+            if (lowerMessage.includes('weather')) {
+                return 'For weather information, I recommend checking a reliable weather service closer to your travel date. Weather can change quickly, so it\'s best to check forecasts regularly.';
+            }
+            
+            // Travel documents
+            if (lowerMessage.includes('passport') || lowerMessage.includes('visa')) {
+                return 'Make sure your passport is valid for at least six months beyond your travel dates. Check visa requirements for your destination well in advance, as some countries require visas that can take time to obtain.';
+            }
+            
+            // Budget travel
+            if (lowerMessage.includes('budget') || lowerMessage.includes('cheap')) {
+                return 'For budget travel, consider: 1) Traveling during off-peak seasons, 2) Staying in hostels or budget accommodations, 3) Eating at local restaurants instead of tourist areas, 4) Using public transportation, 5) Looking for free attractions and activities.';
+            }
+            
+            // Safety
+            if (lowerMessage.includes('safe') || lowerMessage.includes('safety')) {
+                return 'Travel safety tips: 1) Research safety conditions at your destination, 2) Keep valuables secure and out of sight, 3) Be aware of your surroundings, 4) Have emergency contacts handy, 5) Consider travel insurance for unexpected situations.';
+            }
+            
+            // Packing
+            if (lowerMessage.includes('pack') || lowerMessage.includes('packing')) {
+                return 'Essential packing items: 1) Travel documents, 2) Appropriate clothing for the climate, 3) Comfortable shoes, 4) Toiletries and medications, 5) Electronics and chargers, 6) Reusable water bottle, 7) Small first-aid kit.';
+            }
+            
+            // Default response
+            return 'I\'m here to help with your travel questions! You can ask me about destination recommendations, travel tips, weather, travel documents, budget travel, safety, or packing advice. How else can I assist you today?';
+        }
+        
+        // Image Recognition Functions
+    // Optional: provide a TFJS model URL (hosted model.json + weights) for reliable client-side image recognition.
+    // If you host your own TFJS MobileNet-compatible model, set TFJS_MODEL_URL to its model.json URL.
+    // Example: const TFJS_MODEL_URL = 'https://your-bucket.storage.googleapis.com/mobilenet_v1/model.json';
+    const TFJS_MODEL_URL = '';
+
+    function loadAIModel() {
+            // Load MobileNet model for image recognition with fallback and graceful degradation.
+            // Some hosts (e.g., tfhub) may block cross-origin requests causing 403 errors. We try a fallback
+            // and if loading fails we disable the image recognition UI so the rest of the app continues to work.
+
+            function disableImageRecognitionUI() {
+                const imageBtn = document.getElementById('tryImageRecognition');
+                const imageSection = document.getElementById('imageRecognitionSection');
+                const imageInput = document.getElementById('imageInput');
+                if (imageBtn) imageBtn.disabled = true;
+                if (imageSection) imageSection.style.display = 'none';
+                if (imageInput) imageInput.disabled = true;
+            }
+
+            if (typeof mobilenet === 'undefined' || typeof tf === 'undefined') {
+                console.warn('TensorFlow.js or MobileNet model library not loaded. Disabling image recognition.');
+                showNotification('Image recognition is unavailable (missing libraries).');
+                disableImageRecognitionUI();
+                return;
+            }
+
+            // If a TFJS model URL is provided, attempt to load using that first. This is the most reliable option
+            // for production because you control hosting and CORS settings.
+            if (TFJS_MODEL_URL && TFJS_MODEL_URL.length > 0) {
+                try {
+                    mobilenet.load({ modelUrl: TFJS_MODEL_URL })
+                        .then(model => {
+                            console.log('MobileNet model loaded from TFJS_MODEL_URL');
+                            window.model = model;
+                        })
+                        .catch(err => {
+                            console.error('Error loading mobilenet from TFJS_MODEL_URL:', err);
+                            showNotification('Image recognition is unavailable (failed to load hosted model).');
+                            disableImageRecognitionUI();
+                        });
+                    return;
+                } catch (e) {
+                    console.warn('mobilenet.load with modelUrl not supported by this mobilenet build, falling back to default load');
+                }
+            }
+
+            // Primary attempt: default mobilenet.load() from CDN
+            mobilenet.load()
+                .then(model => {
+                    console.log('MobileNet model loaded successfully (default).');
+                    window.model = model;
+                })
+                .catch((error) => {
+                    console.error('Error loading MobileNet model (default):', error);
+                    // Final fallback: disable the feature and inform the user
+                    showNotification('Image recognition is currently unavailable (model load failed).');
+                    disableImageRecognitionUI();
+                });
+        }
+        
+        function handleImageUpload(event) {
+            const imageInput = event.target;
+            const imagePreview = document.getElementById('imagePreview');
+            const previewImg = document.getElementById('previewImg');
+            const imageResult = document.getElementById('imageResult');
+            const landmarkName = document.getElementById('landmarkName');
+            const landmarkDescription = document.getElementById('landmarkDescription');
+            const landmarkConfidence = document.getElementById('landmarkConfidence');
+            
+            if (!imageInput.files || !imageInput.files[0]) return;
+            
+            const file = imageInput.files[0];
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                // Show preview
+                if (previewImg) {
+                    previewImg.src = e.target.result;
+                }
+                if (imagePreview) {
+                    imagePreview.style.display = 'block';
+                }
+                
+                // Show loading state
+                if (landmarkName) landmarkName.textContent = 'Analyzing...';
+                if (landmarkDescription) landmarkDescription.textContent = 'Please wait while our AI analyzes the image.';
+                if (landmarkConfidence) landmarkConfidence.textContent = '';
+                if (imageResult) imageResult.style.display = 'block';
+                
+                // Recognize image
+                if (window.model) {
+                    recognizeImage(e.target.result);
+                } else {
+                    // Model not loaded yet
+                    if (landmarkName) landmarkName.textContent = 'Error';
+                    if (landmarkDescription) landmarkDescription.textContent = 'AI model is still loading. Please try again in a moment.';
+                }
+            };
+            
+            reader.readAsDataURL(file);
+        }
+        
+        function recognizeImage(imageSrc) {
+            const img = new Image();
+            img.crossOrigin = 'anonymous';
+            img.src = imageSrc;
+            
+            img.onload = function() {
+                // Classify the image
+                window.model.classify(img)
+                    .then(predictions => {
+                        // Get the top prediction
+                        const topPrediction = predictions[0];
+                        const className = topPrediction.className;
+                        const probability = Math.round(topPrediction.probability * 100);
+                        
+                        // Update UI with results
+                        const landmarkName = document.getElementById('landmarkName');
+                        const landmarkDescription = document.getElementById('landmarkDescription');
+                        const landmarkConfidence = document.getElementById('landmarkConfidence');
+                        
+                        if (landmarkName) landmarkName.textContent = className;
+                        if (landmarkDescription) landmarkDescription.textContent = getDescriptionForLandmark(className);
+                        if (landmarkConfidence) landmarkConfidence.textContent = `Confidence: ${probability}%`;
+                    })
+                    .catch(error => {
+                        console.error('Error classifying image:', error);
+                        
+                        // Update UI with error
+                        const landmarkName = document.getElementById('landmarkName');
+                        const landmarkDescription = document.getElementById('landmarkDescription');
+                        
+                        if (landmarkName) landmarkName.textContent = 'Error';
+                        if (landmarkDescription) landmarkDescription.textContent = 'Unable to recognize the landmark. Please try another image.';
+                    });
+            };
+            
+            img.onerror = function() {
+                // Update UI with error
+                const landmarkName = document.getElementById('landmarkName');
+                const landmarkDescription = document.getElementById('landmarkDescription');
+                
+                if (landmarkName) landmarkName.textContent = 'Error';
+                if (landmarkDescription) landmarkDescription.textContent = 'Unable to load the image. Please try another image.';
+            };
+        }
+        
+        async function getDescriptionForLandmark(name) {
+            try {
+                const response = await fetch(`${apiBaseUrl}/chat`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        message: `Explain this landmark in 2-3 lines: ${name}`
+                    })
+                });
+                const data = await response.json();
+                return data.reply || 'Unable to load landmark description.';
+            } catch (error) {
+                console.error('Error fetching landmark description:', error);
+                return 'Unable to load landmark description. Please try again.';
+            }
+        }
+
+        // Firebase Auth Functions
+        function handleSignIn(e) {
+            e.preventDefault();
+            const signInEmail = document.getElementById('signInEmail');
+            const signInPassword = document.getElementById('signInPassword');
+            const loginBtn = document.getElementById('loginBtn');
+            const signInError = document.getElementById('signInError');
+            const signInSuccess = document.getElementById('signInSuccess');
+            
+            if (!signInEmail || !signInPassword || !loginBtn || !signInError || !signInSuccess) return;
+            
+            const email = signInEmail.value;
+            const password = signInPassword.value;
+            
+            // Show loading state
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            loginBtn.disabled = true;
+            
+            // Clear previous messages
+            signInError.style.display = 'none';
+            signInSuccess.style.display = 'none';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log('User signed in:', user);
+                    
+                    // Show success message
+                    signInSuccess.textContent = 'Login successful! Welcome back!';
+                    signInSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/user-not-found') {
+                        friendlyMessage = 'No account found with this email.';
+                    } else if (errorCode === 'auth/wrong-password') {
+                        friendlyMessage = 'Incorrect password. Please try again.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/user-disabled') {
+                        friendlyMessage = 'This account has been disabled.';
+                    } else if (errorCode === 'auth/too-many-requests') {
+                        friendlyMessage = 'Too many failed login attempts. Please try again later.';
+                    }
+                    
+                    signInError.textContent = friendlyMessage;
+                    signInError.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                });
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const signUpName = document.getElementById('signUpName');
+            const signUpEmail = document.getElementById('signUpEmail');
+            const signUpPassword = document.getElementById('signUpPassword');
+            const registerBtn = document.getElementById('registerBtn');
+            const signUpError = document.getElementById('signUpError');
+            const signUpSuccess = document.getElementById('signUpSuccess');
+            
+            if (!signUpName || !signUpEmail || !signUpPassword || !registerBtn || !signUpError || !signUpSuccess) return;
+            
+            const name = signUpName.value;
+            const email = signUpEmail.value;
+            const password = signUpPassword.value;
+            
+            // Show loading state
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            registerBtn.disabled = true;
+            
+            // Clear previous messages
+            signUpError.style.display = 'none';
+            signUpSuccess.style.display = 'none';
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up
+                    const user = userCredential.user;
+                    console.log('User signed up:', user);
+                    
+                    // Update user profile with name
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    // Show success message
+                    signUpSuccess.textContent = 'Account created successfully! Welcome!';
+                    signUpSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign up error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Sign up failed. Please try again.';
+                    if (errorCode === 'auth/email-already-in-use') {
+                        friendlyMessage = 'An account with this email already exists.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/weak-password') {
+                        friendlyMessage = 'Password is too weak. Please use a stronger password.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'Email/password accounts are not enabled.';
+                    }
+                    
+                    signUpError.textContent = friendlyMessage;
+                    signUpError.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                });
+        }
+
+        function handleSignOut() {
+            auth.signOut()
+                .then(() => {
+                    console.log('User signed out');
+                    showNotification('You have been signed out successfully.');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showNotification('Error signing out. Please try again.');
+                });
+        }
+
+        function signInWithProvider(provider) {
+            const loadingSpinner = document.getElementById('loadingSpinner');
+            
+            // Show loading spinner
+            if (loadingSpinner) loadingSpinner.style.display = 'flex';
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // The signed-in user info
+                    const user = result.user;
+                    console.log('User signed in with provider:', user);
+                    
+                    // Hide loading spinner
+                    if (loadingSpinner) loadingSpinner.style.display = 'none';
+                    
+                    // Show success message
+                    showNotification(`Welcome, ${user.displayName || user.email}!`);
+                })
+                .catch((error) => {
+                    // Hide loading spinner
+                    if (loadingSpinner) loadingSpinner.style.display = 'none';
+                    
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Provider sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/account-exists-with-different-credential') {
+                        friendlyMessage = 'An account already exists with the same email address but different sign-in credentials.';
+                    } else if (errorCode === 'auth/auth-domain-config-required') {
+                        friendlyMessage = 'Authentication domain configuration is required.';
+                    } else if (errorCode === 'auth/cancelled-popup-request') {
+                        friendlyMessage = 'Popup request was cancelled.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'This login method is not enabled. Please contact support.';
+                    } else if (errorCode === 'auth/operation-not-supported-in-this-environment') {
+                        friendlyMessage = 'This operation is not supported in the current environment.';
+                    } else if (errorCode === 'auth/popup-blocked') {
+                        friendlyMessage = 'Popup was blocked by the browser. Please allow popups and try again.';
+                    } else if (errorCode === 'auth/popup-closed-by-user') {
+                        friendlyMessage = 'Popup was closed before completing the login.';
+                    } else if (errorCode === 'auth/unauthorized-domain') {
+                        friendlyMessage = 'This domain is not authorized for OAuth operations.';
+                    }
+                    
+                    showNotification(friendlyMessage);
+                });
+        }
+
+        // Firebase Auth State Listener
+        auth.onAuthStateChanged(user => {
+            const authButtons = document.getElementById('authButtons');
+            const userProfile = document.getElementById('userProfile');
+            const userAvatar = document.getElementById('userAvatar');
+            const userName = document.getElementById('userName');
+            const signInModal = document.getElementById('signInModal');
+            const signUpModal = document.getElementById('signUpModal');
+            
+            if (user) {
+                // User is signed in
+                currentUser = user;
+                console.log('User logged in:', user);
+                
+                // Update UI for logged-in user
+                if (authButtons) authButtons.style.display = 'none';
+                if (userProfile) userProfile.style.display = 'block';
+                
+                // Set user avatar and name
+                if (userAvatar && userName) {
+                    if (user.displayName) {
+                        userName.textContent = user.displayName;
+                        userAvatar.textContent = user.displayName.charAt(0).toUpperCase();
+                    } else if (user.email) {
+                        userName.textContent = user.email;
+                        userAvatar.textContent = user.email.charAt(0).toUpperCase();
+                    }
+                }
+                
+                // Close any open modals
+                if (signInModal) signInModal.style.display = 'none';
+                if (signUpModal) signUpModal.style.display = 'none';
+                
+                // Show success message
+                showNotification(`Welcome back, ${user.displayName || user.email}!`);
+            } else {
+                // User is signed out
+                currentUser = null;
+                console.log('User logged out');
+                
+                // Update UI for logged-out user
+                if (authButtons) authButtons.style.display = 'block';
+                if (userProfile) userProfile.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

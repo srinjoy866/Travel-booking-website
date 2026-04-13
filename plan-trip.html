@@ -1,0 +1,2013 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Travel Guide - Plan Trip</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-auth-compat.js"></script>
+    
+    <!-- Add AI SDKs -->
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@latest"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder"></script>
+</head>
+<body>
+    <!-- Loading Spinner -->
+    <div id="loadingSpinner" class="loading-spinner">
+        <i class="fas fa-spinner"></i>
+    </div>
+
+    <!-- Header Section -->
+    <header>
+        <div class="container header-container">
+            <div class="logo">
+                <i class="fas fa-compass"></i>
+                <span>AI Travel Guide</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="destinations.html">Destinations</a></li>
+                    <li><a href="plan-trip.html" class="active">Plan Trip</a></li>
+                    <li><a href="travel-tips.html">Travel Tips</a></li>
+                    <li><a href="about.html">About</a></li>
+                </ul>
+            </nav>
+            
+            <div class="user-actions">
+                <!-- Sign In/Sign Up buttons (shown when not logged in) -->
+                <div id="authButtons">
+                    <a href="#" id="signInBtn">Sign In</a>
+                    <a href="#" class="btn" id="signUpBtn">Sign Up</a>
+                </div>
+                
+                <!-- User profile menu (shown when logged in) -->
+                <div id="userProfile" class="user-menu" style="display: none;">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName">User</span>
+                        <i class="fas fa-chevron-down" style="margin-left: 5px;"></i>
+                    </div>
+                    <div class="user-menu-content">
+                        <a href="#" id="myAccount">My Account</a>
+                        <a href="#" id="myTrips">My Trips</a>
+                        <a href="#" id="savedDestinations">Saved Destinations</a>
+                        <a href="#" id="signOutBtn">Sign Out</a>
+                    </div>
+                </div>
+                
+                <select class="lang-selector" id="langSelector">
+                    <option value="en">EN</option>
+                    <option value="es">ES</option>
+                    <option value="fr">FR</option>
+                    <option value="de">DE</option>
+                </select>
+                <button class="dark-mode-toggle" id="darkModeToggle"><i class="fas fa-moon"></i></button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <h1>Plan Your Trip</h1>
+        
+        <div class="trip-planner">
+            <div class="planner-steps">
+                <div class="step active">
+                    <div class="step-number">1</div>
+                    <div class="step-title">Destination</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-title">Dates</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-title">Activities</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-title">Review</div>
+                </div>
+            </div>
+            
+            <div class="planner-content">
+                <div class="step-content active" id="step1">
+                    <h3>Choose Your Destination</h3>
+                    <div class="destination-search">
+                        <input type="text" placeholder="Search for a destination..." id="planDestination">
+                        <button class="btn" id="searchDestinationBtn">Search</button>
+                    </div>
+                    <div class="destination-results" id="planDestinationResults">
+                        <!-- Results will be populated here -->
+                    </div>
+                    
+                    <!-- AI Features Section -->
+                    <div class="ai-features">
+                        <h3>AI-Powered Destination Recommendations</h3>
+                        <div class="ai-recommendations" id="aiRecommendations">
+                            <!-- AI recommendations will be populated here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step-content" id="step2">
+                    <h3>Select Your Travel Dates</h3>
+                    <div class="date-picker">
+                        <div class="date-input">
+                            <label>Departure Date</label>
+                            <input type="date" id="departureDate">
+                        </div>
+                        <div class="date-input">
+                            <label>Return Date</label>
+                            <input type="date" id="returnDate">
+                        </div>
+                    </div>
+                    <div id="weatherForecast" class="weather-forecast" style="display: none;">
+                        <div class="forecast-title">Weather Forecast</div>
+                        <div class="forecast-days" id="forecastDays">
+                            <!-- Forecast will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <!-- AI Insights Section -->
+                    <div class="ai-insights" id="aiInsights" style="display: none;">
+                        <div class="insight-title">AI Travel Insights</div>
+                        <div class="insight-content" id="insightContent">
+                            <!-- AI insights will be populated here -->
+                        </div>
+                    </div>
+                    
+                    <div style="display:flex; gap:8px; margin-top:12px;">
+                        <button class="btn" id="backToStep1">Back</button>
+                        <button class="btn" id="nextToStep3">Next</button>
+                    </div>
+                </div>
+                
+                <div class="step-content" id="step3">
+                    <h3>Choose Your Activities</h3>
+                    
+                    <!-- AI Preferences Section -->
+                    <div class="ai-preferences">
+                        <h3>Customize Your Experience with AI</h3>
+                        <div class="preference-slider">
+                            <div class="preference-label">
+                                <span>Adventure Level</span>
+                                <span id="adventureValue">50%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="50" class="slider" id="adventureSlider">
+                        </div>
+                        <div class="preference-slider">
+                            <div class="preference-label">
+                                <span>Budget Consciousness</span>
+                                <span id="budgetValue">50%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="50" class="slider" id="budgetSlider">
+                        </div>
+                        <div class="preference-slider">
+                            <div class="preference-label">
+                                <span>Cultural Interest</span>
+                                <span id="culturalValue">50%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="50" class="slider" id="culturalSlider">
+                        </div>
+                        <div class="preference-slider">
+                            <div class="preference-label">
+                                <span>Relaxation Focus</span>
+                                <span id="relaxationValue">50%</span>
+                            </div>
+                            <input type="range" min="0" max="100" value="50" class="slider" id="relaxationSlider">
+                        </div>
+                    </div>
+                    
+                    <div class="activity-grid" id="activityGrid">
+                        <!-- Attraction cards will be populated here from the place API (Overpass) -->
+                        <div class="activity-placeholder">Attractions and points of interest will appear here after you select a destination and dates.</div>
+                    </div>
+                    
+                    <div style="display:flex; gap:8px; margin-top:12px;">
+                        <button class="btn" id="backToStep2">Back</button>
+                        <button class="btn" id="nextToStep4">Next</button>
+                    </div>
+                </div>
+                
+                <div class="step-content" id="step4">
+                    <h3>Review Your Trip</h3>
+                    <div class="trip-summary">
+                        <div class="summary-card">
+                            <h4>Destination</h4>
+                            <p id="summaryDestination">Not selected</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Dates</h4>
+                            <p id="summaryDates">Not selected</p>
+                        </div>
+                        <div class="summary-card">
+                            <h4>Activities</h4>
+                            <div id="summaryActivities">
+                                <p>Not selected</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display:flex; gap:10px; align-items:center; margin-top:12px;">
+                        <button class="btn" id="saveTrip">Save Trip</button>
+                        <button class="btn" id="generateAiItinerary"><i class="fas fa-magic"></i> Generate AI Itinerary</button>
+                    </div>
+                    <div id="aiItinerary" style="margin-top:16px;"></div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-column">
+                    <h3>Explore</h3>
+                    <ul>
+                        <li><a href="destinations.html">Destinations</a></li>
+                        <li><a href="#">Activities</a></li>
+                        <li><a href="#">Seasons</a></li>
+                        <li><a href="#">Travel Guides</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Company</h3>
+                    <ul>
+                        <li><a href="about.html">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Blog</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Privacy Policy</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-column">
+                    <h3>Connect</h3>
+                    <div class="social-icons">
+                        <a href="#"><i class="fab fa-instagram"></i></a>
+                        <a href="#"><i class="fab fa-facebook"></i></a>
+                        <a href="#"><i class="fab fa-twitter"></i></a>
+                        <a href="#"><i class="fab fa-youtube"></i></a>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                <p>&copy; 2023 AI Travel Guide. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Sign In Modal -->
+    <div class="modal" id="signInModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignInModal">&times;</span>
+            <h2>Sign In to Your Account</h2>
+            
+            <div class="error-message" id="signInError"></div>
+            <div class="success-message" id="signInSuccess"></div>
+            
+            <form id="signInForm">
+                <div class="form-group">
+                    <label for="signInEmail">Email</label>
+                    <input type="email" id="signInEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signInPassword">Password</label>
+                    <input type="password" id="signInPassword" required>
+                </div>
+                <button type="submit" class="btn" id="loginBtn">Sign In</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleLogin" title="Login with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookLogin" title="Login with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterLogin" title="Login with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Don't have an account? <a href="#" id="switchToSignUp">Sign Up</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Sign Up Modal -->
+    <div class="modal" id="signUpModal">
+        <div class="modal-content">
+            <span class="close" id="closeSignUpModal">&times;</span>
+            <h2>Create Your Account</h2>
+            
+            <div class="error-message" id="signUpError"></div>
+            <div class="success-message" id="signUpSuccess"></div>
+            
+            <form id="signUpForm">
+                <div class="form-group">
+                    <label for="signUpName">Full Name</label>
+                    <input type="text" id="signUpName" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpEmail">Email</label>
+                    <input type="email" id="signUpEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="signUpPassword">Password</label>
+                    <input type="password" id="signUpPassword" required>
+                </div>
+                <button type="submit" class="btn" id="registerBtn">Sign Up</button>
+            </form>
+            
+            <div class="divider">
+                <span>OR</span>
+            </div>
+            
+            <div class="social-buttons">
+                <button class="social-btn google-btn" id="googleSignup" title="Sign Up with Google">
+                    <i class="fab fa-google"></i>
+                </button>
+                <button class="social-btn facebook-btn" id="facebookSignup" title="Sign Up with Facebook">
+                    <i class="fab fa-facebook-f"></i>
+                </button>
+                <button class="social-btn twitter-btn" id="twitterSignup" title="Sign Up with Twitter">
+                    <i class="fab fa-twitter"></i>
+                </button>
+            </div>
+            
+            <div class="form-footer">
+                <p>Already have an account? <a href="#" id="switchToSignIn">Sign In</a></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- AI Chatbot -->
+    <div class="ai-chatbot" id="aiChatbot">
+        <i class="fas fa-robot"></i>
+    </div>
+    
+    <div class="chat-container" id="chatContainer">
+        <div class="chat-header">
+            <div>AI Travel Assistant</div>
+            <div class="chat-close" id="chatClose">&times;</div>
+        </div>
+        <div class="chat-messages" id="chatMessages">
+            <div class="chat-message bot">
+                <div class="message-bubble">
+                    Hello! I'm your AI travel assistant. How can I help you plan your trip today?
+                </div>
+            </div>
+        </div>
+        <div class="chat-input-container">
+            <input type="text" class="chat-input" id="chatInput" placeholder="Type your message...">
+            <button class="chat-send" id="chatSend">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCB1lyyMwbrZP-ZL3MTIAT5H34p1vWbL1M",
+            authDomain: "srinjoy-46fc2.firebaseapp.com",
+            projectId: "srinjoy-46fc2",
+            storageBucket: "srinjoy-46fc2.firebasestorage.app",
+            messagingSenderId: "156421945116",
+            appId: "1:156421945116:web:0ea10bbd2f6464df362cd9",
+            measurementId: "G-KH1TDMBDW2"
+        };
+        
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        
+        // DOM Elements
+        const plannerSteps = document.querySelectorAll('.planner-steps .step');
+        const stepContents = document.querySelectorAll('.step-content');
+        const searchDestinationBtn = document.getElementById('searchDestinationBtn');
+        const planDestination = document.getElementById('planDestination');
+        const planDestinationResults = document.getElementById('planDestinationResults');
+        const nextToStep3 = document.getElementById('nextToStep3');
+        const nextToStep4 = document.getElementById('nextToStep4');
+        const saveTrip = document.getElementById('saveTrip');
+        const darkModeToggle = document.getElementById('darkModeToggle');
+        const langSelector = document.getElementById('langSelector');
+        const signInBtn = document.getElementById('signInBtn');
+        const signUpBtn = document.getElementById('signUpBtn');
+        const signInModal = document.getElementById('signInModal');
+        const signUpModal = document.getElementById('signUpModal');
+        const closeSignInModal = document.getElementById('closeSignInModal');
+        const closeSignUpModal = document.getElementById('closeSignUpModal');
+        const switchToSignUp = document.getElementById('switchToSignUp');
+        const switchToSignIn = document.getElementById('switchToSignIn');
+        const signInFormEl = document.getElementById('signInForm');
+        const signUpFormEl = document.getElementById('signUpForm');
+        const loadingSpinner = document.getElementById('loadingSpinner');
+        const departureDate = document.getElementById('departureDate');
+        const returnDate = document.getElementById('returnDate');
+        const weatherForecast = document.getElementById('weatherForecast');
+        const forecastDays = document.getElementById('forecastDays');
+        const activityGrid = document.getElementById('activityGrid');
+        
+        // AI Features DOM Elements
+        const aiRecommendations = document.getElementById('aiRecommendations');
+        const aiInsights = document.getElementById('aiInsights');
+        const insightContent = document.getElementById('insightContent');
+        const adventureSlider = document.getElementById('adventureSlider');
+        const budgetSlider = document.getElementById('budgetSlider');
+        const culturalSlider = document.getElementById('culturalSlider');
+        const relaxationSlider = document.getElementById('relaxationSlider');
+        const adventureValue = document.getElementById('adventureValue');
+        const budgetValue = document.getElementById('budgetValue');
+        const culturalValue = document.getElementById('culturalValue');
+        const relaxationValue = document.getElementById('relaxationValue');
+        const aiChatbot = document.getElementById('aiChatbot');
+        const chatContainer = document.getElementById('chatContainer');
+        const chatClose = document.getElementById('chatClose');
+        const chatMessages = document.getElementById('chatMessages');
+        const chatInput = document.getElementById('chatInput');
+        const chatSend = document.getElementById('chatSend');
+        
+        // Firebase Auth Elements
+        const authButtons = document.getElementById('authButtons');
+        const userProfile = document.getElementById('userProfile');
+        const userAvatar = document.getElementById('userAvatar');
+        const userName = document.getElementById('userName');
+        const signOutBtn = document.getElementById('signOutBtn');
+        const userMenu = document.querySelector('.user-menu');
+        const userProfileMenu = document.querySelector('.user-profile');
+        
+        // Firebase Auth Message Elements
+        const signInError = document.getElementById('signInError');
+        const signInSuccess = document.getElementById('signInSuccess');
+        const signUpError = document.getElementById('signUpError');
+        const signUpSuccess = document.getElementById('signUpSuccess');
+        const loginBtn = document.getElementById('loginBtn');
+        const registerBtn = document.getElementById('registerBtn');
+        
+        // Social Login Elements
+        const googleLogin = document.getElementById('googleLogin');
+        const facebookLogin = document.getElementById('facebookLogin');
+        const twitterLogin = document.getElementById('twitterLogin');
+        const googleSignup = document.getElementById('googleSignup');
+        const facebookSignup = document.getElementById('facebookSignup');
+        const twitterSignup = document.getElementById('twitterSignup');
+        
+        // Initialize
+        let currentStep = 1;
+        let tripData = {
+            destination: '',
+            destinationCoords: { lat: 0, lon: 0 },
+            departureDate: '',
+            returnDate: '',
+            activities: [],
+            preferences: {
+                adventure: 50,
+                budget: 50,
+                cultural: 50,
+                relaxation: 50
+            }
+        };
+        let currentUser = null;
+        let sentenceEncoder = null;
+        let chatHistory = [];
+
+        // AI helpers (same pattern used elsewhere) - configure to use a hosted API or fallback to local generator
+        const AI_API_URL = '';
+        const AI_API_KEY = '';
+
+        async function generateItinerary(destination, departure, returnD, activities) {
+            const payload = {
+                destination,
+                departure,
+                return: returnD,
+                activities,
+                preferences: tripData.preferences
+            };
+
+            // If server AI is configured, prefer server-generated itinerary
+            if (AI_API_URL && AI_API_URL.length > 0) {
+                try {
+                    const resp = await fetch(AI_API_URL, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            ...(AI_API_KEY ? { 'Authorization': `Bearer ${AI_API_KEY}` } : {})
+                        },
+                        body: JSON.stringify(payload)
+                    });
+                    if (!resp.ok) throw new Error('AI API error');
+                    const data = await resp.json();
+                    return data.itinerary || data.result || data.text || null;
+                } catch (e) {
+                    console.warn('AI itinerary API failed, falling back to local generator:', e.message || e);
+                }
+            }
+
+            // Local generator: build an itinerary across the full trip length and avoid repeating identical days
+            const depDate = departure ? new Date(departure) : null;
+            const retDate = returnD ? new Date(returnD) : null;
+            let daysCount = 3;
+            if (depDate && retDate && !isNaN(depDate.getTime()) && !isNaN(retDate.getTime())) {
+                const diff = Math.ceil((retDate.getTime() - depDate.getTime()) / (1000 * 3600 * 24));
+                daysCount = Math.max(1, diff + 1); // include both departure and return days
+            }
+
+            // Determine base activity pool — support both arrays of strings and arrays of place objects
+            let activityPool = [];
+            if (activities && activities.length) {
+                // If activities are objects with a name property, map to names but keep objects for distribution
+                if (typeof activities[0] === 'object' && activities[0].name) {
+                    activityPool = activities.slice(); // keep objects
+                } else {
+                    activityPool = activities.slice(); // strings
+                }
+            }
+            if (!activityPool.length) {
+                // build from visible activity cards
+                const visibleCards = Array.from(document.querySelectorAll('.activity-card')).filter(c => c.style.display !== 'none');
+                visibleCards.forEach(c => {
+                    const title = c.querySelector('h4') && c.querySelector('h4').textContent;
+                    if (title && !activityPool.includes(title)) activityPool.push(title);
+                });
+            }
+
+            // Fallback pool
+            if (!activityPool.length) activityPool = ['Sightseeing', 'Local Food', 'Relaxation', 'Nature', 'Cultural Museum'];
+
+            // Rotate and vary activities across days
+            const days = [];
+            let poolIdx = 0;
+
+            // Helper to pick next activity avoiding immediate repeats; supports objects and strings
+            function pickNext(count = 1) {
+                const picked = [];
+                for (let i = 0; i < count; i++) {
+                    if (activityPool.length === 0) break;
+                    picked.push(activityPool[poolIdx % activityPool.length]);
+                    poolIdx++;
+                }
+                return picked;
+            }
+
+            // Determine preferences to bias selections
+            const prefs = tripData.preferences || { adventure:50, cultural:50, relaxation:50, budget:50 };
+
+            for (let d = 0; d < daysCount; d++) {
+                const dayNum = d + 1;
+                const dayActivities = [];
+
+                // Morning: bias towards adventure/cultural
+                const morningPick = pickNext(1)[0];
+                const morningLabel = (typeof morningPick === 'object') ? (morningPick.name) : morningPick;
+                if (prefs.adventure > 65) {
+                    dayActivities.push(`Morning: Adventure activity — ${morningLabel || 'Hiking'}`);
+                } else if (prefs.cultural > 65) {
+                    dayActivities.push(`Morning: Cultural visit — ${morningLabel || 'Museum'}`);
+                } else {
+                    dayActivities.push(`Morning: Explore local attractions — ${morningLabel || 'Town exploration'}`);
+                }
+
+                // Afternoon: bias towards budget/relaxation or remaining activities
+                if (prefs.relaxation > 65) {
+                    const relaxPick = pickNext(1)[0];
+                    const relaxLabel = (typeof relaxPick === 'object') ? relaxPick.name : relaxPick;
+                    dayActivities.push(`Afternoon: Relaxation time — ${relaxLabel || 'Spa or beach'}`);
+                } else if (prefs.budget > 65) {
+                    const budgetPick = pickNext(1)[0];
+                    const budgetLabel = (typeof budgetPick === 'object') ? budgetPick.name : budgetPick;
+                    dayActivities.push(`Afternoon: Budget-friendly experiences — ${budgetLabel || 'Local market'}`);
+                } else {
+                    // pick two lighter activities across longer trips
+                    const picks = pickNext(Math.min(2, Math.max(1, Math.floor(activityPool.length / Math.max(1, daysCount)))));
+                    picks.forEach(p => {
+                        const label = (typeof p === 'object') ? p.name : p;
+                        dayActivities.push(`Afternoon: ${label}`);
+                    });
+                }
+
+                // Evening: always include local food & culture
+                dayActivities.push(`Evening: Try local cuisine and enjoy nightlife or cultural events`);
+
+                // Title summary - combine first main activity with a short label
+                const title = dayActivities[0].replace(/Morning: /, '').split(' — ')[0];
+
+                days.push({ day: dayNum, title, activities: dayActivities });
+            }
+
+            // Format as HTML string covering all days
+            const html = `<div class="ai-itinerary-card"><h4>Personalized ${daysCount}-Day Itinerary for ${destination}</h4>` + days.map(d => `
+                <div class="itinerary-day"><h5>Day ${d.day}: ${escapeHtml(d.title)}</h5><ul>${d.activities.map(a => `<li>${escapeHtml(a)}</li>`).join('')}</ul></div>
+            `).join('') + '</div>';
+
+            return html;
+        }
+
+        // Discover nearby activities using Overpass (fallback to simple static suggestions if rate-limited)
+        async function discoverActivities(lat, lon, radius = 50000, bbox = null) {
+            // Build Overpass query: if bbox provided, use bbox-style query to cover large areas (country/region)
+            let query = '';
+            if (bbox && Array.isArray(bbox) && bbox.length === 4) {
+                // bbox is [south, north, west, east] or [lat_min, lat_max, lon_min, lon_max]
+                // Overpass expects: south,west,north,east
+                const south = bbox[0];
+                const north = bbox[1];
+                const west = bbox[2];
+                const east = bbox[3];
+                query = `[
+                    out:json][timeout:60];
+                    (
+                      node["tourism"](${south},${west},${north},${east});
+                      way["tourism"](${south},${west},${north},${east});
+                      node["leisure"](${south},${west},${north},${east});
+                      way["leisure"](${south},${west},${north},${east});
+                      node["amenity"](${south},${west},${north},${east});
+                      way["amenity"](${south},${west},${north},${east});
+                    );
+                    out center 200;`;
+            } else {
+                // Use around radius search for point queries
+                query = `[
+                    out:json][timeout:25];
+                    (
+                      node["tourism"](around:${radius},${lat},${lon});
+                      way["tourism"](around:${radius},${lat},${lon});
+                      node["leisure"](around:${radius},${lat},${lon});
+                      way["leisure"](around:${radius},${lat},${lon});
+                      node["amenity"](around:${radius},${lat},${lon});
+                      way["amenity"](around:${radius},${lat},${lon});
+                    );
+                    out center 200;`;
+            }
+
+            const endpoints = [
+                'https://overpass-api.de/api/interpreter',
+                'https://lz4.overpass-api.de/api/interpreter',
+                'https://overpass.openstreetmap.fr/api/interpreter'
+            ];
+
+            for (const ep of endpoints) {
+                try {
+                    const resp = await fetch(ep, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                        body: `data=${encodeURIComponent(query)}`
+                    });
+                    if (!resp.ok) throw new Error('Overpass response not ok');
+                    const data = await resp.json();
+                    // Map results to activity-like objects
+                    const activities = (data.elements || []).slice(0, 120).map(el => {
+                        const name = el.tags && (el.tags.name || el.tags['operator'] || el.tags['brand']) || (el.tags && Object.values(el.tags)[0]) || 'Activity';
+                        const type = el.tags && (el.tags.tourism || el.tags.leisure || el.tags.amenity) || 'attraction';
+                        return { name, type, lat: el.lat || (el.center && el.center.lat), lon: el.lon || (el.center && el.center.lon) };
+                    });
+                    // Deduplicate by name
+                    const unique = [];
+                    const seen = new Set();
+                    for (const a of activities) {
+                        const key = `${a.name}|${a.type}`;
+                        if (!seen.has(key) && a.name) {
+                            seen.add(key);
+                            unique.push(a);
+                        }
+                    }
+                    // If we have many results from a bbox (country), try to sample representative POIs
+                    if (bbox && unique.length > 80) {
+                        // prefer a mix: take top 30 most common types, then sample
+                        return unique.slice(0, 80);
+                    }
+                    return unique.slice(0, 40);
+                } catch (e) {
+                    console.warn('Overpass endpoint failed, trying next:', ep, e.message || e);
+                    // try next
+                }
+            }
+
+            // Fallback static activities if no Overpass results
+            return [
+                { name: 'City Sightseeing', type: 'sightseeing' },
+                { name: 'Local Food Tour', type: 'food' },
+                { name: 'Museum Visit', type: 'culture' },
+                { name: 'Hiking/Outdoor', type: 'outdoor' },
+                { name: 'Beach & Water Sports', type: 'beach' }
+            ];
+        }
+
+        function populateActivityGrid(activities) {
+            if (!activityGrid) return;
+            activityGrid.innerHTML = '';
+            // store discovered places for itinerary generation
+            tripData.placesList = activities.slice();
+            activities.forEach(act => {
+                const card = document.createElement('div');
+                card.className = 'activity-card';
+                card.innerHTML = `
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h4>${escapeHtml(act.name)}</h4>
+                    <p style="font-size:13px; color:#666;">${escapeHtml(act.type || '')}</p>
+                    <button class="btn small load-reviews-btn" data-activity='${JSON.stringify(act)}'>Load Reviews</button>
+                `;
+                
+                // Add event listener to the "Load Reviews" button
+                const loadReviewsBtn = card.querySelector('.load-reviews-btn');
+                loadReviewsBtn.addEventListener('click', async () => {
+                    loadReviewsBtn.disabled = true;
+                    loadReviewsBtn.textContent = 'Loading...';
+                    
+                    try {
+                        const reviewsHtml = await fetchPlaceReviews(act);
+                        // Post results into the chatbot
+                        if (chatContainer) chatContainer.style.display = 'flex';
+                        addChatHtml(reviewsHtml, 'bot');
+                    } catch (e) {
+                        const errHtml = '<div class="api-error">Unable to load reviews.</div>';
+                        if (chatContainer) chatContainer.style.display = 'flex';
+                        addChatHtml(errHtml, 'bot');
+                        console.warn('Reviews load failed for', act.name, e);
+                    } finally {
+                        loadReviewsBtn.disabled = false;
+                        loadReviewsBtn.textContent = 'Load Reviews';
+                    }
+                });
+                
+                activityGrid.appendChild(card);
+            });
+        }
+
+        // Simple escape helper
+        function escapeHtml(str) {
+            return (str || '').toString().replace(/[&<>"]/g, s => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[s]);
+        }
+
+        // Debounce helper for auto-generating itinerary
+        function debounce(fn, wait) {
+            let t = null;
+            return (...args) => {
+                clearTimeout(t);
+                t = setTimeout(() => fn(...args), wait);
+            };
+        }
+
+        const autoGenerate = debounce(async () => {
+            const destination = tripData.destination || planDestination.value || '';
+            const dep = departureDate.value || '';
+            const ret = returnDate.value || '';
+            if (!destination || !dep || !ret) return;
+
+            // Use discovered place objects (tripData.placesList) when available so generator can distribute real POIs
+            const activities = (tripData.placesList && tripData.placesList.length) ? tripData.placesList.slice() : [];
+
+            const aiEl = document.getElementById('aiItinerary');
+            if (aiEl) {
+                aiEl.innerHTML = '<div style="padding:12px; background:var(--light); border-radius:8px;"><i class="fas fa-spinner fa-spin"></i> Generating personalized itinerary...</div>';
+            }
+
+            try {
+                const itineraryHtml = await generateItinerary(destination, dep, ret, activities);
+                if (aiEl) aiEl.innerHTML = itineraryHtml;
+            } catch (e) {
+                if (aiEl) aiEl.innerHTML = '<div class="api-error">Unable to generate itinerary at this time.</div>';
+            }
+        }, 900);
+
+        function scheduleAutoGenerate() {
+            autoGenerate();
+        }
+
+        // Mock destinations for plan trip
+        const planTripDestinations = [
+            { name: "Bali, Indonesia", country: "indonesia", category: "beach", description: "Tropical paradise with beautiful beaches and vibrant culture" },
+            { name: "Swiss Alps, Switzerland", country: "switzerland", category: "mountain", description: "Breathtaking mountain views and world-class skiing" },
+            { name: "Paris, France", country: "france", category: "city", description: "City of lights with iconic landmarks and exquisite cuisine" },
+            { name: "Cairo, Egypt", country: "egypt", category: "historical", description: "Ancient wonders and rich historical heritage" },
+            { name: "Tokyo, Japan", country: "japan", category: "city", description: "Modern metropolis blending tradition and innovation" },
+            { name: "Maldives", country: "maldives", category: "beach", description: "Crystal clear waters and luxury overwater bungalows" }
+        ];
+
+        // AI Recommendations data
+        const aiRecommendationsData = [
+            { 
+                icon: "fa-mountain", 
+                title: "Adventure Seeker", 
+                description: "Based on your preferences, you might enjoy mountain destinations with hiking and outdoor activities.",
+                destinations: ["Swiss Alps", "Patagonia", "Nepal"]
+            },
+            { 
+                icon: "fa-umbrella-beach", 
+                title: "Beach Lover", 
+                description: "Relaxing beach destinations with crystal clear waters and sunny weather would be perfect for you.",
+                destinations: ["Maldives", "Bali", "Caribbean Islands"]
+            },
+            { 
+                icon: "fa-landmark", 
+                title: "Culture Enthusiast", 
+                description: "Cities rich in history and culture with museums, landmarks, and local traditions.",
+                destinations: ["Rome", "Kyoto", "Marrakech"]
+            }
+        ];
+
+        // Event Listeners
+        searchDestinationBtn.addEventListener('click', searchPlanDestination);
+        nextToStep3.addEventListener('click', () => {
+            goToStep(3);
+        });
+        nextToStep4.addEventListener('click', () => goToStep(4));
+        // Back buttons
+        const backToStep1 = document.getElementById('backToStep1');
+        const backToStep2 = document.getElementById('backToStep2');
+        if (backToStep1) backToStep1.addEventListener('click', () => goToStep(1));
+        if (backToStep2) backToStep2.addEventListener('click', () => goToStep(2));
+        saveTrip.addEventListener('click', saveTripData);
+        const generateAiItineraryBtn = document.getElementById('generateAiItinerary');
+        if (generateAiItineraryBtn) generateAiItineraryBtn.addEventListener('click', async () => {
+            const destination = tripData.destination || planDestination.value || 'your selected destination';
+            const dep = departureDate.value || '';
+            const ret = returnDate.value || '';
+            // Use discovered place objects (tripData.placesList) when available
+            const activities = (tripData.placesList && tripData.placesList.length) ? tripData.placesList.slice() : [];
+
+            const aiEl = document.getElementById('aiItinerary');
+            if (aiEl) {
+                aiEl.innerHTML = '<div style="padding:12px; background:var(--light); border-radius:8px;"><i class="fas fa-spinner fa-spin"></i> Generating personalized itinerary...</div>';
+            }
+
+            try {
+                const itineraryHtml = await generateItinerary(destination, dep, ret, activities);
+                if (aiEl) aiEl.innerHTML = itineraryHtml;
+            } catch (e) {
+                if (aiEl) aiEl.innerHTML = '<div class="api-error">Unable to generate itinerary at this time.</div>';
+            }
+        });
+        darkModeToggle.addEventListener('click', toggleDarkMode);
+        langSelector.addEventListener('change', changeLanguage);
+        signInBtn.addEventListener('click', openSignInModal);
+        signUpBtn.addEventListener('click', openSignUpModal);
+        closeSignInModal.addEventListener('click', () => signInModal.style.display = 'none');
+        closeSignUpModal.addEventListener('click', () => signUpModal.style.display = 'none');
+        switchToSignUp.addEventListener('click', (e) => {
+            e.preventDefault();
+            signInModal.style.display = 'none';
+            signUpModal.style.display = 'block';
+        });
+        switchToSignIn.addEventListener('click', (e) => {
+            e.preventDefault();
+            signUpModal.style.display = 'none';
+            signInModal.style.display = 'block';
+        });
+        
+        // AI Features Event Listeners
+        adventureSlider.addEventListener('input', (e) => {
+            tripData.preferences.adventure = e.target.value;
+            adventureValue.textContent = `${e.target.value}%`;
+            updateActivityRecommendations();
+        });
+        
+        budgetSlider.addEventListener('input', (e) => {
+            tripData.preferences.budget = e.target.value;
+            budgetValue.textContent = `${e.target.value}%`;
+            updateActivityRecommendations();
+        });
+        
+        culturalSlider.addEventListener('input', (e) => {
+            tripData.preferences.cultural = e.target.value;
+            culturalValue.textContent = `${e.target.value}%`;
+            updateActivityRecommendations();
+        });
+        
+        relaxationSlider.addEventListener('input', (e) => {
+            tripData.preferences.relaxation = e.target.value;
+            relaxationValue.textContent = `${e.target.value}%`;
+            updateActivityRecommendations();
+        });
+        
+        // AI Chatbot Event Listeners
+        aiChatbot.addEventListener('click', () => {
+            chatContainer.style.display = chatContainer.style.display === 'flex' ? 'none' : 'flex';
+        });
+        
+        chatClose.addEventListener('click', () => {
+            chatContainer.style.display = 'none';
+        });
+        
+        chatSend.addEventListener('click', sendChatMessage);
+        
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') {
+                sendChatMessage();
+            }
+        });
+        
+        // Firebase Auth Event Listeners
+        signInFormEl.addEventListener('submit', handleSignIn);
+        signUpFormEl.addEventListener('submit', handleSignUp);
+        signOutBtn.addEventListener('click', handleSignOut);
+        
+        // Social Login Event Listeners
+        googleLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+        facebookLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+        twitterLogin.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+        googleSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.GoogleAuthProvider()));
+        facebookSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.FacebookAuthProvider()));
+        twitterSignup.addEventListener('click', () => signInWithProvider(new firebase.auth.TwitterAuthProvider()));
+        
+        // User menu toggle
+        userProfileMenu.addEventListener('click', () => {
+            userMenu.classList.toggle('show');
+        });
+        
+        // Close user menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!userProfile.contains(e.target)) {
+                userMenu.classList.remove('show');
+            }
+        });
+        
+        // Date change event to show weather forecast
+        departureDate.addEventListener('change', () => { showWeatherForecast(); scheduleAutoGenerate(); });
+        returnDate.addEventListener('change', () => { showWeatherForecast(); scheduleAutoGenerate(); });
+
+        // Close modals when clicking outside
+        window.addEventListener('click', (e) => {
+            if (e.target === signInModal) signInModal.style.display = 'none';
+            if (e.target === signUpModal) signUpModal.style.display = 'none';
+        });
+
+        // Load dark mode preference on page load
+        window.addEventListener('load', () => {
+            const darkMode = localStorage.getItem('darkMode') === 'true';
+            if (darkMode) {
+                document.body.classList.add('dark-mode');
+                darkModeToggle.querySelector('i').classList.remove('fa-moon');
+                darkModeToggle.querySelector('i').classList.add('fa-sun');
+            }
+            
+            // Load AI recommendations on page load
+            loadAIRecommendations();
+            
+            // Initialize TensorFlow.js models
+            initializeAIModels();
+        });
+
+        // Initialize AI Models
+        async function initializeAIModels() {
+            try {
+                // Load Universal Sentence Encoder for semantic search
+                sentenceEncoder = await use.load();
+                console.log('AI models loaded successfully');
+            } catch (error) {
+                console.error('Error loading AI models:', error);
+            }
+        }
+
+        // Functions
+        function searchPlanDestination() {
+            const searchTerm = planDestination.value.toLowerCase();
+            
+            // Clear previous results
+            planDestinationResults.innerHTML = '';
+            
+            // Filter destinations
+            const results = planTripDestinations.filter(dest => 
+                dest.name.toLowerCase().includes(searchTerm)
+            );
+            
+            // Display results
+            if (results.length > 0) {
+                results.forEach(dest => {
+                    const resultItem = document.createElement('div');
+                    resultItem.className = 'destination-result';
+                    resultItem.innerHTML = `
+                        <strong>${dest.name}</strong>
+                        <p style="font-size: 14px; color: #666; margin-top: 5px;">${dest.description}</p>
+                    `;
+                    resultItem.addEventListener('click', () => selectDestination(dest));
+                    planDestinationResults.appendChild(resultItem);
+                });
+            } else {
+                // If not found in our static list, try open-source geocoding (Nominatim)
+                planDestinationResults.innerHTML = '<p>No local results. Searching OpenStreetMap...</p>';
+                geocodePlace(planDestination.value)
+                    .then(places => {
+                        planDestinationResults.innerHTML = '';
+                        if (!places || !places.length) {
+                            planDestinationResults.innerHTML = '<p>No results found for that query.</p>';
+                            return;
+                        }
+                        places.forEach(p => {
+                            const item = document.createElement('div');
+                            item.className = 'destination-result';
+                            item.innerHTML = `
+                                <strong>${escapeHtml(p.display_name.split(',')[0])}</strong>
+                                <p style="font-size: 13px; color: #666; margin-top:5px;">${escapeHtml(p.display_name)}</p>
+                            `;
+                            item.addEventListener('click', () => {
+                                // Normalize into destination-like object
+                                const destObj = {
+                                    name: p.display_name.split(',')[0],
+                                    geocode: p,
+                                    bbox: p.boundingbox,
+                                    lat: p.lat,
+                                    lon: p.lon,
+                                    category: p.type || 'unknown'
+                                };
+                                selectDestination(destObj);
+                            });
+                            planDestinationResults.appendChild(item);
+                        });
+                    })
+                    .catch(err => {
+                        console.error('Geocode error:', err);
+                        planDestinationResults.innerHTML = '<p>Geocoding failed. Try again later.</p>';
+                    });
+            }
+        }
+
+        // Geocode free-text query using Nominatim. Returns an array of results with display_name, lat, lon, boundingbox, type
+        async function geocodePlace(query) {
+            if (!query || !query.toString().trim()) return [];
+            const url = `https://nominatim.openstreetmap.org/search?format=json&limit=8&q=${encodeURIComponent(query)}`;
+            try {
+                const resp = await fetch(url, {
+                    headers: {
+                        'Accept-Language': 'en-US'
+                    }
+                });
+                if (!resp.ok) throw new Error('Nominatim error');
+                const data = await resp.json();
+                // Ensure boundingbox fields are normalized to numbers/arrays
+                return data.map(d => ({
+                    display_name: d.display_name,
+                    lat: parseFloat(d.lat),
+                    lon: parseFloat(d.lon),
+                    boundingbox: d.boundingbox ? d.boundingbox.map(Number) : null,
+                    type: d.type || ''
+                }));
+            } catch (e) {
+                console.error('Geocode failed', e);
+                return [];
+            }
+        }
+
+        function selectDestination(destination) {
+            tripData.destination = destination.name || (destination.display_name || 'Selected Destination');
+            planDestination.value = tripData.destination;
+            planDestinationResults.innerHTML = '';
+
+            showNotification(`Selected destination: ${tripData.destination}`);
+
+            // Auto-advance to Dates step
+            goToStep(2);
+            // Focus departure date for convenience
+            setTimeout(() => { departureDate.focus(); }, 200);
+
+            // If destination comes from geocode, it may contain bbox and lat/lon
+            if (destination.geocode || destination.bbox || destination.boundingbox) {
+                const bboxRaw = destination.bbox || destination.boundingbox || (destination.geocode && destination.geocode.boundingbox);
+                // Nominatim boundingbox comes as [south, north, west, east] strings
+                let bbox = null;
+                if (bboxRaw && bboxRaw.length === 4) {
+                    bbox = bboxRaw.map(Number);
+                    // Convert to [south, north, west, east] or normalize if in different order
+                }
+
+                const lat = destination.lat || (destination.geocode && destination.geocode.lat) || 0;
+                const lon = destination.lon || (destination.geocode && destination.geocode.lon) || 0;
+
+                if (bbox) {
+                    // Use bbox-aware Overpass discovery for large areas
+                    discoverActivities(lat, lon, 50000, bbox)
+                        .then(acts => populateActivityGrid(acts))
+                        .catch(e => console.warn('Activity discovery failed (bbox):', e));
+                    // Save centroid coords if available
+                    tripData.destinationCoords = { lat: lat || 0, lon: lon || 0 };
+                } else if (lat && lon) {
+                    tripData.destinationCoords = { lat, lon };
+                    discoverActivities(lat, lon)
+                        .then(acts => populateActivityGrid(acts))
+                        .catch(e => console.warn('Activity discovery failed (coord):', e));
+                } else {
+                    // fallback to country data if present
+                    if (destination.country) {
+                        getCountryData(destination.country)
+                            .then(countryData => {
+                                if (countryData) {
+                                    tripData.destinationCoords = { lat: countryData.capitalLat, lon: countryData.capitalLon };
+                                    discoverActivities(tripData.destinationCoords.lat, tripData.destinationCoords.lon)
+                                        .then(activities => populateActivityGrid(activities))
+                                        .catch(e => console.warn('Activity discovery failed:', e));
+                                }
+                            })
+                            .catch(err => console.warn('Country lookup failed:', err));
+                    }
+                }
+
+                // Generate AI insights for the destination (use provided category if any)
+                generateAIInsights(destination);
+                return;
+            }
+
+            // If destination is a plain object with country field (from local list)
+            if (destination.country) {
+                getCountryData(destination.country)
+                    .then(countryData => {
+                        if (countryData) {
+                            tripData.destinationCoords = {
+                                lat: countryData.capitalLat,
+                                lon: countryData.capitalLon
+                            };
+                            // Discover activities near the selected destination (dynamic)
+                            if (tripData.destinationCoords.lat && tripData.destinationCoords.lon) {
+                                discoverActivities(tripData.destinationCoords.lat, tripData.destinationCoords.lon)
+                                    .then(activities => populateActivityGrid(activities))
+                                    .catch(e => console.warn('Activity discovery failed:', e));
+                            }
+                            // Generate AI insights for the destination
+                            generateAIInsights(destination);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error getting destination data:', error);
+                        showNotification(`Selected destination: ${destination.name}`);
+                    });
+            }
+        }
+
+        function showWeatherForecast() {
+            if (!tripData.destinationCoords.lat || !tripData.destinationCoords.lon) {
+                return;
+            }
+            
+            const departure = new Date(departureDate.value);
+            const returnDateValue = new Date(returnDate.value);
+            
+            if (isNaN(departure.getTime()) || isNaN(returnDateValue.getTime())) {
+                return;
+            }
+            
+            // Calculate number of days
+            const timeDiff = returnDateValue.getTime() - departure.getTime();
+            const daysDiff = Math.ceil(timeDiff / (1000 * 3600 * 24));
+            
+            if (daysDiff <= 0 || daysDiff > 16) {
+                return;
+            }
+            
+            // Show weather forecast section
+            weatherForecast.style.display = 'block';
+            forecastDays.innerHTML = '';
+            
+            // Get weather forecast
+            fetch(`https://api.open-meteo.com/v1/forecast?latitude=${tripData.destinationCoords.lat}&longitude=${tripData.destinationCoords.lon}&daily=weathercode,temperature_2m_max,temperature_2m_min&timezone=auto`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Weather forecast not available');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.daily) {
+                        // Display forecast for each day
+                        for (let i = 0; i < daysDiff && i < data.daily.time.length; i++) {
+                            const date = new Date(data.daily.time[i]);
+                            const dayName = date.toLocaleDateString('en-US', { weekday: 'short' });
+                            const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                            const maxTemp = data.daily.temperature_2m_max[i];
+                            const minTemp = data.daily.temperature_2m_min[i];
+                            const weatherCode = data.daily.weathercode[i];
+                            
+                            const forecastDay = document.createElement('div');
+                            forecastDay.className = 'forecast-day';
+                            
+                            forecastDay.innerHTML = `
+                                <div class="forecast-date">${dayName}, ${dateStr}</div>
+                                <div class="forecast-icon">${getWeatherIcon(weatherCode)}</div>
+                                <div class="forecast-temp">${maxTemp}°/${minTemp}°</div>
+                            `;
+                            
+                            forecastDays.appendChild(forecastDay);
+                        }
+                    }
+                })
+                .catch(error => {
+                    console.error('Error fetching weather forecast:', error);
+                    forecastDays.innerHTML = '<p>Unable to load weather forecast.</p>';
+                });
+        }
+
+        function getWeatherIcon(weatherCode) {
+            // Return appropriate icon based on weather code
+            if (weatherCode === 0) {
+                return '<i class="fas fa-sun"></i>';
+            } else if (weatherCode >= 1 && weatherCode <= 3) {
+                return '<i class="fas fa-cloud"></i>';
+            } else if (weatherCode === 45 || weatherCode === 48) {
+                return '<i class="fas fa-smog"></i>';
+            } else if ((weatherCode >= 51 && weatherCode <= 57) || (weatherCode >= 61 && weatherCode <= 67) || (weatherCode >= 80 && weatherCode <= 82)) {
+                return '<i class="fas fa-cloud-rain"></i>';
+            } else if (weatherCode >= 71 && weatherCode <= 77) {
+                return '<i class="fas fa-snowflake"></i>';
+            } else if (weatherCode >= 85 && weatherCode <= 86) {
+                return '<i class="fas fa-snowflake"></i>';
+            } else if (weatherCode >= 95 && weatherCode <= 99) {
+                return '<i class="fas fa-bolt"></i>';
+            } else {
+                return '<i class="fas fa-question"></i>';
+            }
+        }
+
+        function getCountryData(countryName) {
+            return fetch(`https://restcountries.com/v3.1/name/${countryName}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Country not found');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    if (data && data.length > 0) {
+                        const country = data[0];
+                        return {
+                            capital: country.capital ? country.capital[0] : 'N/A',
+                            capitalLat: country.capitalInfo ? country.capitalInfo.latlng[0] : 0,
+                            capitalLon: country.capitalInfo ? country.capitalInfo.latlng[1] : 0,
+                            currency: country.currencies ? Object.values(country.currencies)[0].name : 'N/A',
+                            language: country.languages ? Object.values(country.languages)[0] : 'N/A',
+                            population: country.population
+                        };
+                    }
+                    return null;
+                })
+                .catch(error => {
+                    console.error('Error fetching country data:', error);
+                    return null;
+                });
+        }
+
+        function goToStep(stepNumber) {
+            // Update current step
+            currentStep = stepNumber;
+            
+            // Update step indicators
+            plannerSteps.forEach((step, index) => {
+                if (index < stepNumber) {
+                    step.classList.add('completed');
+                } else {
+                    step.classList.remove('completed');
+                }
+                
+                if (index === stepNumber - 1) {
+                    step.classList.add('active');
+                } else {
+                    step.classList.remove('active');
+                }
+            });
+            
+            // Update step content
+            stepContents.forEach(content => {
+                content.classList.remove('active');
+            });
+            
+            const currentStepContent = document.getElementById(`step${stepNumber}`);
+            if (currentStepContent) {
+                currentStepContent.classList.add('active');
+            }
+            
+            // Load AI features for specific steps
+            if (stepNumber === 1) {
+                loadAIRecommendations();
+            } else if (stepNumber === 2 && tripData.destination) {
+                generateAIInsights({ name: tripData.destination, category: tripData.category || 'unknown' });
+            }
+            
+            // Update trip summary if on step 4
+            if (stepNumber === 4) {
+                updateTripSummary();
+            }
+        }
+
+        function updateTripSummary() {
+            // Update destination
+            document.getElementById('summaryDestination').textContent = tripData.destination || 'Not selected';
+            
+            // Update dates
+            const departureDateValue = document.getElementById('departureDate').value;
+            const returnDateValue = document.getElementById('returnDate').value;
+            
+            if (departureDateValue && returnDateValue) {
+                document.getElementById('summaryDates').textContent = `${departureDateValue} to ${returnDateValue}`;
+            } else {
+                document.getElementById('summaryDates').textContent = 'Not selected';
+            }
+            
+            // Update activities (use discovered places if available)
+            const activities = (tripData.placesList && tripData.placesList.length) ? tripData.placesList.slice() : ((tripData.activities && tripData.activities.length) ? tripData.activities.map(a => ({ name: a })) : []);
+
+            const summaryEl = document.getElementById('summaryActivities');
+            if (!summaryEl) return;
+
+            if (activities.length === 0) {
+                summaryEl.innerHTML = '<p>Not selected</p>';
+                return;
+            }
+
+            // Build a richer activities summary with optional dynamic reviews (Google Places) and links
+            summaryEl.innerHTML = '';
+            const list = document.createElement('div');
+            list.className = 'summary-activities-list';
+
+            activities.slice(0, 12).forEach((act, idx) => {
+                const name = (typeof act === 'string') ? act : (act.name || act);
+                const item = document.createElement('div');
+                item.className = 'summary-activity-item';
+                item.style.marginBottom = '8px';
+
+                const title = document.createElement('div');
+                title.style.fontWeight = '700';
+                title.textContent = name;
+                item.appendChild(title);
+
+                // If we have coordinates, show a link to OSM and prepare a reviews container
+                const meta = document.createElement('div');
+                meta.style.fontSize = '0.9rem';
+                meta.style.color = 'var(--gray)';
+                if (act && act.lat && act.lon) {
+                    const osm = document.createElement('a');
+                    osm.href = `https://www.openstreetmap.org/?mlat=${act.lat}&mlon=${act.lon}#map=16/${act.lat}/${act.lon}`;
+                    osm.target = '_blank';
+                    osm.rel = 'noopener';
+                    osm.textContent = 'Open on map';
+                    osm.style.marginRight = '10px';
+                    meta.appendChild(osm);
+                }
+
+                // Reviews container and button
+                const reviewsWrap = document.createElement('div');
+                reviewsWrap.className = 'reviews-wrap';
+                reviewsWrap.style.marginTop = '6px';
+
+                const getReviewsBtn = document.createElement('button');
+                getReviewsBtn.className = 'btn small';
+                getReviewsBtn.textContent = 'Load reviews';
+                getReviewsBtn.style.marginRight = '8px';
+                getReviewsBtn.addEventListener('click', async () => {
+                    getReviewsBtn.disabled = true;
+                    getReviewsBtn.textContent = 'Loading reviews...';
+                    try {
+                        const reviewsHtml = await fetchPlaceReviews(act);
+                        const html = reviewsHtml || '<div class="api-error">No reviews found.</div>';
+                        // Post results into the chatbot instead of opening a new tab or placing inside the plan UI
+                        if (chatContainer) chatContainer.style.display = (chatContainer.style.display === 'flex' ? 'flex' : 'flex');
+                        // Add as bot message (allow HTML)
+                        addChatHtml(html, 'bot');
+                    } catch (e) {
+                        const errHtml = '<div class="api-error">Unable to load reviews.</div>';
+                        if (chatContainer) chatContainer.style.display = 'flex';
+                        addChatHtml(errHtml, 'bot');
+                        console.warn('Reviews load failed for', name, e);
+                    } finally {
+                        getReviewsBtn.disabled = false;
+                        getReviewsBtn.textContent = 'Load reviews';
+                    }
+                });
+
+                item.appendChild(meta);
+                item.appendChild(getReviewsBtn);
+                item.appendChild(reviewsWrap);
+                list.appendChild(item);
+            });
+
+            summaryEl.appendChild(list);
+        }
+
+        // Fetch basic web search results for a place without using any API key.
+        // This shows a short DuckDuckGo Instant Answer (if available) and provides direct search links (Google/Bing/DuckDuckGo).
+        async function fetchPlaceReviews(place) {
+            const name = (typeof place === 'string') ? place : (place && (place.name || ''));
+            const query = encodeURIComponent((name || '') + (tripData.destination ? ' ' + tripData.destination : ''));
+            const google = `https://www.google.com/search?q=${query}`;
+            const bing = `https://www.bing.com/search?q=${query}`;
+            const ddg = `https://duckduckgo.com/?q=${query}`;
+
+            // Try to get Wikipedia summary first
+            try {
+                const wikiUrl = `https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`;
+                const wikiResp = await fetch(wikiUrl);
+                if (wikiResp.ok) {
+                    const wikiData = await wikiResp.json();
+                    const summary = wikiData.extract;
+                    const wikiPageUrl = wikiData.content_urls?.desktop?.page || '';
+                    
+                    let html = `<div style="font-weight:700; margin-bottom:6px;">Information about ${escapeHtml(name || 'this place')}</div>`;
+                    if (summary) html += `<div style="margin-bottom:8px; color:var(--gray);">${escapeHtml(summary)}</div>`;
+                    if (wikiPageUrl) html += `<div style="margin-bottom:8px;"><a href="${wikiPageUrl}" target="_blank" rel="noopener">Read more on Wikipedia</a></div>`;
+                    
+                    // Add search links
+                    html += `<div style="margin-top:10px; font-weight:600;">For reviews and more information:</div>`;
+                    html += `<div><a href="${google}" target="_blank" rel="noopener">Search on Google</a> · <a href="${bing}" target="_blank" rel="noopener">Search on Bing</a> · <a href="${ddg}" target="_blank" rel="noopener">Search on DuckDuckGo</a></div>`;
+                    
+                    return html;
+                }
+            } catch (e) {
+                console.warn('Wikipedia lookup failed', e);
+            }
+
+            // Fallback to DuckDuckGo
+            try {
+                const resp = await fetch(`https://api.duckduckgo.com/?q=${query}&format=json&no_html=1&skip_disambig=1`);
+                if (resp && resp.ok) {
+                    const j = await resp.json();
+                    const abstract = j && (j.AbstractText || (j.RelatedTopics && j.RelatedTopics[0] && j.RelatedTopics[0].Text));
+                    let html = `<div style="font-weight:700; margin-bottom:6px;">Information about ${escapeHtml(name || 'this place')}</div>`;
+                    if (abstract) html += `<div style="margin-bottom:8px; color:var(--gray);">${escapeHtml(abstract)}</div>`;
+                    
+                    // Add search links
+                    html += `<div style="margin-top:10px; font-weight:600;">For reviews and more information:</div>`;
+                    html += `<div><a href="${google}" target="_blank" rel="noopener">Search on Google</a> · <a href="${bing}" target="_blank" rel="noopener">Search on Bing</a> · <a href="${ddg}" target="_blank" rel="noopener">Search on DuckDuckGo</a></div>`;
+                    
+                    return html;
+                }
+            } catch (e) {
+                console.warn('DuckDuckGo instant answer failed', e);
+            }
+
+            // Final fallback: just show search links
+            return `<div style="font-weight:700; margin-bottom:6px;">No information found for ${escapeHtml(name || 'this place')}</div>
+                    <div style="margin-top:10px; font-weight:600;">Search for reviews and information:</div>
+                    <div><a href="${google}" target="_blank" rel="noopener">Search on Google</a> · <a href="${bing}" target="_blank" rel="noopener">Search on Bing</a> · <a href="${ddg}" target="_blank" rel="noopener">Search on DuckDuckGo</a></div>`;
+        }
+
+        function saveTripData() {
+            // Collect trip data
+            tripData.departureDate = document.getElementById('departureDate').value;
+            tripData.returnDate = document.getElementById('returnDate').value;
+            
+            // Use discovered places list for activities when saving
+            tripData.activities = (tripData.placesList && tripData.placesList.length) ? tripData.placesList.map(p => p.name) : (tripData.activities || []);
+            
+            // Save to localStorage
+            const savedTrips = JSON.parse(localStorage.getItem('savedTrips') || '[]');
+            savedTrips.push(tripData);
+            localStorage.setItem('savedTrips', JSON.stringify(savedTrips));
+            
+            // Show notification
+            showNotification('Trip saved successfully!');
+            
+            // Reset planner
+            setTimeout(() => {
+                goToStep(1);
+                planDestination.value = '';
+                document.getElementById('departureDate').value = '';
+                document.getElementById('returnDate').value = '';
+                document.querySelectorAll('#step3 input[type="checkbox"]').forEach(cb => cb.checked = false);
+                weatherForecast.style.display = 'none';
+                aiInsights.style.display = 'none';
+                
+                // Reset trip data
+                tripData = {
+                    destination: '',
+                    destinationCoords: { lat: 0, lon: 0 },
+                    departureDate: '',
+                    returnDate: '',
+                    activities: [],
+                    preferences: {
+                        adventure: 50,
+                        budget: 50,
+                        cultural: 50,
+                        relaxation: 50
+                    }
+                };
+                
+                // Reset sliders
+                adventureSlider.value = 50;
+                budgetSlider.value = 50;
+                culturalSlider.value = 50;
+                relaxationSlider.value = 50;
+                adventureValue.textContent = '50%';
+                budgetValue.textContent = '50%';
+                culturalValue.textContent = '50%';
+                relaxationValue.textContent = '50%';
+            }, 1500);
+        }
+
+        function showNotification(message) {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = '#333';
+            notification.style.color = 'white';
+            notification.style.padding = '15px';
+            notification.style.borderRadius = '5px';
+            notification.style.zIndex = '1000';
+            notification.style.opacity = '0';
+            notification.style.transition = 'opacity 0.5s';
+            
+            // Add to DOM
+            document.body.appendChild(notification);
+            
+            // Fade in
+            setTimeout(() => {
+                notification.style.opacity = '1';
+            }, 10);
+            
+            // Remove after 3 seconds
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(notification);
+                }, 500);
+            }, 3000);
+        }
+
+        function toggleDarkMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = darkModeToggle.querySelector('i');
+            
+            if (document.body.classList.contains('dark-mode')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+            
+            // Save preference
+            localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+        }
+
+        function changeLanguage() {
+            const selectedLang = langSelector.value;
+            showNotification(`Language changed to ${selectedLang.toUpperCase()}`);
+        }
+
+        function openSignInModal() {
+            signInModal.style.display = 'block';
+        }
+
+        function openSignUpModal() {
+            signUpModal.style.display = 'block';
+        }
+
+        // AI Features Functions
+        function loadAIRecommendations() {
+            // Clear previous recommendations
+            aiRecommendations.innerHTML = '';
+            
+            // Add AI recommendations
+            aiRecommendationsData.forEach(rec => {
+                const recCard = document.createElement('div');
+                recCard.className = 'ai-feature-card';
+                
+                // Create the title section
+                const titleSection = document.createElement('div');
+                titleSection.className = 'ai-feature-title';
+                titleSection.innerHTML = `
+                    <i class="fas ${rec.icon}"></i>
+                    <span>${rec.title}</span>
+                `;
+                
+                // Create the content section
+                const contentSection = document.createElement('div');
+                contentSection.className = 'ai-feature-content';
+                contentSection.innerHTML = `
+                    <p>${rec.description}</p>
+                    <p><strong>Recommended destinations:</strong></p>
+                `;
+                
+                // Create a container for the destination tags
+                const destinationsContainer = document.createElement('div');
+                destinationsContainer.style.display = 'flex';
+                destinationsContainer.style.flexWrap = 'wrap';
+                destinationsContainer.style.gap = '8px';
+                destinationsContainer.style.marginTop = '8px';
+                
+                // Add each destination as a clickable tag
+                rec.destinations.forEach(destName => {
+                    const destTag = document.createElement('span');
+                    destTag.className = 'destination-tag';
+                    destTag.textContent = destName;
+                    
+                    // Add click event to select the destination
+                    destTag.addEventListener('click', () => {
+                        // Find the destination object that matches the name
+                        const selectedDest = planTripDestinations.find(d => d.name.includes(destName));
+                        if (selectedDest) {
+                            selectDestination(selectedDest);
+                        } else {
+                            // If not found in our list, create a generic destination object
+                            selectDestination({
+                                name: destName,
+                                country: 'unknown',
+                                category: 'unknown'
+                            });
+                        }
+                    });
+                    
+                    destinationsContainer.appendChild(destTag);
+                });
+                
+                contentSection.appendChild(destinationsContainer);
+                recCard.appendChild(titleSection);
+                recCard.appendChild(contentSection);
+                aiRecommendations.appendChild(recCard);
+            });
+        }
+
+        function generateAIInsights(destination) {
+            // Show AI insights section
+            aiInsights.style.display = 'block';
+            insightContent.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Generating AI insights...';
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                // Generate insights based on destination
+                let insights = [];
+                
+                // Determine the category of the destination
+                let category = destination.category || 'unknown';
+                
+                if (category === 'beach') {
+                    insights.push("Best time to visit: May to September for optimal weather conditions.");
+                    insights.push("Recommended activities: Snorkeling, beach volleyball, and sunset cruises.");
+                    insights.push("Packing essentials: Sunscreen, swimwear, and light clothing.");
+                } else if (category === 'mountain') {
+                    insights.push("Best time to visit: December to March for skiing, June to August for hiking.");
+                    insights.push("Recommended activities: Skiing, snowboarding, mountain hiking, and scenic cable car rides.");
+                    insights.push("Packing essentials: Warm layers, waterproof jacket, and sturdy hiking boots.");
+                } else if (category === 'city') {
+                    insights.push("Best time to visit: Spring and fall for pleasant weather and fewer crowds.");
+                    insights.push("Recommended activities: City tours, museum visits, local food experiences, and shopping.");
+                    insights.push("Packing essentials: Comfortable walking shoes, weather-appropriate clothing, and a city map.");
+                } else if (category === 'historical') {
+                    insights.push("Best time to visit: October to April for cooler temperatures and fewer tourists.");
+                    insights.push("Recommended activities: Historical site tours, museum visits, and cultural performances.");
+                    insights.push("Packing essentials: Comfortable walking shoes, modest clothing for religious sites, and a camera.");
+                } else {
+                    // Generic insights for unknown categories
+                    insights.push("Research the best time to visit based on climate and tourist seasons.");
+                    insights.push("Look for popular local attractions and activities unique to this destination.");
+                    insights.push("Check travel advisories and visa requirements before planning your trip.");
+                }
+                
+                // Add personalized insights based on user preferences
+                if (tripData.preferences.adventure > 70) {
+                    insights.push("Based on your adventure preference, consider adding extreme sports or outdoor expeditions to your itinerary.");
+                }
+                
+                if (tripData.preferences.relaxation > 70) {
+                    insights.push("Based on your relaxation preference, consider including spa visits or leisurely activities in your schedule.");
+                }
+                
+                if (tripData.preferences.cultural > 70) {
+                    insights.push("Based on your cultural interest, prioritize local festivals, traditional performances, and historical sites.");
+                }
+                
+                if (tripData.preferences.budget > 70) {
+                    insights.push("Based on your budget preference, look for affordable accommodations, local eateries, and free attractions.");
+                }
+                
+                // Display insights
+                insightContent.innerHTML = insights.map(insight => `<p>${insight}</p>`).join('');
+            }, 1500);
+        }
+
+        function updateActivityRecommendations() {
+            // This function would update activity recommendations based on slider values
+            // In a real implementation, this would use AI to analyze preferences and suggest activities
+            console.log('Updating activity recommendations based on preferences:', tripData.preferences);
+        }
+
+        // AI Chatbot Functions
+        function sendChatMessage() {
+            const message = chatInput.value.trim();
+            if (!message) return;
+            
+            // Add user message to chat
+            addChatMessage(message, 'user');
+            
+            // Clear input
+            chatInput.value = '';
+            
+            // Add to chat history
+            chatHistory.push({ role: 'user', content: message });
+            
+            // Generate bot response
+            generateBotResponse(message);
+        }
+
+        function addChatMessage(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+            
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.textContent = message;
+            
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+            
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        // Add chat message with HTML content (used for reviews/search results)
+        function addChatHtml(htmlContent, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `chat-message ${sender}`;
+
+            const bubbleDiv = document.createElement('div');
+            bubbleDiv.className = 'message-bubble';
+            bubbleDiv.innerHTML = htmlContent || '';
+
+            messageDiv.appendChild(bubbleDiv);
+            chatMessages.appendChild(messageDiv);
+
+            // Scroll to bottom
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function generateBotResponse(userMessage) {
+            // Show typing indicator
+            const typingDiv = document.createElement('div');
+            typingDiv.className = 'chat-message bot';
+            typingDiv.innerHTML = '<div class="message-bubble"><i class="fas fa-spinner fa-spin"></i> Typing...</div>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+            
+            // Simulate AI processing delay
+            setTimeout(() => {
+                // Remove typing indicator
+                chatMessages.removeChild(typingDiv);
+                
+                // Generate response based on user message
+                let response = '';
+                
+                // Simple rule-based responses (in a real app, this would use an AI API)
+                if (userMessage.toLowerCase().includes('hello') || userMessage.toLowerCase().includes('hi')) {
+                    response = "Hello! I'm your AI travel assistant. How can I help you plan your trip today?";
+                } else if (userMessage.toLowerCase().includes('destination') || userMessage.toLowerCase().includes('place')) {
+                    response = "I can help you find the perfect destination based on your preferences. What type of experience are you looking for? Beach, mountain, city, or cultural?";
+                } else if (userMessage.toLowerCase().includes('budget') || userMessage.toLowerCase().includes('cost')) {
+                    response = "Budget planning is important for any trip! I can help you find destinations and activities that match your budget. What's your approximate budget range?";
+                } else if (userMessage.toLowerCase().includes('weather')) {
+                    response = "Weather can greatly impact your travel experience. Once you select a destination, I can provide you with detailed weather forecasts for your travel dates.";
+                } else if (userMessage.toLowerCase().includes('itinerary') || userMessage.toLowerCase().includes('plan')) {
+                    response = "I can generate a personalized itinerary for you! Just select your destination, travel dates, and preferred activities, then click the 'Generate AI Itinerary' button.";
+                } else if (userMessage.toLowerCase().includes('activities') || userMessage.toLowerCase().includes('things to do')) {
+                    response = "There are many activities to choose from! You can select from beach activities, hiking, food tours, and sightseeing. You can also customize your preferences using the sliders in the activities section.";
+                } else if (userMessage.toLowerCase().includes('help') || userMessage.toLowerCase().includes('support')) {
+                    response = "I'm here to help! You can ask me about destinations, activities, budget planning, weather forecasts, or itinerary suggestions. What would you like to know?";
+                } else {
+                    response = "I'm not sure how to answer that. You can ask me about destinations, activities, budget planning, weather forecasts, or itinerary suggestions. Is there something specific you'd like help with?";
+                }
+                
+                // Add bot response to chat
+                addChatMessage(response, 'bot');
+                
+                // Add to chat history
+                chatHistory.push({ role: 'assistant', content: response });
+            }, 1000);
+        }
+
+        // Firebase Auth Functions
+        function handleSignIn(e) {
+            e.preventDefault();
+            const email = document.getElementById('signInEmail').value;
+            const password = document.getElementById('signInPassword').value;
+            
+            // Show loading state
+            loginBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Signing In...';
+            loginBtn.disabled = true;
+            
+            // Clear previous messages
+            signInError.style.display = 'none';
+            signInSuccess.style.display = 'none';
+            
+            auth.signInWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed in
+                    const user = userCredential.user;
+                    console.log('User signed in:', user);
+                    
+                    // Show success message
+                    signInSuccess.textContent = 'Login successful! Welcome back!';
+                    signInSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/user-not-found') {
+                        friendlyMessage = 'No account found with this email.';
+                    } else if (errorCode === 'auth/wrong-password') {
+                        friendlyMessage = 'Incorrect password. Please try again.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/user-disabled') {
+                        friendlyMessage = 'This account has been disabled.';
+                    } else if (errorCode === 'auth/too-many-requests') {
+                        friendlyMessage = 'Too many failed login attempts. Please try again later.';
+                    }
+                    
+                    signInError.textContent = friendlyMessage;
+                    signInError.style.display = 'block';
+                    
+                    // Reset button state
+                    loginBtn.innerHTML = 'Sign In';
+                    loginBtn.disabled = false;
+                });
+        }
+
+        function handleSignUp(e) {
+            e.preventDefault();
+            const name = document.getElementById('signUpName').value;
+            const email = document.getElementById('signUpEmail').value;
+            const password = document.getElementById('signUpPassword').value;
+            
+            // Show loading state
+            registerBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Creating Account...';
+            registerBtn.disabled = true;
+            
+            // Clear previous messages
+            signUpError.style.display = 'none';
+            signUpSuccess.style.display = 'none';
+            
+            auth.createUserWithEmailAndPassword(email, password)
+                .then((userCredential) => {
+                    // Signed up
+                    const user = userCredential.user;
+                    console.log('User signed up:', user);
+                    
+                    // Update user profile with name
+                    return user.updateProfile({
+                        displayName: name
+                    });
+                })
+                .then(() => {
+                    // Show success message
+                    signUpSuccess.textContent = 'Account created successfully! Welcome!';
+                    signUpSuccess.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                })
+                .catch((error) => {
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Sign up error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Sign up failed. Please try again.';
+                    if (errorCode === 'auth/email-already-in-use') {
+                        friendlyMessage = 'An account with this email already exists.';
+                    } else if (errorCode === 'auth/invalid-email') {
+                        friendlyMessage = 'Invalid email address.';
+                    } else if (errorCode === 'auth/weak-password') {
+                        friendlyMessage = 'Password is too weak. Please use a stronger password.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'Email/password accounts are not enabled.';
+                    }
+                    
+                    signUpError.textContent = friendlyMessage;
+                    signUpError.style.display = 'block';
+                    
+                    // Reset button state
+                    registerBtn.innerHTML = 'Sign Up';
+                    registerBtn.disabled = false;
+                });
+        }
+
+        function handleSignOut() {
+            auth.signOut()
+                .then(() => {
+                    console.log('User signed out');
+                    showNotification('You have been signed out successfully.');
+                })
+                .catch((error) => {
+                    console.error('Sign out error:', error);
+                    showNotification('Error signing out. Please try again.');
+                });
+        }
+
+        function signInWithProvider(provider) {
+            // Show loading spinner
+            loadingSpinner.style.display = 'flex';
+            
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    // The signed-in user info
+                    const user = result.user;
+                    console.log('User signed in with provider:', user);
+                    
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    // Show success message
+                    showNotification(`Welcome, ${user.displayName || user.email}!`);
+                })
+                .catch((error) => {
+                    // Hide loading spinner
+                    loadingSpinner.style.display = 'none';
+                    
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                    console.error('Provider sign in error:', errorCode, errorMessage);
+                    
+                    // Show error message
+                    let friendlyMessage = 'Login failed. Please try again.';
+                    if (errorCode === 'auth/account-exists-with-different-credential') {
+                        friendlyMessage = 'An account already exists with the same email address but different sign-in credentials.';
+                    } else if (errorCode === 'auth/auth-domain-config-required') {
+                        friendlyMessage = 'Authentication domain configuration is required.';
+                    } else if (errorCode === 'auth/cancelled-popup-request') {
+                        friendlyMessage = 'Popup request was cancelled.';
+                    } else if (errorCode === 'auth/operation-not-allowed') {
+                        friendlyMessage = 'This login method is not enabled. Please contact support.';
+                    } else if (errorCode === 'auth/operation-not-supported-in-this-environment') {
+                        friendlyMessage = 'This operation is not supported in the current environment.';
+                    } else if (errorCode === 'auth/popup-blocked') {
+                        friendlyMessage = 'Popup was blocked by the browser. Please allow popups and try again.';
+                    } else if (errorCode === 'auth/popup-closed-by-user') {
+                        friendlyMessage = 'Popup was closed before completing the login.';
+                    } else if (errorCode === 'auth/unauthorized-domain') {
+                        friendlyMessage = 'This domain is not authorized for OAuth operations.';
+                    }
+                    
+                    showNotification(friendlyMessage);
+                });
+        }
+
+        // Firebase Auth State Listener
+        auth.onAuthStateChanged(user => {
+            if (user) {
+                // User is signed in
+                currentUser = user;
+                console.log('User logged in:', user);
+                
+                // Update UI for logged-in user
+                authButtons.style.display = 'none';
+                userProfile.style.display = 'block';
+                
+                // Set user avatar and name
+                if (user.displayName) {
+                    userName.textContent = user.displayName;
+                    userAvatar.textContent = user.displayName.charAt(0).toUpperCase();
+                } else if (user.email) {
+                    userName.textContent = user.email;
+                    userAvatar.textContent = user.email.charAt(0).toUpperCase();
+                }
+                
+                // Close any open modals
+                signInModal.style.display = 'none';
+                signUpModal.style.display = 'none';
+                
+                // Show success message
+                showNotification(`Welcome back, ${user.displayName || user.email}!`);
+            } else {
+                // User is signed out
+                currentUser = null;
+                console.log('User logged out');
+                
+                // Update UI for logged-out user
+                authButtons.style.display = 'block';
+                userProfile.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>
